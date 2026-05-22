@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@font-face {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.transition {
+  transition: all 0.3s ease;
+}
+
+.inter {
+  font-family: "Inter", sans-serif;
+}
+
+.general-container {
+  padding: 70px 50px;
+}
+
+.space-between-section {
+  height: 70px;
+  width: 100%;
+}
+
+@media (max-width:650px) {
+  .general-container {
+    padding: 70px 20px;
+  }
+}
