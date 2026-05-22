@@ -23,7 +23,6 @@ const HomePage = () => {
       <HomeSliderBanner />
       <HomeTestimonial />
       <div className='space-between-section'></div>
-      <p>Test</p>
     </>
   )
 }
