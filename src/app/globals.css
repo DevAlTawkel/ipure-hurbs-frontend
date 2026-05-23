@@ -15,6 +15,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Playfair Display";
+  src: url("../fonts/Playfair_Display/PlayfairDisplay-VariableFont_wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -28,6 +36,10 @@
 
 .manrope {
   font-family: "Manrope", sans-serif;
+}
+
+.playfair_display {
+  font-family: "Playfair Display";
 }
 
 .general-container {
@@ -271,12 +283,24 @@ a {
   font-weight: 600;
 }
 
+.font-900 {
+  font-weight: 900;
+}
+
 .color-black {
   color: rgba(0, 4, 4, 1);
 }
 
 .color-white {
   color: rgba(255, 255, 255, 1);
+}
+
+.color-deep-forest-green {
+  color: rgba(47, 58, 47, 1);
+}
+
+.size-24{
+  font-size: 24px;
 }
 
 .size-16 {
@@ -289,6 +313,10 @@ a {
 
 .line-height-16 {
   line-height: 16px;
+}
+
+.line-height-24 {
+  line-height: 24px;
 }
 
 .gap-5 {
@@ -333,6 +361,10 @@ a {
 
 .background-white {
   background-color: rgba(255, 255, 255, 1);
+}
+
+.background-deep-forest-green {
+  background: rgba(47, 58, 47, 1);
 }
 
 .transition {

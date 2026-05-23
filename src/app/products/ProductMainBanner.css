@@ -1,0 +1,60 @@
+.ProductMainBanner-main-container img {
+    aspect-ratio: 1920 / 641;
+}
+
+.ProductMainBanner-content-container {
+    top: 68%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ProductMainBanner-button {
+    border-radius: 37px;
+    padding: 16px;
+    width: 274px;
+    display: inline-flex;
+}
+
+.ProductMainBanner-button-sub-container {
+    bottom: -10px;
+    left: 5%;
+    width: 90%;
+    height: 23px;
+    background: rgba(95, 111, 82, 1);
+    filter: blur(48px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.ProductMainBanner-button span {
+    z-index: 1;
+}
+
+@media (max-width:1450px) {
+    .ProductMainBanner-button {
+        padding: 8px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width:950px) {
+    .ProductMainBanner-button {
+        width: auto;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width:550px) {
+    .ProductMainBanner-main-container img {
+        aspect-ratio: 11 / 6;
+    }
+
+    .ProductMainBanner-button {
+        font-size: 14px;
+    }
+
+    .ProductMainBanner-content-container {
+        top: 65%;
+    }
+}
