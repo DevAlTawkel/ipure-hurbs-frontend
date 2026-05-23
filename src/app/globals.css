@@ -283,6 +283,10 @@ a {
   font-weight: 600;
 }
 
+.font-700 {
+  font-weight: 700;
+}
+
 .font-900 {
   font-weight: 900;
 }
@@ -299,12 +303,24 @@ a {
   color: rgba(47, 58, 47, 1);
 }
 
-.size-24{
+.color-dfg-200 {
+  color: rgba(86, 95, 86, 1);
+}
+
+.size-24 {
   font-size: 24px;
+}
+
+.size-18 {
+  font-size: 18px;
 }
 
 .size-16 {
   font-size: 16px;
+}
+
+.size-14 {
+  font-size: 14px;
 }
 
 .size-12 {
@@ -360,11 +376,27 @@ a {
 }
 
 .background-white {
-  background-color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 1);
 }
 
 .background-deep-forest-green {
   background: rgba(47, 58, 47, 1);
+}
+
+.background-red {
+  background: rgba(231, 12, 12, 1);
+}
+
+.background-warm-khali {
+  background: rgba(200, 169, 107, 1);
+}
+
+.background-wk-200 {
+  background: rgba(211, 186, 137, 1);
+}
+
+.background-eoc-200 {
+  background: rgba(127, 140, 117, 1);
 }
 
 .transition {

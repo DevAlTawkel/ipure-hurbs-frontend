@@ -1,0 +1,261 @@
+.Products-wrapper {
+    min-height: 100vh;
+}
+
+/* .Products-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Products-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.Products-cart-btn {
+    padding: 8px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #374151;
+    line-height: 0;
+    transition: background-color 0.15s ease;
+}
+
+.Products-cart-btn:hover {
+    background-color: #f3f4f6;
+}
+
+.Products-cart-badge {
+    top: -2px;
+    right: -2px;
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+/* 
+.Products-cart-strip {
+    background-color: #059669;
+    color: #ffffff;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.Products-cart-strip-total {
+    font-weight: 600;
+} */
+
+.Products-tabbar {
+    background-color: #ffffff;
+    padding: 20px 23px;
+}
+
+.Products-tabs {
+    gap: 32px;
+}
+
+.Products-tab {
+    flex-shrink: 0;
+    padding: 12px 0;
+}
+
+.Products-tab:hover {
+    color: #1f2937;
+}
+
+.Products-tab.active {
+    color: #2f3a2f;
+}
+
+.Products-sort-row {
+    gap: 12px;
+}
+
+.Products-sort-select {
+    border: 1px solid rgba(47, 58, 47, 1);
+    border-radius: 8px;
+    padding: 6px 12px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    padding-right: 30px;
+    background-image: url('/assets/arrow-down.svg');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+.Products-sort-select:focus {
+    border-color: #059669;
+    box-shadow: 0 0 0 1px #059669;
+}
+
+.Products-filter-btn {
+    border: 1px solid rgba(47, 58, 47, 1);
+    border-radius: 8px;
+    padding: 6px 12px;
+    background-color: #ffffff;
+    gap: 8px;
+}
+
+.Products-filter-btn:hover {
+    background-color: #f9fafb;
+}
+
+.Products-main {
+    padding: 0 23px 20px;
+}
+
+.Products-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 24px;
+}
+
+
+@media (min-width:450px) {
+
+    .Products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 815px) {
+    .Products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1100px) {
+    .Products-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.Products-skeleton {
+    background-color: #ffffff;
+    border: 1px solid #f3f4f6;
+    border-radius: 12px;
+    height: 288px;
+    overflow: hidden;
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.Products-skeleton-img {
+    height: 176px;
+    background-color: #f3f4f6;
+    border-radius: 12px 12px 0 0;
+}
+
+.Products-skeleton-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.Products-skeleton-line {
+    height: 12px;
+    background-color: #f3f4f6;
+    border-radius: 4px;
+}
+
+.Products-skeleton-line.short {
+    width: 50%;
+}
+
+.Products-skeleton-line.medium {
+    width: 75%;
+}
+
+.Products-skeleton-line.long {
+    width: 100%;
+}
+
+@keyframes skeleton-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.Products-empty {
+    padding: 80px 0;
+    gap: 8px;
+    color: #9ca3af;
+}
+
+.Products-empty-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.Products-empty-sub {
+    font-size: 14px;
+    margin: 0;
+}
+
+
+@media (max-width:1450px) {
+    .Products-tab {
+        font-size: 18px;
+    }
+
+    .Products-sort-select {
+        font-size: 16px;
+    }
+
+    .Products-filter-btn {
+        font-size: 16px;
+    }
+
+    .Products-filter-btn svg {
+        height: 16px;
+        width: 16px;
+    }
+}
+
+@media (max-width:750px) {
+    .Products-tabbar {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .Products-tabs {
+        flex-wrap: wrap;
+    }
+
+}
+
+@media (max-width:450px) {
+
+    .Products-tabs {
+        gap: 15px;
+        justify-content: center;
+    }
+
+}
