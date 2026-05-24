@@ -1,6 +1,5 @@
 "use client";
 
-import { ShoppingCart, Star } from "lucide-react";
 import { useCartStore } from "@/store/useCartStore";
 import { useWishlistStore } from "@/store/useWishlistStore";
 import './ProductCard.css';

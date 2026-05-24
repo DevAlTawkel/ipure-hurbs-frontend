@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
 @font-face {
   font-family: "Inter", sans-serif;
+  src: url("../fonts/Inter/Inter-VariableFont_opsz\,wght.ttf") format("truetype");
   font-optical-sizing: auto;
   font-weight: 100 900;
   font-style: normal;
@@ -299,6 +298,10 @@ a {
   color: rgba(255, 255, 255, 1);
 }
 
+.color-white-200 {
+  color: rgba(244, 244, 244, 1);
+}
+
 .color-deep-forest-green {
   color: rgba(47, 58, 47, 1);
 }
@@ -309,6 +312,10 @@ a {
 
 .size-24 {
   font-size: 24px;
+}
+
+.size-20 {
+  font-size: 20px;
 }
 
 .size-18 {
@@ -401,6 +408,14 @@ a {
 
 .transition {
   transition: 0.3s ease all;
+}
+
+.list-style-none {
+  list-style: none
+}
+
+.user-select-none{
+  user-select: none;
 }
 
 @media (max-width:650px) {

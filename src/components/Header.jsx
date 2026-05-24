@@ -31,7 +31,7 @@ const Header = () => {
     <div className='Header-main-container'>
       <div className='Header-sub-top-container'>
         <Link href={'/'} className='transition Header-logo-container'>
-          <img src="/assets/logo.png" alt="Company Logo" />
+          <img src="/assets/logo.png" alt="iPure Herbs Logo" />
         </Link>
 
         <div className='Header-sub-top-search-container'>
