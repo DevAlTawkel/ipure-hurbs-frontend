@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
 @font-face {
   font-family: "Inter", sans-serif;
+  src: url("../fonts/Inter/Inter-VariableFont_opsz\,wght.ttf") format("truetype");
   font-optical-sizing: auto;
   font-weight: 100 900;
   font-style: normal;
@@ -12,6 +11,14 @@
   src: url("../fonts/Manrope/Manrope-VariableFont_wght.ttf") format("truetype");
   font-style: normal;
   font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("../fonts/Playfair_Display/PlayfairDisplay-VariableFont_wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400 900;
   font-display: swap;
 }
 
@@ -28,6 +35,10 @@
 
 .manrope {
   font-family: "Manrope", sans-serif;
+}
+
+.playfair_display {
+  font-family: "Playfair Display";
 }
 
 .general-container {
@@ -271,6 +282,14 @@ a {
   font-weight: 600;
 }
 
+.font-700 {
+  font-weight: 700;
+}
+
+.font-900 {
+  font-weight: 900;
+}
+
 .color-black {
   color: rgba(0, 4, 4, 1);
 }
@@ -279,8 +298,36 @@ a {
   color: rgba(255, 255, 255, 1);
 }
 
+.color-white-200 {
+  color: rgba(244, 244, 244, 1);
+}
+
+.color-deep-forest-green {
+  color: rgba(47, 58, 47, 1);
+}
+
+.color-dfg-200 {
+  color: rgba(86, 95, 86, 1);
+}
+
+.size-24 {
+  font-size: 24px;
+}
+
+.size-20 {
+  font-size: 20px;
+}
+
+.size-18 {
+  font-size: 18px;
+}
+
 .size-16 {
   font-size: 16px;
+}
+
+.size-14 {
+  font-size: 14px;
 }
 
 .size-12 {
@@ -289,6 +336,10 @@ a {
 
 .line-height-16 {
   line-height: 16px;
+}
+
+.line-height-24 {
+  line-height: 24px;
 }
 
 .gap-5 {
@@ -332,11 +383,39 @@ a {
 }
 
 .background-white {
-  background-color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 1);
+}
+
+.background-deep-forest-green {
+  background: rgba(47, 58, 47, 1);
+}
+
+.background-red {
+  background: rgba(231, 12, 12, 1);
+}
+
+.background-warm-khali {
+  background: rgba(200, 169, 107, 1);
+}
+
+.background-wk-200 {
+  background: rgba(211, 186, 137, 1);
+}
+
+.background-eoc-200 {
+  background: rgba(127, 140, 117, 1);
 }
 
 .transition {
   transition: 0.3s ease all;
+}
+
+.list-style-none {
+  list-style: none
+}
+
+.user-select-none{
+  user-select: none;
 }
 
 @media (max-width:650px) {

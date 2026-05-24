@@ -1,0 +1,168 @@
+.ProductCard-container {
+    border: 1px solid rgba(209, 209, 210, 1);
+    padding: 4px;
+    border-radius: 12px;
+}
+
+.ProductCard-container:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.ProductCard-badge {
+    top: 14px;
+    left: 9px;
+    z-index: 10;
+    border-radius: 2px;
+    min-width: 75px;
+    min-height: 28px;
+}
+
+.ProductCard-wishlist-btn {
+    top: 11px;
+    right: 9px;
+    z-index: 10;
+    line-height: 0;
+    height: 30px;
+    width: 30px;
+}
+
+.ProductCard-wishlist-btn:hover {
+    background-color: #ffffff;
+}
+
+.ProductCard-wishlist-btn svg {
+    color: rgba(236, 232, 225, 1);
+    transition: color 0.3s ease;
+}
+
+.ProductCard-wishlist-btn.wishlisted svg {
+    fill: #ef4444;
+    color: #ef4444;
+}
+
+.ProductCard-image-wrapper {
+    height: 230px;
+    background: radial-gradient(193.44% 96.06% at 0% -0.21%, rgba(225, 225, 225, 0.77) 0%, rgba(215, 215, 215, 0.462) 100%);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.ProductCard-image {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.ProductCard-out-of-stock {
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.ProductCard-out-of-stock span {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    background-color: #f3f4f6;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.ProductCard-info {
+    padding: 12px;
+    gap: 4px;
+}
+
+.ProductCard-brand {
+    margin-top: 5px;
+    margin-bottom: 3px;
+}
+
+.ProductCard-price-row {
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.ProductCard-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* .ProductCard-original-price {
+    font-size: 12px;
+    color: #9ca3af;
+    text-decoration: line-through;
+} */
+
+/* ── Rating ─────────────────────────────────────────────────────────────── */
+.ProductCard-rating-row {
+    gap: 4px;
+}
+
+.ProductCard-stars {
+    gap: 4px;
+}
+
+.ProductCard-star-count {
+    margin-top: -2.5px;
+}
+
+.ProductCard-description {
+    color: rgba(88, 88, 90, 1);
+    width: 90%;
+}
+
+.ProductCard-actions {
+    gap: 15px;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.ProductCard-btn-buy {
+    background-color: rgba(95, 111, 82, 1);
+    border: 1px solid rgba(95, 111, 82, 1);
+    padding: 8px;
+    border-radius: 38px;
+}
+
+.ProductCard-btn-buy:hover:not(:disabled) {
+    background-color: transparent;
+    border: 1px solid rgba(95, 111, 82, 1);
+    color: rgb(67, 78, 57);
+}
+
+.ProductCard-btn-cart {
+    padding: 8px;
+    border-radius: 38px;
+    border: 1px solid rgba(95, 111, 82, 1);
+}
+
+.ProductCard-btn-cart:hover:not(:disabled) {
+    background-color: rgba(95, 111, 82, 1);
+    color: white;
+}
+
+.ProductCard-btn-buy:disabled,
+.ProductCard-btn-cart:disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    border-color: #e5e7eb;
+    cursor: not-allowed;
+}
+
+@media (max-width:570px) {
+
+    .ProductCard-actions,
+    .ProductCard-price-row {
+        flex-direction: column;
+    }
+
+    .ProductCard-btn-buy,
+    .ProductCard-btn-cart {
+        width: 100%;
+    }
+
+    .ProductCard-price-row {
+        align-items: flex-start;
+    }
+}
