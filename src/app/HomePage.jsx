@@ -1,28 +1,31 @@
 import React from 'react'
-import Hero from './Hero'
 import HomeMarquee from './HomeMarquee'
-import HomeTrustPartners from './HomeTrustPartners'
 import HomeShop from './HomeShop'
-import HomeBestSeller from './HomeBestSeller'
-import HomeSliderBanner from './HomeSliderBanner'
-import HomeContent from './HomeContent'
-import HomeTestimonial from './HomeTestimonial'
+import HomeMainBanner from './HomeMainBanner'
+import HomeFeatureProducts from './HomeFeatureProducts'
+import HomeWhyChooseUs from './HomeWhyChooseUs'
+import HomeBestSellers from './HomeBestSellers'
+import HomeAboutUs from './HomeAboutUs'
+import HomeBlogs from './HomeBlogs'
+import HomeNewsletter from './HomeNewsletter'
 
 const HomePage = () => {
   return (
     <>
-      <Hero />
+      <HomeMainBanner />
       <HomeMarquee />
-      <div className='space-between-section'></div>
-      <HomeTrustPartners />
-      <div className='space-between-section'></div>
       <HomeShop />
       <div className='space-between-section'></div>
-      <HomeBestSeller />
-      <HomeContent />
-      <HomeSliderBanner />
-      <HomeTestimonial />
+      <HomeFeatureProducts />
       <div className='space-between-section'></div>
+      <HomeWhyChooseUs />
+      <div className='space-between-section'></div>
+      <HomeBestSellers />
+      <div className='space-between-section'></div>
+      <HomeAboutUs />
+      <div className='space-between-section'></div>
+      <HomeBlogs />
+      <HomeNewsletter />
     </>
   )
 }

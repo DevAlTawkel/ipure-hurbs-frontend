@@ -60,7 +60,7 @@
 }
 
 .Header-sub-bottom-right-container {
-    background: linear-gradient(90deg, #A9B388 0%, #5F6F52 100%);
+    background: linear-gradient(270.01deg, #A9B388 -16.17%, #5F6F52 100%);
     padding: 4px 12px;
     border-radius: 30px;
 }
@@ -112,8 +112,28 @@
     }
 }
 
+@media (max-width:550px) {
+    .Header-sub-bottom-container {
+        padding: 10px 20px;
+    }
+}
+
 @media (max-width:400px) {
     .Header-sub-top-sub-container {
         width: 100%;
+    }
+}
+
+@media (max-width:380px) {
+    .Header-sub-bottom-left-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+
+    .Header-sub-top-sub-container {
+        flex-wrap: wrap;
+        justify-content: center;
     }
 }

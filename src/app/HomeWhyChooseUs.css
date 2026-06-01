@@ -1,0 +1,48 @@
+.HomeWhyChooseUs-main-container img {
+    aspect-ratio: 2 / 1;
+}
+
+.HomeWhyChooseUs-content-container {
+    top: 50%;
+    left: 50%;
+    transform: translate(0%, -50%);
+}
+
+.HomeWhyChooseUs-titles-container {
+    margin-bottom: 48px;
+    margin-left: 11px;
+}
+
+.HomeWhyChooseUs-content-main-right,
+.HomeWhyChooseUs-content-main-left,
+.HomeWhyChooseUs-content-main-container {
+    gap: 40px;
+}
+
+.HomeWhyChooseUs-card {
+    max-width: 250px;
+}
+
+.HomeWhyChooseUs-icon-container {
+    height: 32px;
+    width: 32px;
+    border-radius: 4px;
+    background-color: rgba(95, 111, 82, 1);
+}
+
+@media (max-width:1000px) {
+    .HomeWhyChooseUs-content-container {
+        display: none;
+    }
+
+    .HomeWhyChooseUs-main-container img {
+        aspect-ratio: 1000 / 463;
+    }
+}
+
+@media (max-width:550px) {
+
+    .HomeWhyChooseUs-main-container img {
+        aspect-ratio: 550 / 1159;
+    }
+}

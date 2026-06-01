@@ -34,6 +34,9 @@
 @media (max-width:1450px) {
     .ProductMainBanner-button {
         padding: 8px;
+    }
+
+    .ProductMainBanner-button span {
         font-size: 18px;
     }
 }
@@ -50,7 +53,7 @@
         aspect-ratio: 11 / 6;
     }
 
-    .ProductMainBanner-button {
+    .ProductMainBanner-button span{
         font-size: 14px;
     }
 

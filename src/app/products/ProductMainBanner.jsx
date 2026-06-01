@@ -10,8 +10,8 @@ const MainBanner = () => {
         <img src="/assets/product-main-banner.webp" alt="Complete Herbal Wellness Range" />
       </picture>
       <div className='position-absolute ProductMainBanner-content-container'>
-        <Link href={'/products'} className='position-relative background-deep-forest-green manrope font-600 size-24 color-white text-align-center ProductMainBanner-button'>
-          <span className='position-relative text-align-center width-100' style={{ zIndex: 1 }}>Explore More</span>
+        <Link href={'/products'} className='position-relative background-deep-forest-green color-white text-align-center ProductMainBanner-button'>
+          <span className='position-relative text-align-center width-100 manrope font-600 size-24' style={{ zIndex: 1 }}>Explore More</span>
           <div className='position-absolute ProductMainBanner-button-sub-container'></div>
         </Link>
       </div>
