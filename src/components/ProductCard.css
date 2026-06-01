@@ -24,15 +24,19 @@
     line-height: 0;
     height: 30px;
     width: 30px;
-    background-color: rgba(177, 177, 177, 1);
+    background-color: white;
 }
 
 .ProductCard-wishlist-btn:hover {
     background-color: rgba(200, 169, 107, 1);
 }
 
+.ProductCard-wishlist-btn:hover svg {
+    color: white;
+}
+
 .ProductCard-wishlist-btn svg {
-    color: rgba(236, 232, 225, 1);
+    color: rgba(200, 169, 107, 1);
     transition: color 0.3s ease;
 }
 
@@ -117,26 +121,26 @@
 }
 
 .ProductCard-btn-buy {
-    background-color: rgba(200, 169, 107, 1);
-    border: 1px solid rgba(200, 169, 107, 1);
+    background-color: rgba(47, 58, 47, 1);
+    border: 1px solid rgba(47, 58, 47, 1);
     padding: 8px;
     border-radius: 38px;
 }
 
 .ProductCard-btn-buy:hover:not(:disabled) {
     background-color: transparent;
-    border: 1px solid rgba(200, 169, 107, 1);
-    color: rgba(200, 169, 107, 1);
+    border: 1px solid rgba(47, 58, 47, 1);
+    color: rgba(47, 58, 47, 1);
 }
 
 .ProductCard-btn-cart {
     padding: 8px;
     border-radius: 38px;
-    border: 1px solid rgba(200, 169, 107, 1);
+    border: 1px solid rgba(47, 58, 47, 1);
 }
 
 .ProductCard-btn-cart:hover:not(:disabled) {
-    background-color: rgba(200, 169, 107, 1);
+    background-color: rgba(47, 58, 47, 1);
     color: white;
 }
 
@@ -152,7 +156,7 @@
     padding: 4px 6px;
     gap: 6px;
     border-radius: 38px;
-    border: 1px solid rgba(200, 169, 107, 1);
+    border: 1px solid rgba(47, 58, 47, 1);
     cursor: default;
 }
 

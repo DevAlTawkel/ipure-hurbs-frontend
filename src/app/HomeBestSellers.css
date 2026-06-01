@@ -1,0 +1,40 @@
+.HomeBestSellers--sub-title {
+    margin-bottom: 48px;
+    max-width: 660px;
+}
+
+.HomeBestSellers-cards-main-container {
+    background: linear-gradient(167.5deg, #A9B388 34.44%, #5F6F52 90.93%);
+    padding: 19px 20px 90px;
+}
+
+.HomeBestSellers-cards-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.HomeBestSellers-arrow-container {
+    background: radial-gradient(80% 80% at 88.75% 20%, rgba(219, 225, 202, 0.66) 0%, rgba(203, 209, 184, 0.66) 100%);
+    width: 40px;
+    height: 40px;
+}
+
+.HomeBestSellers-arrow-container svg {
+    margin-left: 2px;
+}
+
+.HomeBestSellers-cards-viewmore {
+    margin-bottom: 32px;
+}
+
+@media (max-width:1200px) {
+    .HomeBestSellers-cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width:600px) {
+    .HomeBestSellers-cards-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

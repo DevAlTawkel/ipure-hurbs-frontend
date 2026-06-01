@@ -1,0 +1,114 @@
+.HomeFeatureProducts-title {
+    margin-bottom: 48px;
+}
+
+.HomeFeatureProducts-cards-container {
+    background: linear-gradient(167.5deg, #A9B388 34.44%, #5F6F52 90.93%);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    padding: 116px 20px;
+}
+
+.HomeFeatureProducts-card-description-container p {
+    margin-bottom: 16px;
+}
+
+.HomeFeatureProducts-button {
+    border-radius: 37px;
+    padding: 16px;
+    width: 274px;
+    display: inline-flex;
+    margin-top: 10px;
+}
+
+.HomeFeatureProducts-button-sub-container {
+    bottom: 0px;
+    left: 5%;
+    width: 90%;
+    height: 23px;
+    background: rgba(95, 111, 82, 1);
+    filter: blur(48px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.HomeFeatureProducts-button span {
+    z-index: 1;
+}
+
+.HomeFeatureProducts-card {
+    border-radius: 12px;
+    background: radial-gradient(99.49% 99.2% at 14.1% 3.3%, rgba(255, 255, 255, 0.25) 0%, rgba(244, 244, 244, 0.25) 48.08%, rgba(236, 236, 236, 0.25) 74.04%, rgba(236, 236, 236, 0.25) 100%);
+}
+
+.HomeFeatureProducts-card-image-container {
+    width: 45%;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 2px solid rgba(203, 209, 184, 1);
+    border-radius: 12px;
+}
+
+.HomeFeatureProducts-card-description-container {
+    width: 55%;
+    padding: 40px 40px 40px 68px;
+}
+
+@media (max-width:1450px) {
+    .HomeFeatureProducts-button {
+        padding: 8px 50px;
+        width: auto;
+    }
+
+    .HomeFeatureProducts-card-description-container {
+        padding: 35px;
+    }
+
+    .HomeFeatureProducts-button span {
+        font-size: 18px;
+    }
+}
+
+@media (max-width:1200px) {
+    .HomeFeatureProducts-cards-container {
+        grid-template-columns: 1fr;
+        gap: 80px;
+    }
+}
+
+@media (max-width:950px) {
+    .HomeFeatureProducts-button {
+        width: auto;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width:550px) {
+    .HomeFeatureProducts-button span {
+        font-size: 14px;
+    }
+
+    .HomeFeatureProducts-card {
+        flex-direction: column;
+    }
+
+    .HomeFeatureProducts-card-image-container,
+    .HomeFeatureProducts-card-description-container {
+        width: 100%;
+
+    }
+
+    .HomeFeatureProducts-button {
+        padding: 8px;
+        width: 274px;
+    }
+
+    .HomeFeatureProducts-card-description-container {
+        padding: 25px;
+    }
+
+    .HomeFeatureProducts-cards-container {
+        padding: 70px 20px;
+        gap: 40px;
+    }
+}

@@ -89,7 +89,7 @@ const DUMMY_PRODUCTS = [
     image: "/assets/products/product-04.png",
     badge: "Best Seller",
     category: "Best Seller",
-    inStock: false,
+    inStock: true,
   },
   {
     id: 5,
