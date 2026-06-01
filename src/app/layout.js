@@ -2,6 +2,7 @@
 import Header from "@/components/Header";
 import "./globals.css";
 import Footer from "@/components/Footer";
+import { Toaster } from 'react-hot-toast';
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -24,6 +25,20 @@ export default function RootLayout({ children }) {
       <body>
         <Header />
         {children}
+        <Toaster
+          position="top-right"
+          containerClassName="manrope size-16"
+          toastOptions={{
+            duration: 2000,
+            style: {
+              background: 'white',
+              color: 'rgba(200, 169, 107, 1)',
+              borderRadius: '8px',
+              padding: '10px 16px',
+              border:'1px solide rgba(200, 169, 107, 1)'
+            },
+          }}
+        />
         <Footer />
       </body>
     </html>

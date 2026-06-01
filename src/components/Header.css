@@ -70,6 +70,26 @@
     line-height: 24px;
 }
 
+
+.Header-badge {
+    top: -8px;
+    right: -8px;
+    background-color: rgba(177, 177, 177, 1);
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    line-height: 1;
+    pointer-events: none;
+}
+
+
 @media (max-width:1100px) {
     .Header-sub-top-container {
         flex-direction: column;
@@ -78,15 +98,16 @@
 }
 
 @media (max-width:750px) {
-    .Header-sub-top-search-container{
+    .Header-sub-top-search-container {
         width: 100%;
     }
 
-    .Header-sub-bottom-container{
+    .Header-sub-bottom-container {
         flex-direction: column;
         gap: 20px;
     }
-    .Header-sub-bottom-right-container{
+
+    .Header-sub-bottom-right-container {
         margin-bottom: 14px;
     }
 }

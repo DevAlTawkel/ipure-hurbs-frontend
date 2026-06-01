@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { useProductStore } from "@/store/useProductStore";
-import { useCartStore } from "@/store/useCartStore";
 import ProductCard from "@/components/ProductCard";
 import './Products.css';
 
@@ -27,12 +26,7 @@ export default function Products() {
         getFilteredProducts,
     } = useProductStore();
 
-    // Cart store
-    const { getCartCount, getCartTotal } = useCartStore();
-
     const products = getFilteredProducts();
-    const cartCount = getCartCount();
-    const cartTotal = getCartTotal();
 
     useEffect(() => {
         fetchProducts();
@@ -40,25 +34,6 @@ export default function Products() {
 
     return (
         <div className="Products-wrapper">
-
-            {/* <header className="Products-topbar">
-                <h1 className="Products-title">Products</h1>
-                <button className="position-relative Products-cart-btn">
-                    <ShoppingCart size={20} />
-                    {cartCount > 0 && (
-                        <span className="position-absolute Products-cart-badge">
-                            {cartCount}
-                        </span>
-                    )}
-                </button>
-            </header> */}
-
-            {/* {cartCount > 0 && (
-                <div className="display-flex align-items-center justify-content-between Products-cart-strip">
-                    <span>{cartCount} item{cartCount > 1 ? "s" : ""} in cart</span>
-                    <span className="Products-cart-strip-total">${cartTotal.toFixed(2)}</span>
-                </div>
-            )} */}
 
             <div className="display-flex align-items-center justify-content-space-between Products-tabbar">
                 <div className="display-flex Products-tabs">
