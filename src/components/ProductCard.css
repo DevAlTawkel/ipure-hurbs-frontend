@@ -19,7 +19,7 @@
 
 .ProductCard-wishlist-btn {
     top: 11px;
-    right: 9px;
+    right: 11.5px;
     z-index: 10;
     line-height: 0;
     height: 30px;
@@ -52,7 +52,7 @@
 .ProductCard-image-wrapper {
     height: 230px;
     background: radial-gradient(193.44% 96.06% at 0% -0.21%, rgba(225, 225, 225, 0.77) 0%, rgba(215, 215, 215, 0.462) 100%);
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 16px;
 }
 
@@ -77,7 +77,7 @@
 }
 
 .ProductCard-info {
-    padding: 12px;
+    padding: 6px ;
     gap: 4px;
 }
 
@@ -115,7 +115,7 @@
 }
 
 .ProductCard-actions {
-    gap: 15px;
+    gap: 10px;
     margin-top: auto;
     padding-top: 10px;
 }
@@ -126,12 +126,6 @@
     padding: 8px;
     border-radius: 38px;
 }
-
-/* .ProductCard-btn-buy:hover:not(:disabled) {
-    background-color: transparent;
-    border: 1px solid rgba(47, 58, 47, 1);
-    color: rgba(47, 58, 47, 1);
-} */
 
 .ProductCard-btn-cart {
     padding: 8px;

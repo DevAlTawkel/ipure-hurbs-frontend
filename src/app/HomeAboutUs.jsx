@@ -65,7 +65,7 @@ const HomeAboutUs = () => {
                     </div>
                 </div>
                 <div className='display-flex justify-content-flex-end'>
-                    <Link href={'/about-us'} className='color-white-200 background-warm-khali manrope font-400 size-16 HomeAboutUs-learn-more-button'>
+                    <Link href={'/about-us'} className='color-sandstone-800 background-warm-khali manrope font-400 size-16 HomeAboutUs-learn-more-button'>
                         Learn More
                     </Link>
                 </div>
