@@ -10,32 +10,39 @@
     transform: translateX(-50%);
 }
 
+.HomeMainBanner-button span {
+    z-index: 1;
+}
+
+.HomeMainBanner-button-wrap {
+    position: relative;
+    display: inline-flex;
+    transition: transform 0.5s cubic-bezier(0.25, 1.5, 0.5, 1);
+}
+
 .HomeMainBanner-button {
     border-radius: 37px;
     padding: 16px;
     width: 274px;
     display: inline-flex;
-    transition: transform 0.5s cubic-bezier(0.25, 1.5, 0.5, 1);
+    justify-content: center;
 }
 
-.HomeMainBanner-button:hover {
+.HomeMainBanner-button-wrap:hover {
     transform: translateY(-5px);
 }
 
-.HomeMainBanner-button-sub-container {
-    bottom: -10px;
+.HomeMainBanner-button-glow {
+    position: absolute;
+    bottom: -14px;
     left: 5%;
     width: 90%;
     height: 23px;
     background: rgba(95, 111, 82, 1);
-    filter: blur(48px);
+    filter: blur(20px);
     border-radius: 50%;
     pointer-events: none;
     z-index: 0;
-}
-
-.HomeMainBanner-button span {
-    z-index: 1;
 }
 
 @media (max-width:1450px) {

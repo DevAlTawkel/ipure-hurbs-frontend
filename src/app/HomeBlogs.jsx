@@ -41,14 +41,16 @@ const HomeBlogs = () => {
                 Learn. Heal. Thrive with natural wellness.
             </p>
 
-            <Link href={'/blogs'} className="manrope font-600 size-24 color-deep-forest-green display-flex align-items-center gap-10 justify-content-flex-end HomeBlogs-cards-viewmore">
-                See more
-                <div className="display-flex align-items-center justify-content-center border-radius-100 HomeBlogs-arrow-container">
-                    <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.36356 8.00006L0 1.77776L1.81817 8.742e-07L10 8.00006L1.81817 16L0 14.2222L6.36356 8.00006Z" fill="white" />
-                    </svg>
-                </div>
-            </Link>
+            <div className='display-flex align-items-flex-end justify-content-flex-end'>
+                <Link href={'/blogs'} className="manrope font-600 size-24 color-deep-forest-green display-flex align-items-center gap-10 justify-content-flex-end HomeBlogs-cards-viewmore">
+                    See more
+                    <div className="display-flex align-items-center justify-content-center border-radius-100 HomeBlogs-arrow-container">
+                        <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.36356 8.00006L0 1.77776L1.81817 8.742e-07L10 8.00006L1.81817 16L0 14.2222L6.36356 8.00006Z" fill="white" />
+                        </svg>
+                    </div>
+                </Link>
+            </div>
             <div className='display-grid HomeBlogs-grid-container'>
                 {
                     blogs.map((item, i) => (

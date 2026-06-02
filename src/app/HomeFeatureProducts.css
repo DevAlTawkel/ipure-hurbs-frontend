@@ -13,33 +13,39 @@
     margin-bottom: 16px;
 }
 
+.HomeFeatureProducts-button span {
+    z-index: 1;
+}
+
+.HomeFeatureProducts-button-wrap {
+    position: relative;
+    display: inline-flex;
+    transition: transform 0.5s cubic-bezier(0.25, 1.5, 0.5, 1);
+}
+
 .HomeFeatureProducts-button {
     border-radius: 37px;
     padding: 16px;
     width: 274px;
     display: inline-flex;
-    margin-top: 10px;
-    transition: transform 0.5s cubic-bezier(0.25, 1.5, 0.5, 1);
+    justify-content: center;
 }
 
-.HomeFeatureProducts-button:hover {
+.HomeFeatureProducts-button-wrap:hover {
     transform: translateY(-5px);
 }
 
-.HomeFeatureProducts-button-sub-container {
-    bottom: 0px;
+.HomeFeatureProducts-button-glow {
+    position: absolute;
+    bottom: -14px;
     left: 5%;
     width: 90%;
     height: 23px;
     background: rgba(95, 111, 82, 1);
-    filter: blur(48px);
+    filter: blur(20px);
     border-radius: 50%;
     pointer-events: none;
     z-index: 0;
-}
-
-.HomeFeatureProducts-button span {
-    z-index: 1;
 }
 
 .HomeFeatureProducts-card {
