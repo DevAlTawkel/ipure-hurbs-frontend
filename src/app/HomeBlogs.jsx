@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import './HomeBlogs.css'
 import Link from "next/link";
 
@@ -27,6 +28,12 @@ const blogs = [
 ]
 
 const HomeBlogs = () => {
+
+    const [page, setPage] = useState(0);
+
+    const next = () => setPage((p) => Math.min(p + 1, blogs.length - 1));
+    const prev = () => setPage((p) => Math.max(p - 1, 0));
+
     return (
         <div className='background-white-200 HomeBlogs-main-container'>
             <p className='playfair_display font-600 size-48 color-deep-forest-green text-align-center user-select-none'>Blog Posts</p>
@@ -34,23 +41,25 @@ const HomeBlogs = () => {
                 Learn. Heal. Thrive with natural wellness.
             </p>
 
-            <Link href={'/blogs'} className="manrope font-600 size-24 color-deep-forest-green display-flex align-items-center gap-10 justify-content-flex-end HomeBlogs-cards-viewmore">
-                See more
-                <div className="display-flex align-items-center justify-content-center border-radius-100 HomeBlogs-arrow-container">
-                    <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.36356 8.00006L0 1.77776L1.81817 8.742e-07L10 8.00006L1.81817 16L0 14.2222L6.36356 8.00006Z" fill="white" />
-                    </svg>
-                </div>
-            </Link>
+            <div className='display-flex align-items-flex-end justify-content-flex-end'>
+                <Link href={'/blogs'} className="manrope font-600 size-24 color-deep-forest-green display-flex align-items-center gap-10 justify-content-flex-end HomeBlogs-cards-viewmore">
+                    See more
+                    <div className="display-flex align-items-center justify-content-center border-radius-100 HomeBlogs-arrow-container">
+                        <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.36356 8.00006L0 1.77776L1.81817 8.742e-07L10 8.00006L1.81817 16L0 14.2222L6.36356 8.00006Z" fill="white" />
+                        </svg>
+                    </div>
+                </Link>
+            </div>
             <div className='display-grid HomeBlogs-grid-container'>
                 {
                     blogs.map((item, i) => (
-                        <div key={i} className='background-white overflow-hidden HomeBlogs-card'>
+                        <div key={i} className='background-white display-flex flex-direction-column overflow-hidden transition user-select-none HomeBlogs-card'>
                             <div className='HomeBlogs-card-image-container'>
                                 <img src={item.image} alt="" className='object-fit-cover' />
                             </div>
-                            <div className='HomeBlogs-card-content-container'>
-                                <div className='display-flex align-items-center justify-content-space-between HomeBlogs-card-icons-container'>
+                            <div className='display-flex flex-direction-column HomeBlogs-card-content-container'>
+                                <div className='display-flex align-items-center HomeBlogs-card-icons-container'>
                                     <div className='display-flex align-items-center justify-content-center gap-10'>
                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 0V2H13V0H15V2H19C19.5523 2 20 2.44772 20 3V19C20 19.5523 19.5523 20 19 20H1C0.44772 20 0 19.5523 0 19V3C0 2.44772 0.44772 2 1 2H5V0H7ZM18 10H2V18H18V10ZM5 4H2V8H18V4H15V6H13V4H7V6H5V4Z" fill="#565F56" />
@@ -70,10 +79,19 @@ const HomeBlogs = () => {
                                         <p className='manrope font-400 size-14 color-black-dfg-200'>Like</p>
                                     </div>
                                 </div>
-                                <h5 className='manrope font-600 size-24 color-deep-forest-green'>{item.title}</h5>
-                                <p className='manrope font-400 size-18 color-black-black HomeBlogs-card-description'>{item.desc}</p>
-                                <div className='display-flex align-items-flex-end'>
-                                    <Link href={item.link} className='margin-left-auto manrope size-18 font-400 color-deep-forest-green HomeBlogs-card-link'>
+                                <h5 className='manrope font-600 size-24 color-deep-forest-green'>
+                                    {item.title}
+                                </h5>
+
+                                <p className='manrope font-400 size-18 color-black-black HomeBlogs-card-description'>
+                                    {item.desc}
+                                </p>
+
+                                <div className='display-flex align-items-flex-end margin-top-auto HomeBlogs-card-link-container'>
+                                    <Link
+                                        href={item.link}
+                                        className='margin-left-auto manrope size-18 font-400 color-deep-forest-green transition HomeBlogs-card-link'
+                                    >
                                         Read more
                                     </Link>
                                 </div>
@@ -81,6 +99,81 @@ const HomeBlogs = () => {
                         </div>
                     ))
                 }
+            </div>
+
+            <div className='HomeBlogs-slider'>
+                <div
+                    className='HomeBlogs-slider-track'
+                    style={{
+                        transform: `translateX(-${page * 100}%)`
+                    }}
+                >
+                    {blogs.map((item, i) => (
+                        <div
+                            key={i}
+                            className='background-white display-flex flex-direction-column overflow-hidden transition user-select-none HomeBlogs-card HomeBlogs-slide'
+                        >
+                            <div className='HomeBlogs-card-image-container'>
+                                <img src={item.image} alt="" className='object-fit-cover' />
+                            </div>
+
+                            <div className='display-flex flex-direction-column HomeBlogs-card-content-container'>
+                                <div className='display-flex align-items-center HomeBlogs-card-icons-container'>
+                                    {/* Your icons section here */}
+                                </div>
+
+                                <h5 className='manrope font-600 size-24 color-deep-forest-green'>
+                                    {item.title}
+                                </h5>
+
+                                <p className='manrope font-400 size-18 color-black-black HomeBlogs-card-description'>
+                                    {item.desc}
+                                </p>
+
+                                <div className='display-flex align-items-flex-end margin-top-auto HomeBlogs-card-link-container'>
+                                    <Link
+                                        href={item.link}
+                                        className='margin-left-auto manrope size-18 font-400 color-deep-forest-green transition HomeBlogs-card-link'
+                                    >
+                                        Read more
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className='HomeBlogs-pagination'>
+                    <button
+                        onClick={prev}
+                        disabled={page === 0}
+                        className='display-flex align-items-center justify-content-center cursor-pointer border-none border-radius-50 background-white HomeBlogs-pagination-button-left'
+                    >
+                        <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.94972 6.36412L-4.94538e-07 1.41432L1.41421 0.000118194L7.77822 6.36412L1.41421 12.728L-6.18171e-08 11.3138L4.94972 6.36412Z" fill="rgba(200, 169, 107, 1)" />
+                        </svg>
+                    </button>
+
+                    <div className='HomeBlogs-dots'>
+                        {blogs.map((_, i) => (
+                            <span
+                                key={i}
+                                className={`HomeBlogs-dot ${i === page ? 'active' : ''}`}
+                                onClick={() => setPage(i)}
+                            />
+                        ))}
+                    </div>
+
+                    <button
+                        onClick={next}
+                        disabled={page === blogs.length - 1}
+                        className='display-flex align-items-center justify-content-center cursor-pointer border-none border-radius-50 background-white'
+                    >
+                        <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.94972 6.36412L-4.94538e-07 1.41432L1.41421 0.000118194L7.77822 6.36412L1.41421 12.728L-6.18171e-08 11.3138L4.94972 6.36412Z" fill="rgba(200, 169, 107, 1)" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     )

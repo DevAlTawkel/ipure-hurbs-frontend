@@ -31,6 +31,67 @@
     color: rgba(200, 169, 107, 1);
 }
 
+
+.HomeShop-slider {
+    display: none;
+}
+
+.HomeShop-slider-track {
+    display: flex;
+    transition: transform 0.35s ease;
+}
+
+.HomeShop-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.HomeShop-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.HomeShop-pagination button {
+    width: 32px;
+    height: 32px;
+}
+
+.HomeShop-pagination button:disabled svg path {
+    fill: #00000048;
+}
+
+.HomeShop-pagination button:disabled {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.HomeShop-pagination-button-left{
+    transform: rotate(-180deg);
+}
+
+.HomeShop-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.HomeShop-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #d4d4d4;
+    cursor: pointer;
+}
+
+.HomeShop-dot.active {
+    background: rgba(200, 169, 107, 1);
+}
+
 @media (max-width:955px) {
 
     .HomeShop-cards-container {
@@ -44,8 +105,45 @@
     }
 }
 
-@media (max-width:550px) {
+@media (max-width:650px) {
     .HomeShop-cards-container {
-        grid-template-columns: 1fr;
+        display: none;
+    }
+
+    .HomeShop-slider {
+        display: block;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .HomeShop-slider-track {
+        display: flex;
+        width: 100%;
+    }
+
+    .HomeShop-slide {
+        min-width: 100%;
+        flex: 0 0 100%;
+
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        box-sizing: border-box;
+    }
+
+    .HomeShop-slide a {
+        display: block;
+        width: 100%;
+    }
+
+    .HomeShop-image-container img {
+        width: 100%;
+        display: block;
+        height: auto;
+    }
+
+    .HomeShop-category {
+        font-size: 14px;
+        text-align: center;
     }
 }
