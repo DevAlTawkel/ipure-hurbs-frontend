@@ -15,6 +15,11 @@
     padding: 16px;
     width: 274px;
     display: inline-flex;
+    transition: transform 0.5s cubic-bezier(0.25, 1.5, 0.5, 1);
+}
+
+.HomeMainBanner-button:hover {
+    transform: translateY(-5px);
 }
 
 .HomeMainBanner-button-sub-container {
@@ -37,7 +42,7 @@
     .HomeMainBanner-button {
         padding: 8px;
     }
-    
+
     .HomeMainBanner-button span {
         font-size: 18px;
     }

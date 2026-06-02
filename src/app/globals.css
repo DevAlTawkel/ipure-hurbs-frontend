@@ -453,7 +453,7 @@ a {
   }
 
   .size-48 {
-    font-size: 38px;
+    font-size: 30px;
   }
 
   .size-28 {
@@ -485,6 +485,6 @@ a {
   }
 
   .space-between-section {
-    height: 70px;
+    height: 50px;
   }
 }

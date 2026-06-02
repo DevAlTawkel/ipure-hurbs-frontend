@@ -19,10 +19,11 @@
     width: 274px;
     display: inline-flex;
     margin-top: 10px;
+    transition: transform 0.5s cubic-bezier(0.25, 1.5, 0.5, 1);
 }
 
 .HomeFeatureProducts-button:hover {
-    background-color: rgba(200, 169, 107, 1);
+    transform: translateY(-5px);
 }
 
 .HomeFeatureProducts-button-sub-container {

@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import './HomeBlogs.css'
 import Link from "next/link";
 
@@ -27,6 +28,12 @@ const blogs = [
 ]
 
 const HomeBlogs = () => {
+
+    const [page, setPage] = useState(0);
+
+    const next = () => setPage((p) => Math.min(p + 1, blogs.length - 1));
+    const prev = () => setPage((p) => Math.max(p - 1, 0));
+
     return (
         <div className='background-white-200 HomeBlogs-main-container'>
             <p className='playfair_display font-600 size-48 color-deep-forest-green text-align-center user-select-none'>Blog Posts</p>
@@ -90,6 +97,81 @@ const HomeBlogs = () => {
                         </div>
                     ))
                 }
+            </div>
+
+            <div className='HomeBlogs-slider'>
+                <div
+                    className='HomeBlogs-slider-track'
+                    style={{
+                        transform: `translateX(-${page * 100}%)`
+                    }}
+                >
+                    {blogs.map((item, i) => (
+                        <div
+                            key={i}
+                            className='background-white display-flex flex-direction-column overflow-hidden transition user-select-none HomeBlogs-card HomeBlogs-slide'
+                        >
+                            <div className='HomeBlogs-card-image-container'>
+                                <img src={item.image} alt="" className='object-fit-cover' />
+                            </div>
+
+                            <div className='display-flex flex-direction-column HomeBlogs-card-content-container'>
+                                <div className='display-flex align-items-center HomeBlogs-card-icons-container'>
+                                    {/* Your icons section here */}
+                                </div>
+
+                                <h5 className='manrope font-600 size-24 color-deep-forest-green'>
+                                    {item.title}
+                                </h5>
+
+                                <p className='manrope font-400 size-18 color-black-black HomeBlogs-card-description'>
+                                    {item.desc}
+                                </p>
+
+                                <div className='display-flex align-items-flex-end margin-top-auto HomeBlogs-card-link-container'>
+                                    <Link
+                                        href={item.link}
+                                        className='margin-left-auto manrope size-18 font-400 color-deep-forest-green transition HomeBlogs-card-link'
+                                    >
+                                        Read more
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className='HomeBlogs-pagination'>
+                    <button
+                        onClick={prev}
+                        disabled={page === 0}
+                        className='display-flex align-items-center justify-content-center cursor-pointer border-none border-radius-50 background-white HomeBlogs-pagination-button-left'
+                    >
+                        <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.94972 6.36412L-4.94538e-07 1.41432L1.41421 0.000118194L7.77822 6.36412L1.41421 12.728L-6.18171e-08 11.3138L4.94972 6.36412Z" fill="rgba(200, 169, 107, 1)" />
+                        </svg>
+                    </button>
+
+                    <div className='HomeBlogs-dots'>
+                        {blogs.map((_, i) => (
+                            <span
+                                key={i}
+                                className={`HomeBlogs-dot ${i === page ? 'active' : ''}`}
+                                onClick={() => setPage(i)}
+                            />
+                        ))}
+                    </div>
+
+                    <button
+                        onClick={next}
+                        disabled={page === blogs.length - 1}
+                        className='display-flex align-items-center justify-content-center cursor-pointer border-none border-radius-50 background-white'
+                    >
+                        <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.94972 6.36412L-4.94538e-07 1.41432L1.41421 0.000118194L7.77822 6.36412L1.41421 12.728L-6.18171e-08 11.3138L4.94972 6.36412Z" fill="rgba(200, 169, 107, 1)" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     )

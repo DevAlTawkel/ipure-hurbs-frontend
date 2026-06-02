@@ -51,9 +51,9 @@
 
 .ProductCard-image-wrapper {
     height: 230px;
-    background: radial-gradient(193.44% 96.06% at 0% -0.21%, rgba(225, 225, 225, 0.77) 0%, rgba(215, 215, 215, 0.462) 100%);
     border-radius: 8px;
     padding: 16px;
+    border: 1px solid rgba(244, 244, 244, 1)
 }
 
 .ProductCard-image {

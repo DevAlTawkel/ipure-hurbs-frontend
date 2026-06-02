@@ -82,33 +82,6 @@ const socialLinks = [
 const Footer = () => {
   return (
     <footer className='color-white-200 Footer-main-container'>
-      <svg className='Footer-bg' preserveAspectRatio="none"
-        viewBox="0 0 1440 473"
-        xmlns="http://www.w3.org/2000/svg">
-        <g filter="url(#filter0_n_456_2776)">
-          <path d="M-21 28C-21 5.90862 -3.09139 -12 19 -12H1429C1451.09 -12 1469 5.90861 1469 28V433C1469 455.091 1451.09 473 1429 473H19C-3.09139 473 -21 455.091 -21 433V28Z" fill="#7F8C75" />
-        </g>
-        <defs>
-          <filter id="filter0_n_456_2776" x="-21" y="-12" width="1490" height="485" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
-            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-            <feTurbulence type="fractalNoise" baseFrequency="2 2" stitchTiles="stitch" numOctaves="3" result="noise" seed="6823" />
-            <feColorMatrix in="noise" type="luminanceToAlpha" result="alphaNoise" />
-            <feComponentTransfer in="alphaNoise" result="coloredNoise1">
-              <feFuncA type="discrete" tableValues="1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 " />
-            </feComponentTransfer>
-            <feComposite operator="in" in2="shape" in="coloredNoise1" result="noise1Clipped" />
-            <feFlood flood-color="rgba(0, 0, 0, 0.25)" result="color1Flood" />
-            <feComposite operator="in" in2="noise1Clipped" in="color1Flood" result="color1" />
-            <feMerge result="effect1_noise_456_2776">
-              <feMergeNode in="shape" />
-              <feMergeNode in="color1" />
-            </feMerge>
-          </filter>
-        </defs>
-      </svg>
-
-
       <div className='Footer-content'>
         <div className='display-grid Footer-nav'>
           {Object.entries(footerLinks).map(([heading, links]) => (
