@@ -35,12 +35,11 @@
 }
 
 .HomeWhyChooseUs-header-container:hover div {
-    background-color: white;
+    background-color: rgba(200, 169, 107, 1);
 }
 
 .HomeWhyChooseUs-header-container:hover svg path {
-    fill: rgba(200, 169, 107, 1);
-    color: rgba(200, 169, 107, 1);
+    fill: white;
 }
 
 @media (max-width:1000px) {
