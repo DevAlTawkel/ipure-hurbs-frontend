@@ -72,6 +72,10 @@
     color: #ffffff;
 }
 
+.Footer-middle{
+    grid-template-columns: repeat(3, 1fr);
+}
+
 @media (max-width: 1024px) {
     .Footer-nav {
         grid-template-columns: repeat(2, 1fr);

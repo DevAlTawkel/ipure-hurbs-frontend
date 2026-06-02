@@ -30,6 +30,20 @@
     background-color: rgba(95, 111, 82, 1);
 }
 
+.HomeWhyChooseUs-card {
+    user-select: none;
+
+}
+
+.HomeWhyChooseUs-header-container:hover div {
+    background-color: white;
+}
+
+.HomeWhyChooseUs-header-container:hover svg path {
+    fill: rgba(200, 169, 107, 1);
+    color: rgba(200, 169, 107, 1);
+}
+
 @media (max-width:1000px) {
     .HomeWhyChooseUs-content-container {
         display: none;

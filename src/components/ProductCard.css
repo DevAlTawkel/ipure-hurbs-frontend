@@ -127,11 +127,11 @@
     border-radius: 38px;
 }
 
-.ProductCard-btn-buy:hover:not(:disabled) {
+/* .ProductCard-btn-buy:hover:not(:disabled) {
     background-color: transparent;
     border: 1px solid rgba(47, 58, 47, 1);
     color: rgba(47, 58, 47, 1);
-}
+} */
 
 .ProductCard-btn-cart {
     padding: 8px;

@@ -17,7 +17,7 @@ const HomeFeatureProducts = () => {
                         <p className='manrope font-600 size-20 color-white'>Explore Product Store</p>
                         <p className='manrope font-600 size-28 color-white'>Nature’s Goodness Carefully Curated</p>
                         <p className='manrope font-400 size-18 color-white'>Naturally inspired products, rooted in sustainability and care for the Earth.</p>
-                        <Link href={'/'} className='position-relative background-deep-forest-green color-white text-align-center HomeFeatureProducts-button'>
+                        <Link href={'/'} className='position-relative background-deep-forest-green color-white text-align-center transition HomeFeatureProducts-button'>
                             <span className='position-relative text-align-center width-100 manrope font-600 size-24' style={{ zIndex: 1 }}>Shop More</span>
                             <div className='position-absolute HomeFeatureProducts-button-sub-container'></div>
                         </Link>
@@ -33,7 +33,7 @@ const HomeFeatureProducts = () => {
                         <p className='manrope font-600 size-20 color-white'>Welcome to Product Store</p>
                         <p className='manrope font-600 size-28 color-white'>Our Commitment To Sustainability</p>
                         <p className='manrope font-400 size-18 color-white'>Naturally inspired products, rooted in sustainability and care for the Earth.</p>
-                        <Link href={'/'} className='position-relative background-deep-forest-green color-white text-align-center HomeFeatureProducts-button'>
+                        <Link href={'/'} className='position-relative background-deep-forest-green color-white text-align-center transition HomeFeatureProducts-button'>
                             <span className='position-relative text-align-center width-100 manrope font-600 size-24' style={{ zIndex: 1 }}>Shop More</span>
                             <div className='position-absolute HomeFeatureProducts-button-sub-container'></div>
                         </Link>

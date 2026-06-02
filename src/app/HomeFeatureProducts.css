@@ -21,6 +21,10 @@
     margin-top: 10px;
 }
 
+.HomeFeatureProducts-button:hover {
+    background-color: rgba(200, 169, 107, 1);
+}
+
 .HomeFeatureProducts-button-sub-container {
     bottom: 0px;
     left: 5%;

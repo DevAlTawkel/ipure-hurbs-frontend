@@ -45,11 +45,11 @@ const HomeBlogs = () => {
             <div className='display-grid HomeBlogs-grid-container'>
                 {
                     blogs.map((item, i) => (
-                        <div key={i} className='background-white overflow-hidden HomeBlogs-card'>
+                        <div key={i} className='background-white display-flex flex-direction-column overflow-hidden transition user-select-none HomeBlogs-card'>
                             <div className='HomeBlogs-card-image-container'>
                                 <img src={item.image} alt="" className='object-fit-cover' />
                             </div>
-                            <div className='HomeBlogs-card-content-container'>
+                            <div className='display-flex flex-direction-column HomeBlogs-card-content-container'>
                                 <div className='display-flex align-items-center justify-content-space-between HomeBlogs-card-icons-container'>
                                     <div className='display-flex align-items-center justify-content-center gap-10'>
                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -70,10 +70,19 @@ const HomeBlogs = () => {
                                         <p className='manrope font-400 size-14 color-black-dfg-200'>Like</p>
                                     </div>
                                 </div>
-                                <h5 className='manrope font-600 size-24 color-deep-forest-green'>{item.title}</h5>
-                                <p className='manrope font-400 size-18 color-black-black HomeBlogs-card-description'>{item.desc}</p>
-                                <div className='display-flex align-items-flex-end'>
-                                    <Link href={item.link} className='margin-left-auto manrope size-18 font-400 color-deep-forest-green HomeBlogs-card-link'>
+                                <h5 className='manrope font-600 size-24 color-deep-forest-green'>
+                                    {item.title}
+                                </h5>
+
+                                <p className='manrope font-400 size-18 color-black-black HomeBlogs-card-description'>
+                                    {item.desc}
+                                </p>
+
+                                <div className='display-flex align-items-flex-end margin-top-auto HomeBlogs-card-link-container'>
+                                    <Link
+                                        href={item.link}
+                                        className='margin-left-auto manrope size-18 font-400 color-deep-forest-green transition HomeBlogs-card-link'
+                                    >
                                         Read more
                                     </Link>
                                 </div>

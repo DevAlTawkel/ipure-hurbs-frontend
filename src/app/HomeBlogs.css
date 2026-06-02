@@ -47,8 +47,18 @@
     line-height: 30px;
 }
 
+.HomeBlogs-card-link:hover {
+    color: rgba(200, 169, 107, 1);
+}
+
 .HomeBlogs-card-content-container {
     padding: 12px;
+    flex: 1;
+}
+
+.HomeBlogs-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
 @media (max-width:1050px) {
