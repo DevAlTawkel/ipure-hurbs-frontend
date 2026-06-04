@@ -1,5 +1,6 @@
 "use client";
 
+import { DUMMY_PRODUCTS } from '@/store/useProductStore'
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
@@ -29,7 +30,7 @@ export default function ProductDetailss() {
 
   // ─── Find product by slug ─────────────────────────────────────────────────
   // When API is ready: fetch from /api/products/{slug} instead
-  const product = products.find((p) => p.slug === slug) ?? products[0];
+  const product = DUMMY_PRODUCTS.find((p) => p.slug === slug) ?? products[0];
 
   const cartItem = cart.find((i) => i.id === product?.id);
   const isWishlisted = mounted && wishlistIds.includes(product?.id);

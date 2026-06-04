@@ -2,7 +2,7 @@ import React from 'react'
 import ProductDetails from './ProductDetails'
 import TopSlider from '@/components/TopSlider'
 
-const ProductHomePage = () => {
+const ProductHomePage = ({ slug }) => {
     return (
         <>
             <TopSlider 
@@ -11,7 +11,7 @@ const ProductHomePage = () => {
                     'Due to Eid holidays, delivery and return/exchange pickup delivery might be delayed.'
                 ]}
             />
-            <ProductDetails />
+            <ProductDetails slug={slug}/>
         </>
     )
 }

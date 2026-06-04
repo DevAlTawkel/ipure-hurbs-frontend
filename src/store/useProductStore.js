@@ -30,7 +30,7 @@ const mapProduct = (p) => ({
 });
 
 // ─── Dummy Data — remove once API is stable ───────────────────────────────────
-const DUMMY_PRODUCTS = [
+export const DUMMY_PRODUCTS = [
   {
     id: 1,
     name: "Happy Knights Prash",
