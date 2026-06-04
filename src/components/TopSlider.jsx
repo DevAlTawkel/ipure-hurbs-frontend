@@ -21,7 +21,7 @@ const TopSlider = ({ slides = [] }) => {
     if (!slides.length) return null;
 
     return (
-        <div className='background-white-400 width-100 display-flex align-items-center justify-content-center TopSlider-main-container'>
+        <div className='width-100 display-flex align-items-center justify-content-center TopSlider-main-container'>
             <AnimatePresence mode="wait">
                 <motion.div
                     key={currentIndex}
@@ -32,7 +32,7 @@ const TopSlider = ({ slides = [] }) => {
                         duration: 0.4,
                         ease: "easeInOut",
                     }}
-                    className="width-100 display-flex align-items-center justify-content-center manrope font-500 size-12 color-black-black"
+                    className="width-100 display-flex align-items-center justify-content-center manrope font-500 size-14 color-white"
                 >
                     {slides[currentIndex]}
                 </motion.div>
