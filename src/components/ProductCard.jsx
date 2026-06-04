@@ -3,6 +3,7 @@
 import { useCartStore } from "@/store/useCartStore";
 import { useWishlistStore } from "@/store/useWishlistStore";
 import './ProductCard.css';
+import { useRouter } from "next/navigation";
 
 const BADGE_STYLES = {
   "Best Seller": "background-warm-khali size-12",
@@ -10,6 +11,9 @@ const BADGE_STYLES = {
 };
 
 export default function ProductCard({ product }) {
+
+  const router = useRouter();
+
   const { addToCart, updateQuantity, cart } = useCartStore();
 
   const { toggleWishlist, wishlistIds } = useWishlistStore();
@@ -51,7 +55,7 @@ export default function ProductCard({ product }) {
 
       <div className="position-relative display-flex align-items-center justify-content-center background-white ProductCard-image-wrapper">
         <img
-          src={product.image}
+          src={product.images[0]?.url}
           alt={product.name}
           className="ProductCard-image"
           onError={(e) => {
@@ -90,6 +94,7 @@ export default function ProductCard({ product }) {
         <div className="display-flex ProductCard-actions">
           <button
             disabled={!product.inStock}
+            onClick={() => router.push(`/products/${product.slug}`)}
             className="width-50 size-16 font-400 transition cursor-pointer color-white ProductCard-btn-buy"
           >
             Buy Now
