@@ -30,7 +30,7 @@ const HomeAboutUs = () => {
             <div className='width-50 HomeAboutUs-sub-container'>
                 <div className='HomeAboutUs-titles-container'>
                     <h6 className='manrope font-600 size-20 color-dfg-200'>Who We Are</h6>
-                    <h2 className='playfair_display font-600 size-48 margin-bottom-20 color-deep-forest-green'>About Us</h2>
+                    <h2 className='playfair_display font-600 size-32 margin-bottom-20 color-deep-forest-green'>About Us</h2>
                     <p className='manrope size-18 font-400 margin-bottom-20 color-black-black'>We are a global health and wellness community born to support you in living your best life, established in 2026. With a team of experienced Ayurvedic experts, herbalists, and scientists, iPure Herbs leads the way in delivering trusted, natural solutions for your well-being — for men and women alike.</p>
                     <p className='manrope size-18 font-400 color-black-black'>Our commitment to quality is upheld through rigorous certifications including ISO 9001, GMP, and FSSAI — ensuring purity and potency in every product.</p>
                 </div>

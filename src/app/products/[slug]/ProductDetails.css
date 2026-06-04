@@ -57,6 +57,7 @@
 .ProductDetails-wishlist-btn.wishlisted svg {
     fill: rgba(200, 169, 107, 1);
     color: rgba(200, 169, 107, 1);
+    stroke: rgba(200, 169, 107, 1);
 }
 
 .ProductDetails-share-btn {
@@ -84,7 +85,25 @@
 }
 
 .ProductDetails-name {
-    margin-bottom: 16px;
+    margin-bottom: 7px;
+}
+
+.ProductDetails-by-container {
+    margin-bottom: 7px;
+}
+
+.ProductDetails-by-a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0, 72, 255, 1);
+    margin-left: 8px;
+}
+
+.ProductDetails-by-arrow {
+    width: 24px;
+    height: 24px;
+    margin-top: 3px;
 }
 
 .ProductDetails-rating-row {
@@ -139,11 +158,31 @@
 }
 
 .ProductDetails-location {
-    margin-bottom: 80px;
+    margin-bottom: 18px;
 }
 
 .ProductDetails-short-desc {
+    margin-bottom: 19px;
+}
+
+.ProductDetails-choose {
     margin-bottom: 12px;
+}
+
+.ProductDetails-choose-express {
+    padding: 4px 8px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    background-color: rgba(3, 153, 3, 1);
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.ProductDetails-choose-express-checkout {
+    padding: 4px 8px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    background-color: rgba(3, 153, 3, 1);
 }
 
 .ProductDetails-size {
@@ -160,7 +199,7 @@
     padding: 0 8px;
     line-height: 30px;
     width: 88px;
-    margin-bottom: 32px;
+    margin-bottom: 16px;
 }
 
 .ProductDetails-size-box.active {
@@ -188,9 +227,8 @@
 }
 
 .ProductDetails-checkout-container {
-    border-radius: 12px;
     padding: 16px;
-    border: 1px solid rgba(177, 177, 177, 1)
+    min-width: 320px;
 }
 
 .ProductDetails-stock {
@@ -198,7 +236,7 @@
 }
 
 .ProductDetails-stock.in-stock {
-    color: rgba(95, 111, 82, 1);
+    color: rgba(3, 153, 3, 1);
 }
 
 .ProductDetails-stock.out-of-stock {
@@ -289,6 +327,34 @@
     color: #1a2e1a;
 }
 
+.ProductDetails-actions {
+    margin-bottom: 28px;
+}
+
+.ProductDetails-coupon-container {
+    padding: 12px;
+}
+
+.ProductDetails-coupon-container-p {
+    margin-bottom: 32px;
+}
+
+.ProductDetails-coupon-input-container input{
+    padding: 6px 14px;
+    border-radius: 39px;
+    border: 1px solid rgba(86, 95, 86, 1);
+}
+
+.ProductDetails-coupon-input-container input::placeholder{
+    color: rgba(177, 177, 177, 1);
+}
+
+.ProductDetails-coupon-input-container button {
+    right: 14px;
+    top: 45%;
+    transform: translateY(-50%);
+    color: rgba(231, 12, 12, 1);
+}
 
 .ProductDetails-tabs-section {
     border-top: 1px solid #e5e7eb;
@@ -448,11 +514,11 @@
         justify-content: flex-start;
     }
 
-    .ProductDetails-tabs{
+    .ProductDetails-tabs {
         padding: 22px 26px;
     }
 
-    .ProductDetails-description-first-row{
+    .ProductDetails-description-first-row {
         padding: 50px 26px 54px;
     }
 
@@ -492,7 +558,7 @@
     }
 
     .ProductDetails-gallery-images-container {
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
 
     .ProductDetails-thumbs {

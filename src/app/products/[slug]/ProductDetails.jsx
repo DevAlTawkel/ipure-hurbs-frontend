@@ -3,7 +3,6 @@
 import { DUMMY_PRODUCTS } from '@/store/useProductStore'
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Link from "next/link";
 import { useProductStore } from "@/store/useProductStore";
 import { useCartStore } from "@/store/useCartStore";
 import { useWishlistStore } from "@/store/useWishlistStore";
@@ -69,7 +68,7 @@ export default function ProductDetailss() {
 
   const handleCartAction = () => {
     if (isInCart) {
-      removeFromCart(product.id);
+      toast(`Item already added to cart`);
       return;
     }
 
@@ -182,25 +181,25 @@ export default function ProductDetailss() {
         <span className="ProductDetails-breadcrumb-current">{product.name}</span>
       </nav> */}
 
-      <div className="display-flex align-items-flex-start ProductDetails-top">
+      <div className="display-flex align-items-flex-start justify-content-space-between ProductDetails-top">
         <div className="ProductDetails-gallery">
           <div className="display-flex align-items-center justify-content-space-between">
             <button
               onClick={() => toggleWishlist(product)}
               aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-              className={`background-white-400 border-none cursor-pointer transition border-radius-100 background-white ProductDetails-wishlist-btn ${isWishlisted ? 'wishlisted' : ''}`}
+              className={`background-white-400 border-none cursor-pointer transition border-radius-100 background-eoc-200 ProductDetails-wishlist-btn ${isWishlisted ? 'wishlisted' : ''}`}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(235, 229, 221, 1)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path></svg>
             </button>
 
 
             <button
               onClick={handleShare}
-              className="background-white-400 border-none cursor-pointer transition border-radius-100 background-white ProductDetails-share-btn"
+              className="background-white-400 border-none cursor-pointer transition border-radius-100 background-eoc-200 ProductDetails-share-btn"
               aria-label="Share product"
             >
               <svg width="21" height="17" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 11.5H8C4.54202 11.5 1.53953 13.4502 0.0323901 16.3107C0.0109301 16.0433 0 15.7729 0 15.5C0 9.9772 4.47715 5.5 10 5.5V0L20.5 8.5L10 17V11.5ZM8 9.5H12V12.8078L17.3214 8.5L12 4.19224V7.5H10C7.5795 7.5 5.41011 8.5749 3.94312 10.2735C5.20873 9.7714 6.58041 9.5 8 9.5Z" fill="#C8A96B" />
+                <path d="M10 11.5H8C4.54202 11.5 1.53953 13.4502 0.0323901 16.3107C0.0109301 16.0433 0 15.7729 0 15.5C0 9.9772 4.47715 5.5 10 5.5V0L20.5 8.5L10 17V11.5ZM8 9.5H12V12.8078L17.3214 8.5L12 4.19224V7.5H10C7.5795 7.5 5.41011 8.5749 3.94312 10.2735C5.20873 9.7714 6.58041 9.5 8 9.5Z" fill="rgba(235, 229, 221, 1)" />
               </svg>
             </button>
 
@@ -222,13 +221,16 @@ export default function ProductDetailss() {
               ))}
             </div>
 
-            <div className="width-100 display-flex align-items-center justify-content-center overflow-hidden ProductDetails-main-image">
-              <img
-                src={product.images[selectedImage]?.url}
-                alt={product.name}
-                className="object-fit-contain"
-                onError={(e) => { e.target.src = "https://placehold.co/500x500/f3f4f6/9ca3af?text=Product"; }}
-              />
+            <div>
+              <div className="width-100 display-flex align-items-center justify-content-center flex-direction-column overflow-hidden ProductDetails-main-image">
+                <img
+                  src={product.images[selectedImage]?.url}
+                  alt={product.name}
+                  className="object-fit-contain"
+                  onError={(e) => { e.target.src = "https://placehold.co/500x500/f3f4f6/9ca3af?text=Product"; }}
+                />
+              </div>
+              <p className='text-align-center color-black-black manrope font-400 size-14'>Click to see full view</p>
             </div>
           </div>
         </div>
@@ -236,7 +238,17 @@ export default function ProductDetailss() {
 
         <div className="display-flex flex-direction-column ProductDetails-info">
           <h1 className="playfair_display font-600 size-36 ProductDetails-name">{product.name}</h1>
-
+          <div className='display-flex align-items-center ProductDetails-by-container'>
+            <p className='manrope font-400 size-24 ProductDetails-by'>By:</p>
+            <a href="#" className='ProductDetails-by-a'>
+              <p className='manrope font-400 size-18 '>Bioqem</p>
+              <div className='display-flex align-items-center justify-content-center ProductDetails-by-arrow'>
+                <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.94972 6.36412L-4.94538e-07 1.41432L1.41421 0.000118194L7.77822 6.36412L1.41421 12.728L-6.18171e-08 11.3138L4.94972 6.36412Z" fill="#0048FF" />
+                </svg>
+              </div>
+            </a>
+          </div>
           <div className="display-flex align-items-center gap-10 ProductDetails-rating-row">
             <h6 className="manrope font-600 size-20 color-deep-forest-green">{product.rating}</h6>
             <div className="display-flex align-items-center ProductDetails-stars">
@@ -267,6 +279,7 @@ export default function ProductDetailss() {
           </div>
 
           <p className="manrope font-400 size-14 color-black-black ProductDetails-short-desc">Bioqem Pharma Happy Knights Prash for Men is a natural, plant-based blend with ingredients like Korean Red Ginseng, Royal Jelly, and Safed Musali to support energy, stamina, vitality, and men’s wellness naturally.</p>
+          <p className='manrope font-600 size-20 ProductDetails-choose'>Choose <span className='manrope font-600 size-16 color-white ProductDetails-choose-express'>Express delivery</span> <span className='manrope font-500 size-14 color-earthy-olive-color'>Get your Order earliest.</span></p>
           <p className="manrope font-600 size-20 color-deep-forest-green ProductDetails-size">Size</p>
           <div className="display-flex ProductDetails-sizes-container">
             {
@@ -411,7 +424,7 @@ export default function ProductDetailss() {
                 onChange={(e) => setDeliveryType(e.target.value)}
               />
               <span className="ProductDetails-custom-radio"></span>
-              Express delivery
+              <span className='manrope font-400 size-16 color-white ProductDetails-choose-express-checkout'>Express delivery</span>
             </label>
           </div>
 
@@ -441,7 +454,7 @@ export default function ProductDetailss() {
               disabled={!product.inStock}
               className="width-100 manrope size-16 font-400 background-transparent color-dfg-200 transition cursor-pointer ProductDetails-btn-cart"
             >
-              {isInCart ? "Remove from Cart" : "Add to Cart"}
+              Add to Cart
             </button>
 
             <button
@@ -450,6 +463,14 @@ export default function ProductDetailss() {
             >
               Buy Now
             </button>
+          </div>
+
+          <div className='ProductDetails-coupon-container'>
+            <p className='manrope font-600 size-24 color-deep-forest-green ProductDetails-coupon-container-p'>Apply coupon</p>
+            <div className='position-relative ProductDetails-coupon-input-container'>
+              <input className='width-100 manrope font-400 size-16 outline-none' placeholder='ipureherb20' type="text" />
+              <button className='position-absolute border-none outline-none background-transparent manrope font-500 size-16 cursor-pointer'>Apply</button>
+            </div>
           </div>
         </div>
       </div >
@@ -624,7 +645,7 @@ export default function ProductDetailss() {
           )}
         </div>
       </div >
-      
+
 
       {
         recommended.length > 0 && (
@@ -639,7 +660,7 @@ export default function ProductDetailss() {
         )
       }
 
-      
+
       {
         moreToExplore.length > 0 && (
           <section className="ProductDetails-section">

@@ -46,7 +46,7 @@
 }
 
 .space-between-section {
-  height: 100px;
+  height: 54px;
   width: 100%;
 }
 
@@ -344,6 +344,10 @@ a {
 
 .size-36 {
   font-size: 36px;
+}
+
+.size-32 {
+  font-size: 32px;
 }
 
 .size-28 {

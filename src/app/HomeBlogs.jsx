@@ -36,7 +36,7 @@ const HomeBlogs = () => {
 
     return (
         <div className='background-white-200 HomeBlogs-main-container'>
-            <p className='playfair_display font-600 size-48 color-deep-forest-green text-align-center user-select-none'>Blog Posts</p>
+            <p className='playfair_display font-600 size-32 color-deep-forest-green text-align-center user-select-none HomeBlogs-title'>Blog Posts</p>
             <p className='manrope font-400 size-18 color-dfg-200 text-align-center margin-left-auto margin-right-auto HomeBlogs-sub-title'>
                 Learn. Heal. Thrive with natural wellness.
             </p>

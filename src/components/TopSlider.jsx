@@ -1,44 +1,55 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import './TopSlider.css'
+import React, { useEffect, useState, useRef } from "react";
+import "./TopSlider.css";
 
 const TopSlider = ({ slides = [] }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const isTransitioning = useRef(false);
 
-    const [currentIndex, setCurrentIndex] = useState(0);
+  const carouselSlides = [...slides, slides[0]];
 
-    useEffect(() => {
-        if (!slides.length || slides.length === 1) return;
+  useEffect(() => {
+    if (slides.length <= 1) return;
 
-        const interval = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % slides.length);
-        }, 4000);
+    const interval = setInterval(() => {
+      if (!isTransitioning.current) {
+        isTransitioning.current = true;
+        setCurrentIndex((prev) => prev + 1);
+      }
+    }, 5000);
 
-        return () => clearInterval(interval);
-    }, [slides.length]);
+    return () => clearInterval(interval);
+  }, [slides]);
 
-    if (!slides.length) return null;
+  const handleTransitionEnd = () => {
+    if (currentIndex === slides.length) {
+      setCurrentIndex(0);
+    }
+    isTransitioning.current = false;
+  };
 
-    return (
-        <div className='width-100 display-flex align-items-center justify-content-center TopSlider-main-container'>
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key={currentIndex}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{
-                        duration: 0.4,
-                        ease: "easeInOut",
-                    }}
-                    className="width-100 display-flex align-items-center justify-content-center manrope font-500 size-14 color-white"
-                >
-                    {slides[currentIndex]}
-                </motion.div>
-            </AnimatePresence>
-        </div>
-    )
-}
+  return (
+    <div className="TopSlider-wrapper">
+      <div
+        className="TopSlider-track"
+        style={{
+          transform: `translateX(-${currentIndex * 100}%)`,
+          transition:
+            currentIndex === 0 && !isTransitioning.current
+              ? "none"
+              : "transform 0.6s ease-in-out",
+        }}
+        onTransitionEnd={handleTransitionEnd}
+      >
+        {carouselSlides.map((slide, index) => (
+          <div key={index} className="TopSlider-slide">
+            {slide}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-export default TopSlider
+export default TopSlider;

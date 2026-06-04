@@ -23,10 +23,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
         <Toaster
           position="top-right"
+          containerStyle={{
+            zIndex: 1000011
+          }}
           containerClassName="manrope size-16"
           toastOptions={{
             duration: 2000,
@@ -35,10 +36,13 @@ export default function RootLayout({ children }) {
               color: 'rgba(200, 169, 107, 1)',
               borderRadius: '8px',
               padding: '10px 16px',
-              border:'1px solide rgba(200, 169, 107, 1)'
+              border: '1px solid rgba(200, 169, 107, 1)'
             },
           }}
         />
+        <Header />
+        {children}
+
         <Footer />
       </body>
     </html>
