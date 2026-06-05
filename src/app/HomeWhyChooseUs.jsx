@@ -13,7 +13,7 @@ const HomeWhyChooseUs = () => {
                 <div className='position-relative'>
                     <div className='HomeWhyChooseUs-titles-container'>
                         <p className='manrope font-600 size-20 color-dfg-200'>Our Promise</p>
-                        <h2 className='playfair_display font-600 size-48 color-deep-forest-green'>Why Choose Us?</h2>
+                        <h2 className='playfair_display font-600 size-32 color-deep-forest-green'>Why Choose Us?</h2>
                     </div>
                     <div className='display-grid HomeWhyChooseUs-content-main-container'>
                         <div className='HomeWhyChooseUs-card'>

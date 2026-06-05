@@ -42,7 +42,7 @@ const HomeBestSellers = () => {
 
             <div className="HomeBestSellers-cards-main-container">
                 <div className='display-flex align-items-flex-end justify-content-flex-end'>
-                    <Link href={'/products'} className="manrope font-600 size-24 color-white-200 display-flex align-items-center gap-10 justify-content-flex-end HomeBestSellers-cards-viewmore">
+                    <Link href={'/products'} className="manrope font-500 size-18 color-white-200 display-flex align-items-center gap-10 justify-content-flex-end HomeBestSellers-cards-viewmore">
                         View more
                         <div className="display-flex align-items-center justify-content-center border-radius-100 HomeBestSellers-arrow-container">
                             <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">

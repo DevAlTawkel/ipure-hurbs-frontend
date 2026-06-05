@@ -29,6 +29,10 @@
   font-family: "Inter", sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .inter {
   font-family: "Inter", sans-serif;
 }
@@ -334,7 +338,7 @@ a {
   color: rgba(209, 209, 210, 1);
 }
 
-.color-earthy-olive-color{
+.color-earthy-olive-color {
   color: rgba(95, 111, 82, 1);
 }
 
@@ -484,6 +488,10 @@ a {
   }
 
   .size-48 {
+    font-size: 30px;
+  }
+
+  .size-32 {
     font-size: 30px;
   }
 

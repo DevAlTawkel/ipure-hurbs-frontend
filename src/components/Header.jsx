@@ -16,18 +16,21 @@ const Header = () => {
     },
     {
       id: 2,
-      link: '/',
-      name: 'Categories'
+      link: '/#categories',
+      name: 'Categories',
+      sectionId: 'categories'
     },
     {
       id: 3,
-      link: '/',
-      name: 'Learn'
+      link: '/#learn',
+      name: 'Learn',
+      sectionId: 'learn'
     },
     {
       id: 4,
-      link: '/',
-      name: 'About'
+      link: '/#about',
+      name: 'About',
+      sectionId: 'about'
     }
   ]
 
@@ -36,6 +39,22 @@ const Header = () => {
 
   const [mounted, setMounted] = useState(false)
   useEffect(() => { setMounted(true) }, [])
+
+  const handleSectionScroll = (e, sectionId) => {
+    if (!sectionId) return
+
+    // If already on homepage, prevent default and scroll manually
+    if (window.location.pathname === '/') {
+      e.preventDefault()
+      const section = document.getElementById(sectionId)
+      if (section) {
+        const headerHeight = document.querySelector('.Header-main-container')?.offsetHeight || 0
+        const top = section.getBoundingClientRect().top + window.scrollY - headerHeight
+        window.scrollTo({ top, behavior: 'smooth' })
+      }
+    }
+    // If on another page, let Next.js navigate to /#sectionId normally
+  }
 
   return (
     <div className='Header-main-container'>
@@ -62,16 +81,16 @@ const Header = () => {
         </Link>
 
         <div className='Header-sub-top-search-container'>
+          <input
+            type="text"
+            placeholder='Search natural products that support your wellness, every day..... '
+            className='manrope font-400 size-16 width-100 border-none outline-none'
+          />
           <button className='Header-sub-top-search-button'>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M23.7723 22.6943L17.5759 16.5969C19.1985 14.834 20.1955 12.5024 20.1955 9.93682C20.1947 4.44852 15.6742 0 10.0974 0C4.52055 0 0 4.44852 0 9.93682C0 15.4251 4.52055 19.8736 10.0974 19.8736C12.5069 19.8736 14.7169 19.0402 16.4529 17.6546L22.6733 23.776C22.9764 24.0746 23.4685 24.0746 23.7716 23.776C23.8437 23.7056 23.901 23.6215 23.9401 23.5287C23.9793 23.4358 23.9995 23.3361 23.9995 23.2353C23.9996 23.1345 23.9795 23.0348 23.9405 22.9419C23.9015 22.849 23.8443 22.7648 23.7723 22.6943ZM10.0974 18.3448C5.37878 18.3448 1.55362 14.5804 1.55362 9.93682C1.55362 5.29321 5.37878 1.52884 10.0974 1.52884C14.816 1.52884 18.6411 5.29321 18.6411 9.93682C18.6411 14.5804 14.816 18.3448 10.0974 18.3448Z" fill="#161618" />
             </svg>
           </button>
-          <input
-            type="text"
-            placeholder='What are you looking for?'
-            className='manrope font-400 size-16 width-100 border-none outline-none'
-          />
         </div>
 
         <div className='display-flex align-items-center Header-sub-top-sub-container'>
@@ -112,17 +131,20 @@ const Header = () => {
       <div className='display-flex align-items-center justify-content-space-between Header-sub-bottom-container'>
         <div className='display-flex align-items-center Header-sub-bottom-left-container'>
           {
-            headerMenu.map((item) => {
-              return (
-                <Link href={item.link} key={item.id} className='manrope font-600 transition Header-links'>
-                  {item.name}
-                </Link>
-              )
-            })
+            headerMenu.map((item) => (
+              <Link
+                href={item.link}
+                key={item.id}
+                className='manrope font-600 color-deep-forest-green size-16 transition Header-links'
+                onClick={(e) => handleSectionScroll(e, item.sectionId)}
+              >
+                {item.name}
+              </Link>
+            ))
           }
         </div>
 
-        <div className='cursor-pointer Header-sub-bottom-right-container'>
+        <div className='cursor-pointer transition Header-sub-bottom-right-container'>
           <p className='manrope font-600 size-12 color-white line-height-16'>Get 20% OFF for your first order.</p>
         </div>
       </div>

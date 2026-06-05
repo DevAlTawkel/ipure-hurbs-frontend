@@ -32,11 +32,15 @@
     background-color: white;
     width: 50%;
     border-radius: 27px;
-    padding: 10px;
+    padding: 10px 20px 10px 16.5px;
     min-height: 44px;
     display: flex;
     align-items: center;
     gap: 17px;
+}
+
+.Header-sub-top-search-container input::placeholder {
+    color: rgba(177, 177, 177, 1);
 }
 
 .Header-sub-top-search-button {
@@ -71,6 +75,10 @@
     background: linear-gradient(270.01deg, #A9B388 -16.17%, #5F6F52 100%);
     padding: 4px 12px;
     border-radius: 30px;
+}
+
+.Header-sub-bottom-right-container:hover {
+    scale: 1.05;
 }
 
 .Header-sub-bottom-left-container a {
