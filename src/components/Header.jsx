@@ -11,14 +11,14 @@ const Header = () => {
   const headerMenu = [
     {
       id: 1,
-      link: '/products',
-      name: 'Shop'
+      link: '/#shop',
+      name: 'Shop',
+      sectionId: 'shop'
     },
     {
       id: 2,
-      link: '/#categories',
+      link: '/products',
       name: 'Categories',
-      sectionId: 'categories'
     },
     {
       id: 3,

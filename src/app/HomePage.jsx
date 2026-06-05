@@ -14,7 +14,7 @@ const HomePage = () => {
     <>
       <HomeMainBanner />
       <HomeMarquee />
-      <div id="categories">
+      <div id="shop">
         <HomeShop />
       </div>
       <div className='space-between-section'></div>

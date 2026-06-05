@@ -15,7 +15,7 @@ const HomeNewsletter = () => {
 
         <div className='display-flex align-items-center justify-content-center HomeNewsletter-input-container'>
             <input type="text" placeholder='Enter your email address' className='width-50 manrope font-400 size-16 color-black-800 HomeNewsletter-input' />
-            <button className='outline-none manrope font-600 size-28 background-deep-forest-green color-white-200 cursor-pointer transition HomeNewsletter-button'>Sign Up</button>
+            <button className='outline-none manrope font-600 size-18 background-deep-forest-green color-white-200 cursor-pointer transition HomeNewsletter-button'>Sign Up</button>
         </div>
     </div>
   )

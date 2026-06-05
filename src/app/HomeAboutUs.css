@@ -16,14 +16,14 @@
 }
 
 .HomeAboutUs-card-image-container {
-    height: 60px;
-    width: 60px;
+    height: 48px;
+    width: 48px;
     border: 1px solid rgba(95, 111, 82, 1);
 }
 
 .HomeAboutUs-card-image-container img {
-    height: 48px;
-    width: 48px;
+    height: 36px;
+    width: 36px;
 }
 
 .HomeAboutUs-card-text-container {
