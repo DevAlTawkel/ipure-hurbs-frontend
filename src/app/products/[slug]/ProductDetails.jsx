@@ -514,21 +514,21 @@ export default function ProductDetailss() {
                 <div className='display-flex flex-direction-column gap-15'>
                   <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
                     <h6 className='manrope font-700 size-18 color-deep-forest-green'>Other Ingredients</h6>
-                    <p className='manrope font-400 size-14 color-black-black'>Natural herbal extracts, botanical ingredients, and approved excipients.</p>
-                    <p className='manrope font-400 size-14 color-black-black'>Allergen Information: <br />Manufactured in a facility that may process nuts, dairy, soy, wheat, sesame, or gluten-containing ingredients.</p>
+                    <p className='manrope font-400 size-16 color-black-black'>Natural herbal extracts, botanical ingredients, and approved excipients.</p>
+                    <p className='manrope font-400 size-16 color-black-black'>Allergen Information: <br />Manufactured in a facility that may process nuts, dairy, soy, wheat, sesame, or gluten-containing ingredients.</p>
                   </div>
                   <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
                     <h6 className='manrope font-700 size-18 color-deep-forest-green'>Specifications</h6>
                     <div className='display-grid ProductDetails-description-second-row-rght-sub-grid'>
                       <div>
-                        <p className='manrope font-400 size-14 color-black-black'>Form: Herbal Powder</p>
-                        <p className='manrope font-400 size-14 color-black-black'>Category: Men's Wellness Supplement</p>
-                        <p className='manrope font-400 size-14 color-black-black'>Suitable For: Adult Men</p>
+                        <p className='manrope font-400 size-16 color-black-black'>Form: Herbal Powder</p>
+                        <p className='manrope font-400 size-16 color-black-black'>Category: Men's Wellness Supplement</p>
+                        <p className='manrope font-400 size-16 color-black-black'>Suitable For: Adult Men</p>
                       </div>
                       <div>
-                        <p className='manrope font-400 size-14 color-black-black'>Serving Size: 5 gm</p>
-                        <p className='manrope font-400 size-14 color-black-black'>Storage: Store in a cool, dry place</p>
-                        <p className='manrope font-400 size-14 color-black-black'>Usage Type: Oral Consumption</p>
+                        <p className='manrope font-400 size-16 color-black-black'>Serving Size: 5 gm</p>
+                        <p className='manrope font-400 size-16 color-black-black'>Storage: Store in a cool, dry place</p>
+                        <p className='manrope font-400 size-16 color-black-black'>Usage Type: Oral Consumption</p>
                       </div>
                     </div>
                   </div>
