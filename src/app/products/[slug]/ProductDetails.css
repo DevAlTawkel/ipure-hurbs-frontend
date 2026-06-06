@@ -539,6 +539,7 @@
 
 .ProductDetails-description-second-row-rght-sub-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
 }
 
 .ProductDetails-description-second-row .two-col-list {
