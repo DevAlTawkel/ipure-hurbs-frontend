@@ -10,12 +10,12 @@ import ProductCard from "@/components/ProductCard";
 import "./ProductDetails.css";
 import toast from "react-hot-toast";
 
-const TABS = ["Description", "Reviews"];
+const TABS = ["Description", "Additional information", "Reviews"];
 
 export default function ProductDetailss() {
   const { slug } = useParams();
   const { products } = useProductStore();
-  const { addToCart, updateQuantity, removeFromCart, cart } = useCartStore();
+  const { addToCart, updateQuantity, cart } = useCartStore();
   const { toggleWishlist, wishlistIds } = useWishlistStore();
 
   const [activeTab, setActiveTab] = useState("Description");
@@ -144,42 +144,23 @@ export default function ProductDetailss() {
     </div>
   );
 
-  const handleSocialShare = (platform) => {
-    const shareUrl = encodeURIComponent(window.location.href);
-    const title = encodeURIComponent(product.name);
+  const [zoom, setZoom] = useState({ active: false, x: 0, y: 0 });
 
-    const urls = {
-      facebook: `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setZoom({ active: true, x, y });
+  };
 
-      x: `https://twitter.com/intent/tweet?url=${shareUrl}&text=${title}`,
-
-      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`,
-
-      instagram: null,
-      youtube: null,
-    };
-
-    if (urls[platform]) {
-      window.open(urls[platform], "_blank", "width=600,height=600");
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      toast.success("Link copied! Share it on the app.");
-    }
+  const handleMouseLeave = () => {
+    setZoom({ active: false, x: 0, y: 0 });
   };
 
   if (!product) return null;
 
   return (
     <div className="ProductDetails-wrapper">
-
-      {/* ── Breadcrumb ──────────────────────────────────────────────────── */}
-      {/* <nav className="ProductDetails-breadcrumb">
-        <Link href="/" className="ProductDetails-breadcrumb-link">Home</Link>
-        <span>/</span>
-        <Link href="/products" className="ProductDetails-breadcrumb-link">Shop</Link>
-        <span>/</span>
-        <span className="ProductDetails-breadcrumb-current">{product.name}</span>
-      </nav> */}
 
       <div className="display-flex align-items-flex-start justify-content-space-between ProductDetails-top">
         <div className="ProductDetails-gallery">
@@ -204,12 +185,12 @@ export default function ProductDetailss() {
             </button>
 
           </div>
-          <div className="display-flex align-items-center ProductDetails-gallery-images-container">
+          <div className="display-flex align-items-center gap-10 ProductDetails-gallery-images-container">
             <div className="display-flex flex-direction-column ProductDetails-thumbs">
               {product?.images.map((img, i) => (
                 <button
                   key={i}
-                  onClick={() => setSelectedImage(i)}
+                  onMouseEnter={() => setSelectedImage(i)}
                   className={`overflow-hidden cursor-pointer background-transparent ProductDetails-thumb ${selectedImage === i ? "active" : ""}`}
                 >
                   <img
@@ -221,25 +202,50 @@ export default function ProductDetailss() {
               ))}
             </div>
 
-            <div>
-              <div className="width-100 display-flex align-items-center justify-content-center flex-direction-column overflow-hidden ProductDetails-main-image">
-                <img
-                  src={product.images[selectedImage]?.url}
-                  alt={product.name}
-                  className="object-fit-contain"
-                  onError={(e) => { e.target.src = "https://placehold.co/500x500/f3f4f6/9ca3af?text=Product"; }}
-                />
-              </div>
-              <p className='text-align-center color-black-black manrope font-400 size-14'>Click to see full view</p>
+            <div
+              className="width-100 display-flex align-items-center justify-content-center flex-direction-column overflow-hidden ProductDetails-main-image"
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+            >
+              <img
+                src={product.images[selectedImage]?.url}
+                alt={product.name}
+                className="object-fit-contain ProductDetails-main-img"
+                style={{
+                  transformOrigin: `${zoom.x}% ${zoom.y}%`,
+                  transform: zoom.active ? 'scale(2.5)' : 'scale(1)',
+                  transition: zoom.active ? 'transform 0.1s ease-out' : 'transform 0.3s ease',
+                  cursor: zoom.active ? 'crosshair' : 'zoom-in',
+                }}
+                onError={(e) => { e.target.src = "https://placehold.co/500x500/f3f4f6/9ca3af?text=Product"; }}
+              />
+
+              {zoom.active && (
+                <div className="ProductDetails-zoom-navigator">
+                  <img
+                    src={product.images[selectedImage]?.url}
+                    alt="navigator"
+                    className="ProductDetails-zoom-nav-img"
+                  />
+                  <div
+                    className="ProductDetails-zoom-nav-box"
+                    style={{
+                      left: `${zoom.x}%`,
+                      top: `${zoom.y}%`,
+                      transform: 'translate(-50%, -50%)',
+                    }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
 
 
         <div className="display-flex flex-direction-column ProductDetails-info">
-          <h1 className="playfair_display font-600 size-36 ProductDetails-name">{product.name}</h1>
+          <h1 className="manrope font-600 size-28 color-deep-forest-green ProductDetails-name">{product.name}</h1>
           <div className='display-flex align-items-center ProductDetails-by-container'>
-            <p className='manrope font-400 size-24 ProductDetails-by'>By:</p>
+            <p className='manrope font-400 size-20 ProductDetails-by'>By:</p>
             <a href="#" className='ProductDetails-by-a'>
               <p className='manrope font-400 size-18 '>Bioqem</p>
               <div className='display-flex align-items-center justify-content-center ProductDetails-by-arrow'>
@@ -291,60 +297,10 @@ export default function ProductDetailss() {
             }
           </div>
 
-          <div className="display-flex flex-direction-column gap-10">
+          <div className="display-flex flex-direction-column">
             <p className="manrope font-400 size-14 color-black-black">SKU: N/A</p>
             <p className="manrope font-400 size-14 color-black-black">Categories: Best selling, Men’s health enhancer</p>
             <p className="manrope font-400 size-14 color-black-black">Tags: Erectile dysfunction, loss of libido, Men’s wellness, Premature ejaculation</p>
-            <div className="gap-10 display-flex align-items-center ProductDetails-share-details-container">
-              <p className="manrope font-400 size-14 color-black-black">Share:</p>
-              <div className="display-flex align-items-center ProductDetails-share-icons-container">
-                <button
-                  onClick={() => handleSocialShare("instagram")}
-                  className="display-flex align-items-center justify-content-center cursor-pointer background-transparent border-none"
-                  type="button"
-                >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7.35141 0C8.10168 0.00124 8.48188 0.00521335 8.81041 0.0149934L8.93981 0.01922C9.08928 0.0245334 9.23675 0.0312 9.41455 0.0395333C10.1239 0.0723133 10.6079 0.184533 11.0329 0.349533C11.4723 0.51898 11.8434 0.747867 12.2139 1.11843C12.5839 1.48898 12.8129 1.8612 12.9829 2.29953C13.1473 2.72398 13.2595 3.20843 13.2929 3.91787C13.3008 4.09565 13.3072 4.24311 13.3125 4.39261L13.3167 4.522C13.3264 4.85049 13.3309 5.23075 13.3323 5.98105L13.3328 6.47811C13.3329 6.53885 13.3329 6.60151 13.3329 6.66618L13.3328 6.85425L13.3324 7.35138C13.3311 8.10165 13.3272 8.48191 13.3174 8.81038L13.3131 8.93978C13.3079 9.08931 13.3012 9.23678 13.2929 9.41451C13.2601 10.124 13.1473 10.6078 12.9829 11.0328C12.8134 11.4723 12.5839 11.8434 12.2139 12.214C11.8434 12.584 11.4706 12.8128 11.0329 12.9828C10.6079 13.1473 10.1239 13.2595 9.41455 13.2928C9.23675 13.3008 9.08928 13.3072 8.93981 13.3124L8.81041 13.3166C8.48188 13.3264 8.10168 13.3308 7.35141 13.3323L6.85428 13.3328C6.79355 13.3328 6.73088 13.3328 6.66621 13.3328H6.47815L5.98101 13.3324C5.23075 13.3312 4.85049 13.3272 4.52199 13.3174L4.39261 13.3132C4.24311 13.3078 4.09564 13.3012 3.91787 13.2928C3.20842 13.2601 2.72509 13.1473 2.29953 12.9828C1.86064 12.8134 1.48897 12.584 1.11842 12.214C0.747867 11.8434 0.519533 11.4706 0.349533 11.0328C0.184533 10.6078 0.0728668 10.124 0.0395335 9.41451C0.0316135 9.23678 0.0251534 9.08931 0.01992 8.93978L0.0157267 8.81038C0.00597339 8.48191 0.00152678 8.10165 8.67844e-05 7.35138L0 5.98105C0.00124 5.23075 0.00520667 4.85049 0.0149867 4.522L0.01922 4.39261C0.0245334 4.24311 0.0312001 4.09565 0.0395335 3.91787C0.0723068 3.20787 0.184533 2.72453 0.349533 2.29953C0.518973 1.86065 0.747867 1.48898 1.11842 1.11843C1.48897 0.747867 1.8612 0.519533 2.29953 0.349533C2.72453 0.184533 3.20787 0.0728666 3.91787 0.0395333C4.09564 0.03162 4.24311 0.02516 4.39261 0.0199267L4.52199 0.0157332C4.85049 0.00597324 5.23075 0.00152663 5.98101 8.66254e-05L7.35141 0ZM6.66621 3.33287C4.82427 3.33287 3.33287 4.82589 3.33287 6.66618C3.33287 8.50811 4.82589 9.99951 6.66621 9.99951C8.50815 9.99951 9.99955 8.50651 9.99955 6.66618C9.99955 4.82427 8.50648 3.33287 6.66621 3.33287ZM6.66621 4.6662C7.77081 4.6662 8.66621 5.56131 8.66621 6.66618C8.66621 7.77078 7.77108 8.66618 6.66621 8.66618C5.56161 8.66618 4.6662 7.77111 4.6662 6.66618C4.6662 5.56158 5.56128 4.6662 6.66621 4.6662ZM10.1662 2.33287C9.70668 2.33287 9.33288 2.70614 9.33288 3.16563C9.33288 3.62513 9.70615 3.99898 10.1662 3.99898C10.6257 3.99898 10.9995 3.62571 10.9995 3.16563C10.9995 2.70614 10.6251 2.33229 10.1662 2.33287Z" fill="#B1B1B1" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => handleSocialShare("linkedin")}
-                  className="display-flex align-items-center justify-content-center cursor-pointer background-transparent border-none"
-                  type="button"
-                >
-                  <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2.6667 1.33394C2.66645 1.87681 2.3371 2.36533 1.83394 2.56914C1.33078 2.77295 0.754293 2.65135 0.376313 2.26168C-0.0016667 1.87201 -0.105653 1.29208 0.11338 0.795364C0.33242 0.298644 0.83074 -0.0156827 1.37337 0.000603968C2.09408 0.0222373 2.66703 0.612897 2.6667 1.33394ZM2.7067 3.65394H0.0400333V12.0006H2.7067V3.65394ZM6.92005 3.65394H4.2667V12.0006H6.89338V7.62058C6.89338 5.18058 10.0734 4.95392 10.0734 7.62058V12.0006H12.7067V6.71392C12.7067 2.6006 8.00005 2.75394 6.89338 4.77392L6.92005 3.65394Z" fill="#B1B1B1" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => handleSocialShare("x")}
-                  className="display-flex align-items-center justify-content-center cursor-pointer background-transparent border-none"
-                  type="button"
-                >
-                  <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10.3827 0L7.05161 3.80783L4.17145 0H0L4.98422 6.51747L0.260333 11.9167H2.28311L5.92901 7.75073L9.11535 11.9167H13.1835L7.98781 5.0478L12.4043 0H10.3827ZM9.67328 10.7067L2.36072 1.14645H3.56278L10.7934 10.7067H9.67328Z" fill="#B1B1B1" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => handleSocialShare("facebook")}
-                  className="display-flex align-items-center justify-content-center cursor-pointer background-transparent border-none"
-                  type="button"
-                >
-                  <svg width="7" height="14" viewBox="0 0 7 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.66667 7.66667H6.33333L7 5H4.66667V3.66667C4.66667 2.98041 4.66667 2.33333 6 2.33333H7V0.0934C6.78287 0.0645667 5.962 0 5.09527 0C3.2856 0 2 1.10457 2 3.13314V5H0V7.66667H2V13.3333H4.66667V7.66667Z" fill="#B1B1B1" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => handleSocialShare("youtube")}
-                  className="display-flex align-items-center justify-content-center cursor-pointer background-transparent border-none"
-                  type="button"
-                >
-                  <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6.82927 0C7.18533 0.00196 8.0762 0.0105734 9.02273 0.0484867L9.35833 0.0631199C10.3113 0.10824 11.2635 0.18532 11.7358 0.317C12.3657 0.493967 12.8609 1.01033 13.0282 1.66488C13.2947 2.70427 13.328 4.73293 13.3321 5.22387L13.3327 5.3256V5.33273C13.3327 5.33273 13.3327 5.3352 13.3327 5.33993L13.3321 5.44167C13.328 5.9326 13.2947 7.96127 13.0282 9.00067C12.8585 9.6576 12.3634 10.174 11.7358 10.3485C11.2635 10.4802 10.3113 10.5573 9.35833 10.6024L9.02273 10.617C8.0762 10.6549 7.18533 10.6635 6.82927 10.6655L6.673 10.6661H6.66607C6.66607 10.6661 6.66373 10.6661 6.65913 10.6661L6.503 10.6655C5.7494 10.6614 2.59848 10.6273 1.59634 10.3485C0.9664 10.1715 0.47128 9.6552 0.303913 9.00067C0.0374666 7.96127 0.00416 5.9326 0 5.44167V5.22387C0.00416 4.73293 0.0374666 2.70427 0.303913 1.66488C0.4736 1.00791 0.96872 0.491547 1.59634 0.317C2.59848 0.0381534 5.7494 0.00414667 6.503 0H6.82927ZM5.33274 2.99943V7.66607L9.33273 5.33273L5.33274 2.99943Z" fill="#B1B1B1" />
-                  </svg>
-                </button>
-              </div>
-            </div>
 
             <div className="display-grid gap-12 ProductDetails-delivery-details-container">
               <div className="display-flex align-items-center gap-8">
@@ -397,7 +353,7 @@ export default function ProductDetailss() {
 
 
         <div className="ProductDetails-checkout-container">
-          <div className="display-flex align-items-baseline gap-8 margin-bottom-10">
+          <div className="display-flex align-items-baseline gap-8">
             <span className="manrope font-600 size-24 ProductDetails-price">${product.price.toFixed(2)}</span>
             <span className="manrope font-400 size-16 color-deep-forest-green">($ 200.21 / Kg)</span>
           </div>
@@ -430,7 +386,7 @@ export default function ProductDetailss() {
 
           <div className="ProductDetails-location"></div>
 
-          <p className={`manrope font-600 size-28 ProductDetails-stock ${product.inStock ? "in-stock" : "out-of-stock"}`}>
+          <p className={`manrope font-600 size-20 ProductDetails-stock ${product.inStock ? "in-stock" : "out-of-stock"}`}>
             {product.inStock ? "In Stock" : "Out of Stock"}
           </p>
 
@@ -441,7 +397,7 @@ export default function ProductDetailss() {
                   <path d="M8.99998 7.00002L16 7.00004L16 9.00002L8.99998 9L9.00005 16L7.00007 16L7 9L3.56772e-05 8.99997L2.11787e-05 6.99998L7 7.00002L7 -2.64733e-06L9 4.77051e-06L8.99998 7.00002Z" fill="#58585A" />
                 </svg>
               </button>
-              <span className="manrope font-400 size-16 color-black-black text-align-center ProductDetails-qty-count">{selectedQty}</span>
+              <span className="manrope font-400 size-16 color-black-black text-align-center ProductDetails-qty-count">{selectedQty} {selectedQty <= 1 && "Quantity"}</span>
               <button onClick={handleDecrease} className="display-flex align-items-center justify-content-center border-none background-transparent cursor-pointer transition height-100 width-100 ProductDetails-qty-btn" aria-label="Decrease">
                 <svg width="14" height="2" viewBox="0 0 14 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0 0V2H14V0H0Z" fill="#58585A" />
@@ -482,7 +438,7 @@ export default function ProductDetailss() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`manrope font-400 size-24 ProductDetails-tab ${activeTab === tab ? "active" : ""}`}
+              className={`manrope font-600 size-20 color-black-black cursor-pointer ProductDetails-tab ${activeTab === tab ? "active" : ""}`}
             >
               {tab}
             </button>
@@ -499,117 +455,119 @@ export default function ProductDetailss() {
                 <p className="manrope font-400 size-16 color-black-black ProductDetails-description-p">Regular use as part of a healthy lifestyle may help support men’s wellness goals by contributing to physical resilience, active performance, and general vitality. Designed for modern lifestyles, Happy Knights for Men provides a natural wellness approach for men seeking to maintain their strength, stamina, and overall reproductive health.</p>
               </div>
 
+            </div>
+
+          )}
+
+          {activeTab === "Additional information" && (
+            <div className="ProductDetails-description">
               <div className="ProductDetails-description-second-row">
                 <div>
-                  <h6 className="manrope font-600 size-20 color-deep-forest-green">Key benefits</h6>
-                  <ul>
-                    <li className="manrope font-400 size-16 color-black-black">Supports libido and male vitality</li>
-                    <li className="manrope font-400 size-16 color-black-black">Helps maintain healthy blood circulation </li>
-                    <li className="manrope font-400 size-16 color-black-black">Promotes overall sexual wellness</li>
-                    <li className="manrope font-400 size-16 color-black-black">Supports energy and stamina</li>
-                    <li className="manrope font-400 size-16 color-black-black">Helps reduce fatigue and general weakness</li>
-                    <li className="manrope font-400 size-16 color-black-black">Supports reproductive health</li>
-                    <li className="manrope font-400 size-16 color-black-black">Helps maintain physical endurance</li>
-                    <li className="manrope font-400 size-16 color-black-black">Supports overall immunity and wellness</li>
-                    <li className="manrope font-400 size-16 color-black-black">Promotes vigor and vitality</li>
-                    <li className="manrope font-400 size-16 color-black-black">Helps support healthy sperm quality</li>
-                  </ul>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th className='manrope size-16 font-600 color-deep-forest-green'>Key Herbal Ingredients</th>
+                        <th className='manrope size-16 font-600 color-deep-forest-green'>Key Benefits</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className='manrope size-14 font-400 color-black-black'>Korean Red Ginseng</td>
+                        <td className='manrope size-14 font-400 color-black-black'>Supports libido and male vitality</td>
+                      </tr>
+                      <tr>
+                        <td className='manrope size-14 font-400 color-black-black'>Ashwagandha (Withania somnifera)</td>
+                        <td className='manrope size-14 font-400 color-black-black'>Helps maintain healthy blood circulation</td>
+                      </tr>
+                      <tr>
+                        <td className='manrope size-14 font-400 color-black-black'>Royal Jelly, Gokhru, Giloy & Shilajit </td>
+                        <td className='manrope size-14 font-400 color-black-black'>Promotes overall sexual wellness</td>
+                      </tr>
+                      <tr>
+                        <td className='manrope size-14 font-400 color-black-black'>Siyah Musali (Curculigo orchioides)</td>
+                        <td className='manrope size-14 font-400 color-black-black'>Supports energy and stamina</td>
+                      </tr>
+                      <tr>
+                        <td className='manrope size-14 font-400 color-black-black'>Safed Musali (Chlorophytum borivilianum)</td>
+                        <td className='manrope size-14 font-400 color-black-black'>Helps reduce fatigue and general weakness</td>
+                      </tr>
+                      <tr>
+                        <td className='manrope size-14 font-400 color-black-black'>Kamarkas (Butea monosperma)</td>
+                        <td className='manrope size-14 font-400 color-black-black'>Supports reproductive health</td>
+                      </tr>
+                      <tr>
+                        <td className='manrope size-14 font-400 color-black-black'>Vidarikand (Pueraria tuberosa)</td>
+                        <td className='manrope size-14 font-400 color-black-black'>Supports overall immunity and wellness</td>
+                      </tr>
+                      <tr>
+                        <td className='manrope size-14 font-400 color-black-black'>Zafran, Kaunch Beej & Mastagi</td>
+                        <td className='manrope size-14 font-400 color-black-black'>Promotes vigor and vitality</td>
+                      </tr>
+                      <tr>
+                        <td className='manrope size-14 font-400 color-black-black'>Ginger, Elaichi, Maghz-E-Chilgoza </td>
+                        <td className='manrope size-14 font-400 color-black-black'>Helps support healthy sperm quality</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
 
-                <div>
-                  <h6 className="manrope font-600 size-20 color-deep-forest-green">Key Herbal Ingredients</h6>
-                  <p className="manrope font-400 size-16 color-black-black">Korean Red Ginseng <br />
-                    Ashwagandha (Withania somnifera) <br />
-                    Royal Jelly<br />
-                    Safed Musali (Chlorophytum borivilianum) <br />
-                    Siyah Musali (Curculigo orchioides) <br />
-                    Gokhru (Tribulus terrestris) <br />
-                    Vidarikand (Pueraria tuberosa) <br />
-                    Satawar (Asparagus racemosus) <br />
-                    Giloy (Tinospora cordifolia) <br />
-                    Shilajit <br />
-                    Zafran (Crocus sativus) <br />
-                    Ginger (Zingiber officinalis) <br />
-                    Kamarkas (Butea monosperma) <br />
-                    Kaunch Beej <br />
-                    Elaichi <br />
-                    Maghz-E-Chilgoza <br />
-                    Mastagi</p>
-                </div>
+                <div className='display-flex flex-direction-column gap-15'>
+                  <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
+                    <h6 className='manrope font-600 size-20 color-deep-forest-green'>Other Ingredients</h6>
+                    <p className='manrope font-400 size-14 color-black-black'>Natural herbal extracts, botanical ingredients, and approved excipients.</p>
+                    <p className='manrope font-400 size-14 color-black-black'>Allergen Information: <br />Manufactured in a facility that may process nuts, dairy, soy, wheat, sesame, or gluten-containing ingredients.</p>
+                  </div>
+                  <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
+                    <h6 className='manrope font-600 size-20 color-deep-forest-green'>Specifications</h6>
+                    <div className='display-grid ProductDetails-description-second-row-rght-sub-grid'>
+                      <div>
+                        <p className='manrope font-400 size-14 color-black-black'>Form: Herbal Powder</p>
+                        <p className='manrope font-400 size-14 color-black-black'>Category: Men's Wellness Supplement</p>
+                        <p className='manrope font-400 size-14 color-black-black'>Suitable For: Adult Men</p>
+                      </div>
+                      <div>
+                        <p className='manrope font-400 size-14 color-black-black'>Serving Size: 5 gm</p>
+                        <p className='manrope font-400 size-14 color-black-black'>Storage: Store in a cool, dry place</p>
+                        <p className='manrope font-400 size-14 color-black-black'>Usage Type: Oral Consumption</p>
+                      </div>
+                    </div>
+                  </div>
 
-
-                <div>
-                  <h6 className="manrope font-600 size-20 color-deep-forest-green">Herbal Ingredient Benefits</h6>
-                  <p className="manrope font-600 size-16 color-black-black">Korean Red Ginseng <br /> <span className="manrope size-16 color-black-black font-400">Supports energy, stamina, circulation, and vitality.</span></p>
-                  <p className="manrope font-600 size-16 color-black-black">Ashwagandha <br /> <span className="manrope size-16 color-black-black font-400">Traditionally used to support stress management and endurance.</span></p>
-                  <p className="manrope font-600 size-16 color-black-black">Royal Jelly <br /> <span className="manrope size-16 color-black-black font-400">Supports vitality and overall wellness.</span></p>
-                  <p className="manrope font-600 size-16 color-black-black">Safed Musali <br /> <span className="manrope size-16 color-black-black font-400">Traditionally used for stamina and physical strength.</span></p>
-                  <p className="manrope font-600 size-16 color-black-black">Gokhru <br /> <span className="manrope size-16 color-black-black font-400">Helps support men's vitality and performance.</span></p>
-                  <p className="manrope font-600 size-16 color-black-black">Shilajit <br /> <span className="manrope size-16 color-black-black font-400">Supports energy and overall wellness.</span></p>
-                  <p className="manrope font-600 size-16 color-black-black">Giloy <br /> <span className="manrope size-16 color-black-black font-400">Traditionally used to support immunity.</span></p>
-                  <p className="manrope font-600 size-16 color-black-black">Ginger <br /> <span className="manrope size-16 color-black-black font-400">Supports circulation and digestive wellness.</span></p>
+                  <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
+                    <h6 className='manrope font-600 size-20 color-deep-forest-green'>Indications</h6>
+                    <p className='manrope font-400 size-16 color-black-black'>Traditionally used to support:</p>
+                    <ul className='two-col-list'>
+                      <li className='manrope font-400 size-16 color-black-black'>Male vitality</li>
+                      <li className='manrope font-400 size-16 color-black-black'>Physical stamina</li>
+                      <li className='manrope font-400 size-16 color-black-black'>Energy levels</li>
+                      <li className='manrope font-400 size-16 color-black-black'>General wellness</li>
+                      <li className='manrope font-400 size-16 color-black-black'>Reproductive wellness</li>
+                      <li className='manrope font-400 size-16 color-black-black'>Immune health</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
 
-              <hr className="ProductDetails-description-hr" />
+              {/* <hr className="ProductDetails-description-hr" /> */}
 
               <div className="display-grid ProductDetails-description-third-row">
-                <div>
+                <div className='background-white-200 ProductDetails-description-third-row-sub'>
                   <h6 className="manrope font-600 size-20 color-deep-forest-green">Specifications</h6>
-                  <p className="manrope font-400 size-16 color-black-black">Form: Herbal Powder</p>
-                  <p className="manrope font-400 size-16 color-black-black">Category: Men's Wellness Supplement</p>
-                  <p className="manrope font-400 size-16 color-black-black">Suitable For: Adult Men</p>
-                  <p className="manrope font-400 size-16 color-black-black">Serving Size: 5 gm</p>
-                  <p className="manrope font-400 size-16 color-black-black">Storage: Store in a cool, dry place</p>
-                  <p className="manrope font-400 size-16 color-black-black">Usage Type: Oral Consumption</p>
+                  <p className="manrope font-400 size-16 color-black-black">Serving Size: 5 gm (1 Teaspoon)</p>
+                  <p className="manrope font-400 size-16 color-black-black">Serving Size: 5 gm (1 Servings Per Container: As mentioned on pack)</p>
                 </div>
 
-                <div>
-                  <h6 className="manrope font-600 size-20 color-deep-forest-green">Other Ingredients</h6>
-                  <p className="manrope font-400 size-16 color-black-black">Natural herbal extracts, botanical ingredients, and approved excipients.</p>
-                  <p className="manrope font-600 size-16 color-black-black">Allergen Information:</p>
-                  <p className="manrope font-400 size-16 color-black-black">Manufactured in a facility that may process nuts, dairy, soy, wheat, sesame, or gluten-containing ingredients</p>
-                </div>
-
-                <div>
+                <div className='background-white-200 ProductDetails-description-third-row-sub'>
                   <h6 className="manrope font-600 size-20 color-deep-forest-green">Suggested Use</h6>
                   <ul>
                     <li className="manrope font-400 size-16 color-black-black">Mix 1 teaspoon (5 gm) with cold milk and chew as directed.</li>
-                    <ul>
-                      <li className="manrope font-400 size-16 color-black-black">Consume before food or at least 2 hours after meals.</li>
-                      <li className="manrope font-400 size-16 color-black-black">Use regularly for best results.</li>
-                      <li className="manrope font-400 size-16 color-black-black">Follow physician guidance where applicable.</li>
-                    </ul>
+                    <li className="manrope font-400 size-16 color-black-black">Consume before food or at least 2 hours after meals.</li>
+                    <li className="manrope font-400 size-16 color-black-black">Use regularly for best results</li>
+                    <li className="manrope font-400 size-16 color-black-black">Follow physician guidance where applicable</li>
                   </ul>
                 </div>
 
-              </div>
-
-              <hr className="ProductDetails-description-hr" />
-
-              <div className="ProductDetails-description-fourth-row">
-                <div>
-                  <h6 className="manrope font-600 size-20 color-deep-forest-green">Key Herbal Ingredients</h6>
-                  <p className="manrope font-400 size-16 color-black-black">Serving Size: 5 gm (1 Teaspoon) <br />
-                    Serving Size: 5 gm (1 Servings Per Container: As mentioned on pack)</p>
-                </div>
-
-                <div>
-                  <h6 className="manrope font-600 size-20 color-deep-forest-green">Indications</h6>
-                  <p className="manrope font-400 size-16 color-black-black">Traditionally used to support:</p>
-                  <ul>
-                    <ul>
-                      <li className="manrope font-400 size-16 color-black-black">Male vitality</li>
-                      <li className="manrope font-400 size-16 color-black-black">Physical stamina</li>
-                      <li className="manrope font-400 size-16 color-black-black">Energy levels</li>
-                      <li className="manrope font-400 size-16 color-black-black">General wellness</li>
-                      <li className="manrope font-400 size-16 color-black-black">Reproductive wellness</li>
-                      <li className="manrope font-400 size-16 color-black-black">Immune health</li>
-                    </ul>
-                  </ul>
-                </div>
-
-                <div>
+                <div className='background-white-200 ProductDetails-description-third-row-sub'>
                   <h6 className="manrope font-600 size-20 color-deep-forest-green">Warnings</h6>
                   <ul>
                     <li className="manrope font-400 size-16 color-black-black">Read the label carefully before use.</li>
@@ -618,19 +576,23 @@ export default function ProductDetailss() {
                     <li className="manrope font-400 size-16 color-black-black">Store in a cool and dry place.</li>
                     <li className="manrope font-400 size-16 color-black-black">If you are under medical supervision, consult a healthcare professional before use.</li>
                   </ul>
-                  <p className="manrope font-600 size-16 color-black-black">Do not use if safety seal is broken or missing.</p>
+                  <div className='manrope font-600 size-16 ProductDetails-description-third-row-sub-warning'>
+                    Do not use if safety seal is broken or missing.
+                  </div>
                 </div>
-              </div>
 
+              </div>
 
               <div className="ProductDetails-description-disclaimer">
                 <h6 className="manrope font-600 size-20 color-deep-forest-green">Disclaimer</h6>
-                <p className="manrope font-400 size-16 color-black-black">This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary. Herbal supplements should be used as part of a balanced lifestyle and healthy diet.</p>
+                <p className="manrope font-400 size-16 color-black-black">Our herbal wellness products are thoughtfully crafted to support your everyday well-being and healthy lifestyle. Results may vary from person to person based on individual needs and routines. For the best experience, combine our supplements with a balanced diet, regular activity, and mindful self-care. These products are not intended to diagnose, treat, cure, or prevent any disease.</p>
               </div>
-
-              <hr className="ProductDetails-description-hr" />
             </div>
           )}
+
+
+
+          < hr className="ProductDetails-description-hr" />
 
           {activeTab === "Reviews" && (
             <div className="ProductDetails-reviews">
@@ -650,7 +612,7 @@ export default function ProductDetailss() {
       {
         recommended.length > 0 && (
           <section className="ProductDetails-section">
-            <h2 className="playfair_display font-600 size-48 ProductDetails-section-title">Recommended Products</h2>
+            <h2 className="manrope font-600 size-24 ProductDetails-section-title">Recommended Products</h2>
             <div className="ProductDetails-grid">
               {recommended.map((p) => (
                 <ProductCard key={p.id} product={p} />
@@ -663,8 +625,8 @@ export default function ProductDetailss() {
 
       {
         moreToExplore.length > 0 && (
-          <section className="ProductDetails-section">
-            <h2 className="playfair_display font-600 size-48 ProductDetails-section-title">More to Explore</h2>
+          <section className="ProductDetails-section ProductDetails-section-02">
+            <h2 className="manrope font-600 size-24 ProductDetails-section-title">More to Explore</h2>
             <div className="ProductDetails-grid">
               {moreToExplore.map((p) => (
                 <ProductCard key={p.id} product={p} />
