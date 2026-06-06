@@ -392,15 +392,15 @@ export default function ProductDetailss() {
 
           <div className="display-flex flex-direction-column gap-12 ProductDetails-actions">
             <div className="display-flex align-items-center overflow-hidden ProductDetails-qty-control">
-              <button onClick={handleIncrease} className="display-flex align-items-center justify-content-center border-none background-transparent cursor-pointer transition height-100 width-100 ProductDetails-qty-btn" aria-label="Increase">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8.99998 7.00002L16 7.00004L16 9.00002L8.99998 9L9.00005 16L7.00007 16L7 9L3.56772e-05 8.99997L2.11787e-05 6.99998L7 7.00002L7 -2.64733e-06L9 4.77051e-06L8.99998 7.00002Z" fill="#58585A" />
-                </svg>
-              </button>
-              <span className="manrope font-400 size-16 color-black-black text-align-center ProductDetails-qty-count">{selectedQty} {selectedQty <= 1 && "Quantity"}</span>
               <button onClick={handleDecrease} className="display-flex align-items-center justify-content-center border-none background-transparent cursor-pointer transition height-100 width-100 ProductDetails-qty-btn" aria-label="Decrease">
                 <svg width="14" height="2" viewBox="0 0 14 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0 0V2H14V0H0Z" fill="#58585A" />
+                </svg>
+              </button>
+              <span className="manrope font-400 size-16 color-black-black text-align-center ProductDetails-qty-count">{selectedQty} {selectedQty <= 1 && "Quantity"}</span>
+              <button onClick={handleIncrease} className="display-flex align-items-center justify-content-center border-none background-transparent cursor-pointer transition height-100 width-100 ProductDetails-qty-btn" aria-label="Increase">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.99998 7.00002L16 7.00004L16 9.00002L8.99998 9L9.00005 16L7.00007 16L7 9L3.56772e-05 8.99997L2.11787e-05 6.99998L7 7.00002L7 -2.64733e-06L9 4.77051e-06L8.99998 7.00002Z" fill="#58585A" />
                 </svg>
               </button>
             </div>
@@ -513,12 +513,12 @@ export default function ProductDetailss() {
 
                 <div className='display-flex flex-direction-column gap-15'>
                   <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
-                    <h6 className='manrope font-600 size-20 color-deep-forest-green'>Other Ingredients</h6>
+                    <h6 className='manrope font-700 size-18 color-deep-forest-green'>Other Ingredients</h6>
                     <p className='manrope font-400 size-14 color-black-black'>Natural herbal extracts, botanical ingredients, and approved excipients.</p>
                     <p className='manrope font-400 size-14 color-black-black'>Allergen Information: <br />Manufactured in a facility that may process nuts, dairy, soy, wheat, sesame, or gluten-containing ingredients.</p>
                   </div>
                   <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
-                    <h6 className='manrope font-600 size-20 color-deep-forest-green'>Specifications</h6>
+                    <h6 className='manrope font-700 size-18 color-deep-forest-green'>Specifications</h6>
                     <div className='display-grid ProductDetails-description-second-row-rght-sub-grid'>
                       <div>
                         <p className='manrope font-400 size-14 color-black-black'>Form: Herbal Powder</p>
@@ -534,7 +534,7 @@ export default function ProductDetailss() {
                   </div>
 
                   <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
-                    <h6 className='manrope font-600 size-20 color-deep-forest-green'>Indications</h6>
+                    <h6 className='manrope font-700 size-18 color-deep-forest-green'>Indications</h6>
                     <p className='manrope font-400 size-16 color-black-black'>Traditionally used to support:</p>
                     <ul className='two-col-list'>
                       <li className='manrope font-400 size-16 color-black-black'>Male vitality</li>
@@ -552,13 +552,13 @@ export default function ProductDetailss() {
 
               <div className="display-grid ProductDetails-description-third-row">
                 <div className='background-white-200 ProductDetails-description-third-row-sub'>
-                  <h6 className="manrope font-600 size-20 color-deep-forest-green">Specifications</h6>
+                  <h6 className="manrope font-700 size-18 color-deep-forest-green">Specifications</h6>
                   <p className="manrope font-400 size-16 color-black-black">Serving Size: 5 gm (1 Teaspoon)</p>
                   <p className="manrope font-400 size-16 color-black-black">Serving Size: 5 gm (1 Servings Per Container: As mentioned on pack)</p>
                 </div>
 
                 <div className='background-white-200 ProductDetails-description-third-row-sub'>
-                  <h6 className="manrope font-600 size-20 color-deep-forest-green">Suggested Use</h6>
+                  <h6 className="manrope font-700 size-18 color-deep-forest-green">Suggested Use</h6>
                   <ul>
                     <li className="manrope font-400 size-16 color-black-black">Mix 1 teaspoon (5 gm) with cold milk and chew as directed.</li>
                     <li className="manrope font-400 size-16 color-black-black">Consume before food or at least 2 hours after meals.</li>
@@ -568,7 +568,7 @@ export default function ProductDetailss() {
                 </div>
 
                 <div className='background-white-200 ProductDetails-description-third-row-sub'>
-                  <h6 className="manrope font-600 size-20 color-deep-forest-green">Warnings</h6>
+                  <h6 className="manrope font-700 size-18 color-deep-forest-green">Warnings</h6>
                   <ul>
                     <li className="manrope font-400 size-16 color-black-black">Read the label carefully before use.</li>
                     <li className="manrope font-400 size-16 color-black-black">Do not exceed recommended usage.</li>

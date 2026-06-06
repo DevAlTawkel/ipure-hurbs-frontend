@@ -267,6 +267,35 @@ export const DUMMY_PRODUCTS = [
     category: "Best Seller",
     inStock: true,
   },
+  {
+    id: 9,
+    name: "Happy Knights Prash",
+    slug: 'test-product-8',
+    brand: "Limited Time Deal",
+    description: "Plant-based herbal formula for energy, and mens wellness.",
+    price: 56.89,
+    originalPrice: 89.99,
+    discount: 20,
+    rating: 4.7,
+    reviewCount: 512,
+    images: [
+      {
+        "id": 1,
+        "url": "/assets/products/product-16.png"
+      },
+      {
+        "id": 2,
+        "url": "/assets/products/product-16.png"
+      },
+      {
+        "id": 3,
+        "url": "/assets/products/product-16.png"
+      },
+    ],
+    badge: "20% off",
+    category: "Best Seller",
+    inStock: true,
+  },
 ];
 
 // ─── Store ────────────────────────────────────────────────────────────────────

@@ -393,7 +393,7 @@
 }
 
 .ProductDetails-coupon-input-container input {
-    padding: 6px 14px;
+    padding: 12px 18px;
     border-radius: 39px;
     border: 1px solid rgba(86, 95, 86, 1);
 }
@@ -404,7 +404,7 @@
 
 .ProductDetails-coupon-input-container button {
     right: 14px;
-    top: 45%;
+    top: 48.5%;
     transform: translateY(-50%);
     color: rgba(231, 12, 12, 1);
 }
@@ -566,14 +566,14 @@
 }
 
 .ProductDetails-description-third-row-sub-warning {
-    background-color: rgba(236, 232, 225, 1);
+    background-color: rgba(221, 225, 207, 1);
     padding: 8px 20px;
     border-radius: 60px;
     margin-top: 16px;
 }
 
 .ProductDetails-description-third-row h6 {
-    margin-bottom: 8px;
+    margin-bottom: 16px;
 }
 
 .ProductDetails-description-third-row ul {
