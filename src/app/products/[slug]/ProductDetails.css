@@ -606,10 +606,6 @@
     margin-bottom: 8px;
 }
 
-.ProductDetails-reviews-sub {
-    padding: 54px 36px;
-}
-
 .ProductDetails-section {
     margin-top: 20px;
     margin-bottom: 54px;
@@ -630,6 +626,210 @@
     gap: 24px;
 }
 
+.ProductDetails-reviews-sub {
+    padding: 54px 44px 54px 20px;
+}
+
+.ProductDetails-reviews-sub {
+    gap: 68px;
+}
+
+.ProductDetails-reviews-count-container {
+    padding-top: 16px;
+    padding-left: 22px;
+    min-width: 300px;
+}
+
+.ProductDetails-reviews-count-container h3 {
+    line-height: 26px;
+    margin-bottom: 16px;
+}
+
+.ProductDetails-reviews-p {
+    margin-top: 4px;
+}
+
+.ProductDetails-rating-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 16px;
+}
+
+.ProductDetails-rating-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ProductDetails-rating-bar-label {
+    color: rgba(22, 22, 24, 1);
+}
+
+.ProductDetails-rating-bar-track {
+    flex: 1;
+    height: 6px;
+    background-color: rgba(225, 225, 225, 1);
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.ProductDetails-rating-bar-fill {
+    height: 100%;
+    background-color: rgba(95, 111, 82, 1);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+}
+
+.ProductDetails-rating-bar-pct {
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.ProductDetails-write-review-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    padding: 8px 16px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.ProductDetails-write-review-btn:hover {
+    transform: translateY(-5px);
+}
+
+.ProductDetails-all-reviews-container h4 {
+    margin-bottom: 16px;
+}
+
+.ProductDetails-filter-btn {
+    border: 1px solid rgba(47, 58, 47, 1);
+    border-radius: 8px;
+    padding: 6px 12px;
+    background-color: #ffffff;
+    gap: 8px;
+}
+
+.ProductDetails-filter-btn:hover {
+    background-color: #f9fafb;
+}
+
+
+.ProductDetails-reviews-top {
+    padding: 54px 20px;
+    align-items: flex-start;
+}
+
+.ProductDetails-reviews-count-container {
+    min-width: 260px;
+    flex-shrink: 0;
+}
+
+.ProductDetails-reviews-toolbar {
+    margin: 16px 0 8px;
+}
+
+.ProductDetails-review-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+}
+
+.ProductDetails-review-card {
+    padding: 16px 0 37px;
+    border-bottom: 1px solid rgba(225, 225, 225, 1);
+}
+
+.ProductDetails-review-header {
+    margin-bottom: 16px;
+}
+
+.ProductDetails-review-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(169, 179, 136, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ProductDetails-verified-badge {
+    background-color: rgba(208, 255, 196, 1);
+    border-radius: 28px;
+    padding: 3px 11px;
+}
+
+.ProductDetails-review-title {
+   color: rgba(22, 22, 24, 1);
+}
+
+.ProductDetails-review-body {
+    margin-bottom: 16px;
+}
+
+.ProductDetails-review-images {
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.ProductDetails-review-img {
+    width: 54px;
+    height: 56px;
+    border-radius: 8px;
+    object-fit: cover;
+    /* border: 1px solid #ddd; */
+    background-color: rgba(215, 215, 215, 1);
+}
+
+.ProductDetails-review-add-more {
+    background: transparent;
+    border: none;
+    color: rgba(47, 58, 47, 1);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.ProductDetails-review-footer {
+    margin-top: 16px;
+}
+
+.ProductDetails-helpful-btn {
+    background: transparent;
+    border: 1px solid rgba(177, 177, 177, 1);
+    border-radius: 8px;
+    padding: 10px 16px;
+    color: rgba(22, 22, 24, 1);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.ProductDetails-helpful-btn:hover {
+    background-color: #f0f2ed;
+}
+
+.ProductDetails-report-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgba(22, 22, 24, 1);
+}
+
+.ProductDetails-view-more-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-top: 32px;
+    color: rgba(22, 22, 24, 1);
+}
 
 @media (max-width: 1250px) {
     .ProductDetails-top {
@@ -695,6 +895,21 @@
 
     .ProductDetails-sizes-container {
         flex-wrap: wrap;
+    }
+
+    .ProductDetails-reviews-sub{
+        flex-direction: column;
+    }
+
+    .ProductDetails-reviews-top {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .ProductDetails-reviews-count-container {
+        width: 100%;
+        padding-top: 0;
+        padding-left: 0;
     }
 }
 

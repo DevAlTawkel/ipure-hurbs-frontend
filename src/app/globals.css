@@ -302,6 +302,10 @@ a {
   color: rgba(0, 4, 4, 1);
 }
 
+.color-dfg-400 {
+  color: rgba(125, 132, 125, 1);
+}
+
 .color-black-dfg-200 {
   color: rgba(0, 0, 0, 1);
 }

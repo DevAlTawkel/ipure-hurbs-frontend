@@ -25,6 +25,77 @@ export default function ProductDetailss() {
   const [selectedQty, setSelectedQty] = useState(1);
   const [mounted, setMounted] = useState(false);
 
+  const [visibleReviews, setVisibleReviews] = useState(3);
+
+  const DUMMY_REVIEWS = [
+    {
+      id: 1,
+      name: "Ahmad M.",
+      date: "1 June, 2026",
+      rating: 5,
+      title: "Great price and fast delivery",
+      body: "Ordered and received in 2 days. Product matches the description exactly. Very happy with my purchase.",
+      helpful: 12,
+      verified: true,
+      images: [],
+    },
+    {
+      id: 2,
+      name: "Ahmad M.",
+      date: "1 June, 2026",
+      rating: 4,
+      title: "Great price and fast delivery",
+      body: "Ordered and received in 2 days. Product matches the description exactly. Very happy with my purchase.",
+      helpful: 12,
+      verified: true,
+      images: [],
+    },
+    {
+      id: 3,
+      name: "Ahmad M.",
+      date: "1 June, 2026",
+      rating: 3,
+      title: "Exactly what I needed",
+      body: "Nice size, compact packaging, arrived in perfect condition. Will buy again.",
+      helpful: 12,
+      verified: true,
+      images: ["https://placehold.co/60x60", "https://placehold.co/60x60", "https://placehold.co/60x60"],
+    },
+    {
+      id: 4,
+      name: "Sara K.",
+      date: "28 May, 2026",
+      rating: 5,
+      title: "Highly recommend",
+      body: "Amazing product quality. Will definitely order again.",
+      helpful: 8,
+      verified: true,
+      images: [],
+    },
+    {
+      id: 5,
+      name: "Omar R.",
+      date: "20 May, 2026",
+      rating: 4,
+      title: "Good value",
+      body: "Good product for the price. Delivery was on time.",
+      helpful: 5,
+      verified: false,
+      images: [],
+    },
+    {
+      id: 6,
+      name: "Layla H.",
+      date: "15 May, 2026",
+      rating: 5,
+      title: "Perfect!",
+      body: "Exactly as described. Very satisfied with my purchase.",
+      helpful: 3,
+      verified: true,
+      images: [],
+    },
+  ];
+
   useEffect(() => { setMounted(true); }, []);
 
   // ─── Find product by slug ─────────────────────────────────────────────────
@@ -596,10 +667,156 @@ export default function ProductDetailss() {
 
           {activeTab === "Reviews" && (
             <div className="ProductDetails-reviews">
-              <div className="ProductDetails-reviews-sub">
+              {/* <div className="ProductDetails-reviews-sub">
                 <p className="manrope font-500 size-20 color-deep-forest-green ProductDetails-reviews-empty">
                   No reviews yet. Be the first to review this product.
                 </p>
+              </div> */}
+
+              <div className='display-flex align-items-flex-start ProductDetails-reviews-sub'>
+                <div className='ProductDetails-reviews-count-container'>
+                  <h3 className='manrope size-48 color-deep-forest-green'>4.7</h3>
+                  <div className="display-flex align-items-center ProductDetails-stars">
+                    {[...Array(5)].map((_, index) => {
+                      const fill = Math.max(0, Math.min(100, (4.7 - index) * 100));
+                      return <Star key={index} fill={fill} />;
+                    })}
+                  </div>
+                  <p className='manrope font-400 size-16 color-deep-forest-green ProductDetails-reviews-p'>2580 verified reviews</p>
+
+                  {/* Rating Bars */}
+                  <div className='ProductDetails-rating-bars'>
+                    {[
+                      { star: 5, pct: 74 },
+                      { star: 4, pct: 17 },
+                      { star: 3, pct: 6 },
+                      { star: 2, pct: 0 },
+                      { star: 1, pct: 3 },
+                    ].map(({ star, pct }) => (
+                      <div key={star} className='ProductDetails-rating-bar-row'>
+                        <span className='manrope font-500 size-12 color-deep-forest-green ProductDetails-rating-bar-label'>{star}</span>
+                        <Star fill={pct > 0 ? 100 : 0} />
+                        <div className='ProductDetails-rating-bar-track'>
+                          <div
+                            className='ProductDetails-rating-bar-fill'
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                        <span className='manrope font-400 size-12 color-black-black ProductDetails-rating-bar-pct'>{pct}%</span>
+                      </div>
+                    ))}
+                  </div>
+
+
+                  <button className='color-white background-deep-forest-green gap-8 transition ProductDetails-write-review-btn manrope font-600 size-24'>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6.24264 15.9706H18V17.9706H0V13.7279L9.8995 3.82842L14.1421 8.07109L6.24264 15.9706ZM11.3137 2.41421L13.435 0.29289C13.8256 -0.09763 14.4587 -0.09763 14.8492 0.29289L17.6777 3.12132C18.0682 3.51184 18.0682 4.14501 17.6777 4.53553L15.5563 6.65685L11.3137 2.41421Z" fill="#F4F4F4" />
+                    </svg>
+                    Write a Review
+                  </button>
+                </div>
+
+                <div className='width-100 ProductDetails-all-reviews-container'>
+                  <h4 className='manrope font-600 size-28 color-deep-forest-green'>482 Reviews</h4>
+
+                  <div className='display-flex align-items-center justify-content-space-between width-100 ProductDetails-reviews-toolbar'>
+                    <button className="display-flex align-items-center color-deep-forest-green font-400 manrope cursor-pointer transition outline-none size-18 ProductDetails-filter-btn">
+                      All reviews
+                    </button>
+                    <button className="display-flex align-items-center color-deep-forest-green font-400 manrope cursor-pointer transition outline-none size-18 ProductDetails-filter-btn">
+                      Filter
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.17071 16C4.58254 14.8348 5.69378 14 7 14C8.3062 14 9.4175 14.8348 9.8293 16H20V18H9.8293C9.4175 19.1652 8.3062 20 7 20C5.69378 20 4.58254 19.1652 4.17071 18H0V16H4.17071ZM10.1707 9C10.5825 7.83481 11.6938 7 13 7C14.3062 7 15.4175 7.83481 15.8293 9H20V11H15.8293C15.4175 12.1652 14.3062 13 13 13C11.6938 13 10.5825 12.1652 10.1707 11H0V9H10.1707ZM4.17071 2C4.58254 0.83481 5.69378 0 7 0C8.3062 0 9.4175 0.83481 9.8293 2H20V4H9.8293C9.4175 5.16519 8.3062 6 7 6C5.69378 6 4.58254 5.16519 4.17071 4H0V2H4.17071ZM7 4C7.55228 4 8 3.55228 8 3C8 2.44772 7.55228 2 7 2C6.44772 2 6 2.44772 6 3C6 3.55228 6.44772 4 7 4ZM13 11C13.5523 11 14 10.5523 14 10C14 9.4477 13.5523 9 13 9C12.4477 9 12 9.4477 12 10C12 10.5523 12.4477 11 13 11ZM7 18C7.55228 18 8 17.5523 8 17C8 16.4477 7.55228 16 7 16C6.44772 16 6 16.4477 6 17C6 17.5523 6.44772 18 7 18Z" fill="#2F3A2F" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Review cards */}
+                  <div className='ProductDetails-review-list'>
+                    {DUMMY_REVIEWS.slice(0, visibleReviews).map((review) => (
+                      <div key={review.id} className='ProductDetails-review-card'>
+
+                        {/* Header */}
+                        <div className='display-flex align-items-center justify-content-space-between ProductDetails-review-header'>
+                          <div className='display-flex align-items-center gap-10'>
+                            <div className='ProductDetails-review-avatar'>
+                              <span className='manrope font-600 size-14 color-white'>
+                                {review.name.charAt(0)}
+                              </span>
+                            </div>
+                            <div>
+                              <p className='manrope font-700 size-14 color-deep-forest-green'>{review.name}</p>
+                              <p className='manrope font-500 size-14 color-dfg-400'>{review.date}</p>
+                            </div>
+                          </div>
+                          {review.verified && (
+                            <div className='display-flex align-items-center justify-content-center gap-8 ProductDetails-verified-badge'>
+                              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="0.5" y="0.5" width="13" height="13" rx="6.5" stroke="#2F3A2F" />
+                                <path d="M5.625 8.58824L9.41667 4L10 4.70588L5.625 10L3 6.82355L3.58334 6.11767L5.625 8.58824Z" fill="#2F3A2F" />
+                              </svg>
+                              <span className='manrope font-500 size-14' style={{ color: 'rgba(47, 58, 47, 1)', lineHeight: '20px' }}>Verified</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Stars */}
+                        <div className='display-flex align-items-center ProductDetails-stars' style={{ marginTop: 8 }}>
+                          {[...Array(5)].map((_, i) => {
+                            const fill = Math.max(0, Math.min(100, (review.rating - i) * 100));
+                            return <Star key={i} fill={fill} />;
+                          })}
+                        </div>
+
+                        {/* Title & body */}
+                        <p className='manrope font-600 size-14 ProductDetails-review-title'>{review.title}</p>
+                        <p className='manrope font-400 size-16 color-deep-forest-green ProductDetails-review-body'>{review.body}</p>
+
+                        {/* Images */}
+                        {review.images.length > 0 && (
+                          <div className='display-flex align-items-center gap-12 ProductDetails-review-images'>
+                            {review.images.map((img, i) => (
+                              // <img key={i} src={img} alt={`review-img-${i}`} className='ProductDetails-review-img' />
+                              <div key={i} className='display-flex align-items-center justify-content-center ProductDetails-review-img'>
+                                <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M0.9918 18C0.44405 18 0 17.5551 0 17.0066V0.9934C0 0.44476 0.45531 0 0.9918 0H19.0082C19.556 0 20 0.44495 20 0.9934V17.0066C20 17.5552 19.5447 18 19.0082 18H0.9918ZM18 12V2H2V16L12 6L18 12ZM18 14.8284L12 8.8284L4.82843 16H18V14.8284ZM6 8C4.89543 8 4 7.1046 4 6C4 4.89543 4.89543 4 6 4C7.10457 4 8 4.89543 8 6C8 7.1046 7.10457 8 6 8Z" fill="#2F3A2F" />
+                                </svg>
+                              </div>
+                            ))}
+                            {/* <button className='manrope font-400 size-14 ProductDetails-review-add-more'>Add more</button> */}
+                          </div>
+                        )}
+
+                        {/* Footer */}
+                        <div className='display-flex align-items-center justify-content-space-between ProductDetails-review-footer'>
+                          <button className='display-flex align-items-center gap-8 manrope font-600 size-20 ProductDetails-helpful-btn'>
+                            <svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fillRule="evenodd" clipRule="evenodd" d="M7.75 0H6.79989L6.5456 0.915448L4.29989 9H0V22.5H18.1343L18.4287 21.6661L23.0177 8.66609L23.6058 7H13.5V4.85C13.5 2.17142 11.3286 0 8.65 0H7.75ZM6.4544 10.5846L8.69996 2.50052C9.9748 2.52711 11 3.56883 11 4.85V9.5H20.0722L16.3657 20H6.25V11.3204L6.4544 10.5846Z" fill="#2F3A2F" />
+                            </svg>
+                            Helpful ({review.helpful})
+                          </button>
+                          <button className='manrope font-600 size-20 ProductDetails-report-btn'>
+                            Report
+                          </button>
+                        </div>
+
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* View more */}
+                  {visibleReviews < DUMMY_REVIEWS.length && (
+                    <div className='display-flex justify-content-flex-end'>
+                      <button
+                        onClick={() => setVisibleReviews((prev) => prev + 3)}
+                        className='manrope font-500 size-16 color-deep-forest-green ProductDetails-view-more-btn'
+                      >
+                        View more
+                      </button>
+                    </div>
+                  )}
+
+                </div>
               </div>
 
               <hr className="ProductDetails-description-hr" />
