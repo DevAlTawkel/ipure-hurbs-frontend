@@ -1,4 +1,108 @@
-.WishlistItems-padding{
+.WishlistItems-padding {
     padding: 60px 22px 0;
+    margin-bottom: 54px;
 }
 
+.WishlistItems-grid {
+    padding: 54px 22px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.WishlistItems-i-container {
+    background-color: rgba(222, 203, 166, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+}
+
+.WishlistItems-warning-container {
+    padding: 26px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(244, 244, 244, 1);
+}
+
+.WishlistItems-i-main-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: rgba(125, 132, 125, 1);
+}
+
+.WishlistItems-i-main-container p {
+    max-width: 300px;
+}
+
+.WishlistItems-actions {
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.WishlistItems-btn-cart {
+    padding: 8px;
+    border-radius: 38px;
+    border: 1px solid rgba(47, 58, 47, 1);
+    min-width: 175px;
+}
+
+.WishlistItems-btn-cart:hover:not(:disabled) {
+    background-color: rgba(47, 58, 47, 1);
+    color: white;
+}
+
+.WishlistItems-btn-cart:disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    border-color: #e5e7eb;
+    cursor: not-allowed;
+}
+
+.ProductCardWishlist-last-section {
+    padding: 54px 22px 120px;
+}
+
+.ProductCardWishlist-last-section h6 {
+    color: rgba(47, 58, 47, 1);
+    margin-bottom: 54px;
+}
+
+.ProductCardWishlist-last-section-grid {
+    gap: 24px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+
+@media (max-width: 1024px) {
+
+    .ProductCardWishlist-last-section-grid,
+    .WishlistItems-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 480px) {
+    .WishlistItems-warning-container {
+        flex-wrap: wrap;
+        gap: 25px;
+    }
+
+    .ProductCardWishlist-actions-2{
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .ProductCardWishlist-last-section-grid,
+    .WishlistItems-grid {
+        grid-template-columns: 1fr;
+    }
+}

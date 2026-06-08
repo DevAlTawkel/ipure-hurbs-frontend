@@ -2,8 +2,42 @@
 
 import React from 'react'
 import './WishlistItems.css'
+import ProductCardWishlist from '@/components/ProductCardWishlist'
+import { useWishlistStore } from '@/store/useWishlistStore'
+import { useCartStore } from '@/store/useCartStore'
+import ProductCard from '@/components/ProductCard'
+import { useProductStore } from '@/store/useProductStore'
+import toast from 'react-hot-toast'
 
 const WishlistItems = () => {
+
+    const wishlist = useWishlistStore((state) => state.wishlist)
+    const wishlistIds = useWishlistStore((state) => state.wishlistIds)
+    const { products } = useProductStore()
+    const { addToCart, updateQuantity } = useCartStore();
+
+    const suggestedProducts = products
+        .filter((p) => !wishlistIds.includes(p.id))
+        .slice(0, 8)
+
+    const handleIncrease = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (quantity === 0) {
+            addToCart(product);
+        } else {
+            updateQuantity(product.id, quantity + 1);
+        }
+    };
+
+    const handleAddAllToCart = () => {
+        if (wishlist.length === 0) return;
+
+        wishlist.forEach((product) => {
+            addToCart(product);
+        });
+    };
     return (
         <div>
             <div className='display-flex align-items-center justify-content-space-between flex-wrap-wrap WishlistItems-padding'>
@@ -18,6 +52,45 @@ const WishlistItems = () => {
                         </svg>
                         Edit
                     </button>
+                </div>
+            </div>
+
+            <div className='display-grid WishlistItems-grid'>
+                {wishlist.map((product) => (
+                    <ProductCardWishlist product={product} id={product.id} />
+                ))}
+            </div>
+
+            <div className='WishlistItems-warning-container'>
+                <div className='WishlistItems-i-main-container'>
+                    <div className='WishlistItems-i-container'>
+                        <svg width="6" height="17" viewBox="0 0 6 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 3C3.8284 3 4.5 2.32843 4.5 1.5C4.5 0.67157 3.8284 0 3 0C2.1716 0 1.5 0.67157 1.5 1.5C1.5 2.32843 2.1716 3 3 3ZM0 7H2V15H0V17H6V15H4V5H0V7Z" fill="#E70C0C" />
+                        </svg>
+                    </div>
+                    <p className='manrope font-400 size-16'>
+                        Move everything at once. Add all {wishlist.length !== 1 && wishlist.length} favorite{wishlist.length !== 1 ? 's' : ''} to your bag in one tap.
+                    </p>
+                </div>
+
+                <div className="display-flex ProductCardWishlist-actions ProductCardWishlist-actions-2">
+                    <button
+                        onClick={handleAddAllToCart}
+                        disabled={wishlist.length === 0}
+                        className="size-16 font-400 background-transparent color-dfg-200 transition cursor-pointer ProductCardWishlist-btn-cart"
+                    >
+                        Add to cart
+                    </button>
+                </div>
+            </div>
+
+            <div className='ProductCardWishlist-last-section'>
+                <h6 className='manrope font-600 size-24'>Find your next favorites</h6>
+
+                <div className='display-grid ProductCardWishlist-last-section-grid'>
+                    {suggestedProducts.map((p) => (
+                        <ProductCard key={p.id} product={p} />
+                    ))}
                 </div>
             </div>
         </div>
