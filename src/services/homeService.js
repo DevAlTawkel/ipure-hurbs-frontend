@@ -2,7 +2,7 @@ import api from "@/lib/api";
 
 const homeService = {
   getHomeData: async () => {
-    const { data } = await api.get("/home");
+    const { data } = await api.get("/home/home");
     return data.data;
   },
 };
