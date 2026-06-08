@@ -36,7 +36,8 @@ const HomeFeatureProducts = () => {
                             <p className='manrope font-400 size-18 color-white'>{product.description}</p>
                             <div className="HomeFeatureProducts-button-wrap">
                                 <Link
-                                    href={`/product/${product.slug}`}
+                                    href={`/products/${product.slug}`}
+                                    prefetch={false}
                                     className="background-deep-forest-green color-white text-align-center HomeFeatureProducts-button"
                                 >
                                     <span className='position-relative text-align-center width-100 manrope font-600 size-24 color-white'>
