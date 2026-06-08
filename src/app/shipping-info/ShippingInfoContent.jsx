@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react'
 import './ShippingInfoContent.css'
+import { useRouter } from 'next/navigation';
+import { useCheckoutStore } from "@/store/useCheckoutStore";
 
 const cartItems = [
     {
@@ -34,21 +36,11 @@ const cartItems = [
 ]
 
 const ShippingInfoContent = () => {
-    const [form, setForm] = useState({
-        country: '',
-        firstName: '',
-        lastName: '',
-        contact: '',
-        email: '',
-        address1: '',
-        address2: '',
-        building: '',
-        city: '',
-        zip: '',
-        defaultAddress: false,
-        shippingMethod: 'standard',
-        promoCode: '',
-    })
+
+    const router = useRouter();
+    const { shippingInfo, setShippingInfo } = useCheckoutStore();
+
+    const [form, setForm] = useState(shippingInfo);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target
@@ -64,8 +56,9 @@ const ShippingInfoContent = () => {
     }
 
     const handleContinue = () => {
-        alert('Proceeding to payment...')
-    }
+        setShippingInfo(form);
+        router.push("/payment");
+    };
 
     return (
         <div className="ShippingInfoContent-main-container">
