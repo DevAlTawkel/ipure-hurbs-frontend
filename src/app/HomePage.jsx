@@ -14,7 +14,9 @@ const HomePage = () => {
     <>
       <HomeMainBanner />
       <HomeMarquee />
-      <HomeShop />
+      <div id="shop">
+        <HomeShop />
+      </div>
       <div className='space-between-section'></div>
       <HomeFeatureProducts />
       <div className='space-between-section'></div>
@@ -22,9 +24,13 @@ const HomePage = () => {
       <div className='space-between-section'></div>
       <HomeBestSellers />
       <div className='space-between-section'></div>
-      <HomeAboutUs />
+      <div id="about">
+        <HomeAboutUs />
+      </div>
       <div className='space-between-section'></div>
-      <HomeBlogs />
+      <div id="learn">
+        <HomeBlogs />
+      </div>
       <HomeNewsletter />
     </>
   )

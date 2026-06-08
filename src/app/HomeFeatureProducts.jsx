@@ -5,7 +5,7 @@ import Link from 'next/link'
 const HomeFeatureProducts = () => {
     return (
         <div className='overflow-hidden HomeFeatureProducts-main-container'>
-            <p className='playfair_display font-600 size-48 color-deep-forest-green text-align-center user-select-none HomeFeatureProducts-title'>Our Featured Products</p>
+            <p className='playfair_display font-600 size-32 color-deep-forest-green text-align-center user-select-none HomeFeatureProducts-title'>Our Featured Products</p>
 
             <div className='display-grid HomeFeatureProducts-cards-container'>
                 <div className='display-flex HomeFeatureProducts-card'>

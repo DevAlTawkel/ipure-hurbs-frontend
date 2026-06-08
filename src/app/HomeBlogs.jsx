@@ -36,13 +36,13 @@ const HomeBlogs = () => {
 
     return (
         <div className='background-white-200 HomeBlogs-main-container'>
-            <p className='playfair_display font-600 size-48 color-deep-forest-green text-align-center user-select-none'>Blog Posts</p>
+            <p className='playfair_display font-600 size-32 color-deep-forest-green text-align-center user-select-none HomeBlogs-title'>Blog Posts</p>
             <p className='manrope font-400 size-18 color-dfg-200 text-align-center margin-left-auto margin-right-auto HomeBlogs-sub-title'>
                 Learn. Heal. Thrive with natural wellness.
             </p>
 
             <div className='display-flex align-items-flex-end justify-content-flex-end'>
-                <Link href={'/blogs'} className="manrope font-600 size-24 color-deep-forest-green display-flex align-items-center gap-10 justify-content-flex-end HomeBlogs-cards-viewmore">
+                <Link href={'/blogs'} className="manrope font-500 size-18 color-deep-forest-green display-flex align-items-center gap-10 justify-content-flex-end HomeBlogs-cards-viewmore">
                     See more
                     <div className="display-flex align-items-center justify-content-center border-radius-100 HomeBlogs-arrow-container">
                         <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -4,7 +4,7 @@
 
 .Products-tabbar {
     background-color: #ffffff;
-    padding: 20px 23px;
+    padding: 35px 23px;
 }
 
 .Products-tabs {
@@ -22,7 +22,7 @@
 
 .Products-tab.active {
     color: #2f3a2f;
-    font-weight: 900;
+    font-weight: 600;
 }
 
 .Products-sort-row {

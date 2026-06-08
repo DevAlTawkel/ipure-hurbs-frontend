@@ -61,7 +61,7 @@ const HomeShop = () => {
 
     return (
         <div className='HomeShop-main-container'>
-            <p className='playfair_display font-600 size-48 color-deep-forest-green text-align-center user-select-none HomeShop-title'>Shop By Categories</p>
+            <p className='playfair_display font-600 size-32 color-deep-forest-green text-align-center user-select-none HomeShop-title'>Shop By Categories</p>
 
             <div className='display-grid HomeShop-cards-container'>
                 {

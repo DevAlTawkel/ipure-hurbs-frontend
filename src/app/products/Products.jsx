@@ -41,7 +41,7 @@ export default function Products() {
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`manrope font-600 size-24 color-dfg-200 border-none background-transparent cursor-pointer transition Products-tab ${activeTab === tab ? "active" : ""}`}
+                            className={`manrope font-400 size-18 color-dfg-200 border-none background-transparent cursor-pointer transition Products-tab ${activeTab === tab ? "active" : ""}`}
                         >
                             {tab}
                         </button>
