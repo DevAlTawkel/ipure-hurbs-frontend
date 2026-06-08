@@ -43,7 +43,7 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <Link href={`/products/${product.slug}`}>
+    <Link href={`/products/${product.slug}`} prefetch={false}>
       <div className="position-relative display-flex flex-direction-column overflow-hidden transition cursor-pointer background-white-200 ProductCard-container">
 
         {product.discount > 0 && (
