@@ -1,95 +1,88 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './HomeShop.css'
 import Link from 'next/link'
+import { useHomeStore } from '@/store/useHomeStore'
+
+const PLACEHOLDER_IMAGE = '/assets/categories/category_placeholder.png'
+const PAGE_SIZE = 2
 
 const HomeShop = () => {
+    const { categories, fetchHomeData, isLoading } = useHomeStore()
+    const [page, setPage] = useState(0)
 
-    const categories = [
-        {
-            name: 'Women’s Health Enhancer',
-            image: '/assets/categories/category_01.png',
-            link: '/'
-        },
-        {
-            name: 'Women’s Health Enhancer',
-            image: '/assets/categories/category_02.png',
-            link: '/'
-        },
-        {
-            name: 'Women’s Health Enhancer',
-            image: '/assets/categories/category_03.png',
-            link: '/'
-        },
-        {
-            name: 'Women’s Health Enhancer',
-            image: '/assets/categories/category_04.png',
-            link: '/'
-        },
-        {
-            name: 'Women’s Health Enhancer',
-            image: '/assets/categories/category_05.png',
-            link: '/'
-        },
-        {
-            name: 'Women’s Health Enhancer',
-            image: '/assets/categories/category_06.png',
-            link: '/'
-        },
-        {
-            name: 'Women’s Health Enhancer',
-            image: '/assets/categories/category_07.png',
-            link: '/'
-        },
-        {
-            name: 'Women’s Health Enhancer',
-            image: '/assets/categories/category_08.png',
-            link: '/'
-        },
-    ]
+    useEffect(() => {
+        if (categories.length === 0) fetchHomeData()
+    }, [])
 
-    const [page, setPage] = useState(0);
-    const PAGE_SIZE = 2;
-
-    const pages = [];
+    const pages = []
     for (let i = 0; i < categories.length; i += PAGE_SIZE) {
-        pages.push(categories.slice(i, i + PAGE_SIZE));
+        pages.push(categories.slice(i, i + PAGE_SIZE))
     }
 
-    const next = () => setPage((p) => Math.min(p + 1, pages.length - 1));
-    const prev = () => setPage((p) => Math.max(p - 1, 0));
+    const next = () => setPage((p) => Math.min(p + 1, pages.length - 1))
+    const prev = () => setPage((p) => Math.max(p - 1, 0))
+
+    if (isLoading) {
+        return (
+            <div className='HomeShop-main-container'>
+                <p className='playfair_display font-600 size-32 color-deep-forest-green text-align-center user-select-none HomeShop-title'>
+                    Shop By Categories
+                </p>
+                <div className='display-grid HomeShop-cards-container'>
+                    {Array.from({ length: 8 }).map((_, i) => (
+                        <div key={i} className='HomeShop-skeleton'>
+                            <div className='HomeShop-skeleton-img' />
+                            <div className='HomeShop-skeleton-text' />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className='HomeShop-main-container'>
-            <p className='playfair_display font-600 size-32 color-deep-forest-green text-align-center user-select-none HomeShop-title'>Shop By Categories</p>
+            <p className='playfair_display font-600 size-32 color-deep-forest-green text-align-center user-select-none HomeShop-title'>
+                Shop By Categories
+            </p>
 
+            {/* Desktop grid */}
             <div className='display-grid HomeShop-cards-container'>
-                {
-                    categories.map((item, i) => (
-                        <Link href={item.link} key={i}>
-                            <div className='background-white transition HomeShop-image-container'>
-                                <img src={item.image} alt="" />
-                            </div>
-                            <p className='manrope font-600 size-18 text-align-center color-deep-forest-green transition HomeShop-category'>{item.name}</p>
-                        </Link>
-                    ))
-                }
+                {categories.map((item) => (
+                    <Link href={`/category/${item.slug}`} key={item.id}>
+                        <div className='background-white transition HomeShop-image-container'>
+                            <img
+                                src={item.image ?? PLACEHOLDER_IMAGE}
+                                alt={item.name}
+                                className='object-fit-contain'
+                                onError={(e) => { e.currentTarget.src = PLACEHOLDER_IMAGE }}
+                            />
+                        </div>
+                        <p className='manrope font-600 size-18 text-align-center color-deep-forest-green transition HomeShop-category'>
+                            {item.name}
+                        </p>
+                    </Link>
+                ))}
             </div>
+
+            {/* Mobile slider */}
             <div className='HomeShop-slider'>
                 <div
                     className='HomeShop-slider-track'
-                    style={{
-                        transform: `translateX(-${page * 100}%)`
-                    }}
+                    style={{ transform: `translateX(-${page * 100}%)` }}
                 >
                     {pages.map((group, index) => (
                         <div className='HomeShop-slide' key={index}>
-                            {group.map((item, i) => (
-                                <Link href={item.link} key={i}>
+                            {group.map((item) => (
+                                <Link href={`/category/${item.slug}`} key={item.id}>
                                     <div className='background-white transition HomeShop-image-container'>
-                                        <img src={item.image} alt={item.name} />
+                                        <img
+                                            src={item.image ?? PLACEHOLDER_IMAGE}
+                                            alt={item.name}
+                                            onError={(e) => { e.currentTarget.src = PLACEHOLDER_IMAGE }}
+                                        />
                                     </div>
-
                                     <p className='manrope font-600 size-18 text-align-center color-deep-forest-green transition HomeShop-category'>
                                         {item.name}
                                     </p>

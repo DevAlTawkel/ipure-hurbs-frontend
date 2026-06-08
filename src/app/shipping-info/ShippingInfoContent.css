@@ -1,0 +1,470 @@
+:root {
+    --clr-bg: #ffffff;
+    --clr-border: #e0e0e0;
+    --clr-input-bg: #fafafa;
+    --clr-text: #1a1a1a;
+    --clr-muted: rgba(88, 88, 90, 1);
+    --clr-accent: #2d2d2d;
+    --clr-btn: #1a1a1a;
+    --clr-btn-text: #ffffff;
+    --clr-discount: rgba(3, 153, 3, 1);
+    --clr-link: #c0392b;
+    --clr-summary-bg: #f7f7f7;
+    --radius: 6px;
+    --font-body: 'DM Sans', sans-serif;
+}
+
+/* ── Layout ── */
+.ShippingInfoContent-main-container {
+    display: flex;
+    gap: 54px;
+    margin: 0 auto;
+    padding: 32px 20px;
+    align-items: flex-start;
+}
+
+/* ── Left Panel ── */
+.ShippingInfoContent-left-container {
+    flex: 1 1 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ShippingInfoContent-left-container h2 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--clr-text);
+    padding-bottom: 10px;
+    border-bottom: 1.5px solid var(--clr-border);
+}
+
+/* ── Form ── */
+.shipping-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.shipping-form select,
+.shipping-form input[type="text"],
+.shipping-form input[type="email"],
+.shipping-form input[type="tel"] {
+    width: 100%;
+    padding: 10px 14px;
+    font-family: "Manrope", sans-serif;
+    font-size: 16px;
+    color: rgba(88, 88, 90, 1);
+    background: #ffffff;
+    border: 1.5px solid rgba(132, 132, 133, 1);
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.ShippingInfoContent-btn-buy {
+    background-color: rgba(47, 58, 47, 1);
+    border: 1px solid rgba(47, 58, 47, 1);
+    padding: 16px;
+    border-radius: 38px;
+    width: max-content;
+    margin-left: auto;
+    min-width: 175px;
+}
+
+.ShippingInfoContent-btn-buy:disabled,
+.ShippingInfoContent-btn-cart:disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    border-color: #e5e7eb;
+    cursor: not-allowed;
+}
+
+.shipping-form select:focus,
+.shipping-form input:focus {
+    border-color: #555555;
+    background: #ffffff;
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: '▾';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: var(--clr-muted);
+    pointer-events: none;
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+}
+
+.form-row>* {
+    flex: 1;
+}
+
+/* ── Checkbox ── */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--clr-muted);
+    cursor: pointer;
+    font-family: "Manrope", sans-serif;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    accent-color: var(--clr-accent);
+    cursor: pointer;
+}
+
+/* ── Save Address Button ── */
+.btn-save-address {
+    align-self: flex-end;
+    padding: 9px 20px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--clr-btn);
+    color: var(--clr-btn-text);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-save-address:hover {
+    opacity: 0.85;
+}
+
+/* ── Shipping Method ── */
+.shipping-method-section h3,
+.coupon-section h3 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--clr-text);
+}
+
+.shipping-options {
+    display: flex;
+    gap: 40px;
+    justify-content: space-between;
+}
+
+.shipping-option {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.shipping-option label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.shipping-option label input[type="radio"] {
+    accent-color: var(--clr-accent);
+}
+
+.shipping-option span {
+    font-size: 11px;
+    color: var(--clr-muted);
+    padding-left: 21px;
+}
+
+/* ── Coupon ── */
+.coupon-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.coupon-row input {
+    flex: 1;
+    max-width: 382px;
+    padding: 9px 14px;
+    font-size: 13px;
+    background: #ffffff;
+    border: 1.5px solid #c8c8c8;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.coupon-row input:focus {
+    border-color: #555555;
+}
+
+/* ── Continue Payment Button ── */
+.btn-continue {
+    width: 100%;
+    padding: 13px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    background: var(--clr-btn);
+    color: var(--clr-btn-text);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: opacity 0.2s;
+    margin-top: 4px;
+}
+
+.btn-continue:hover {
+    opacity: 0.85;
+}
+
+.ShippingInfoContent-btn-continue {
+    background-color: rgba(47, 58, 47, 1);
+    border: 1px solid rgba(47, 58, 47, 1);
+    padding: 16px;
+    border-radius: 38px;
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    width: 80%;
+}
+
+.ShippingInfoContent-btn-continue:disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    border-color: #e5e7eb;
+    cursor: not-allowed;
+}
+
+/* ── Section Dividers ── */
+.section-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding-top: 8px;
+    border-top: 1.5px solid var(--clr-border);
+}
+
+.section-step {
+    padding-top: 10px;
+    border-top: 1.5px solid var(--clr-border);
+
+}
+
+.section-step h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--clr-muted);
+    font-family: "Manrope", sans-serif;
+}
+
+/* ── Right Panel (Summary) ── */
+.ShippingInfoContent-right-container {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.summary-box h2 {
+    margin-bottom: 32px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.summary-row .label {
+    color: var(--clr-muted);
+}
+
+.summary-row .discount {
+    color: var(--clr-discount);
+    font-weight: 500;
+}
+
+.summary-divider {
+    height: 1px;
+    background: var(--clr-border);
+    margin: 10px 0;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.summary-tax {
+    font-size: 11px;
+    color: var(--clr-muted);
+    margin-bottom: 14px;
+}
+
+/* ── Cart Items ── */
+.cart-items-box {
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.cart-items-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 14px;
+}
+
+.cart-items-header a {
+    font-size: 14px;
+    color: rgba(47, 58, 47, 1);
+    padding: 14px;
+    text-decoration: none;
+    font-weight: 400;
+    border-bottom: 1px solid rgba(47, 58, 47, 1);
+}
+
+.cart-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--clr-border);
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item-img {
+    width: 56px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: #e8e8e8;
+    flex-shrink: 0;
+}
+
+.cart-item-img-placeholder {
+    width: 56px;
+    height: 60px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #ddd 0%, #ccc 100%);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: #999;
+    text-align: center;
+}
+
+.cart-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cart-item-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--clr-text);
+    font-family: "Manrope", sans-serif;
+}
+
+.cart-item-desc {
+    font-size: 11px;
+    color: var(--clr-muted);
+    line-height: 1.4;
+    font-family: "Manrope", sans-serif;
+}
+
+.cart-item-meta {
+    font-size: 11px;
+    color: var(--clr-muted);
+    margin-top: 3px;
+    font-family: "Manrope", sans-serif;
+}
+
+.cart-item-price {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--clr-text);
+    margin-top: 10px;
+    font-family: "Manrope", sans-serif;
+}
+
+/* ── Payment Options ── */
+.payment-options-box {
+    background: var(--clr-summary-bg);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius);
+    padding: 14px;
+}
+
+.payment-options-box h3 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-family: "Manrope", sans-serif;
+}
+
+.payment-icons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.payment-icon {
+    width: 42px;
+    height: 26px;
+    border: 1px solid var(--clr-border);
+    border-radius: 4px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--clr-muted);
+    letter-spacing: 0.03em;
+    font-family: "Manrope", sans-serif;
+}
+
+/* ── Responsive ── */
+@media (max-width: 680px) {
+    .ShippingInfoContent-main-container {
+        flex-direction: column;
+    }
+
+    .ShippingInfoContent-right-container {
+        flex: 1 1 100%;
+    }
+
+    .shipping-options {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
