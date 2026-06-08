@@ -6,13 +6,13 @@ const api = axios.create({
     "Content-Type": "application/json",
     Accept: "application/json",
   },
-  withCredentials: true, // browser sends Sanctum cookie automatically
+  withCredentials: false, // browser sends Sanctum cookie automatically
 });
 
 // ─── CSRF token for Sanctum (required before login) ───────────────────────────
 export const initCSRF = () =>
   axios.get(`${process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:8000"}/sanctum/csrf-cookie`, {
-    withCredentials: true,
+    withCredentials: false,
   });
 
 // ─── Response interceptor ─────────────────────────────────────────────────────

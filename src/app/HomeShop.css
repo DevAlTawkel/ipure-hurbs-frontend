@@ -15,8 +15,13 @@
 
 .HomeShop-image-container {
     border-radius: 20px;
-    border: 1px solid rgba(236, 236, 236, 1);
+    height: 350px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 
 .HomeShop-category {
     margin-top: 16px;
@@ -71,7 +76,7 @@
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-.HomeShop-pagination-button-left{
+.HomeShop-pagination-button-left {
     transform: rotate(-180deg);
 }
 
