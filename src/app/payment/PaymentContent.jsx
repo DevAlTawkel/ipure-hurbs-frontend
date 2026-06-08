@@ -35,15 +35,6 @@ const cartItems = [
     },
 ]
 
-const shippingAddress = {
-    name: 'Sarah Jane',
-    line1: 'Flat 502 Crimson Tower',
-    line2: 'Birmingham, West Midlands',
-    country: 'England',
-    email: 'sarahj@gmail.com',
-    phone: '+44 7914-357212',
-}
-
 const PaymentContent = () => {
 
     const shippingInfo = useCheckoutStore(

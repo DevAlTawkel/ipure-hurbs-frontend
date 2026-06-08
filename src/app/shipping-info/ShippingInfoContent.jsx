@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import './ShippingInfoContent.css'
 import { useRouter } from 'next/navigation';
 import { useCheckoutStore } from "@/store/useCheckoutStore";
+import toast from 'react-hot-toast';
 
 const cartItems = [
     {
@@ -56,7 +57,29 @@ const ShippingInfoContent = () => {
     }
 
     const handleContinue = () => {
+        const requiredFields = ["country", "firstName", "lastName", "contact", "email", "address1", "city", "zip"];
+
+        const emptyFields = requiredFields.filter((field) => !form[field] || form[field].trim() === "");
+
+        if (emptyFields.length > 0) {
+            toast.error(`Please fill in all required fields: ${emptyFields.join(", ")}`);
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(form.email)) {
+            toast.error("Please enter a valid email address.");
+            return;
+        }
+
+        const phoneRegex = /^\+?\d{7,15}$/;
+        if (!phoneRegex.test(form.contact)) {
+            toast.error("Please enter a valid contact number.");
+            return;
+        }
+
         setShippingInfo(form);
+        toast.success("Shipping info saved!");
         router.push("/payment");
     };
 
