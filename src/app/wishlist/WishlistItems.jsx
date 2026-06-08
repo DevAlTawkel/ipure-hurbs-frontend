@@ -7,7 +7,6 @@ import { useWishlistStore } from '@/store/useWishlistStore'
 import { useCartStore } from '@/store/useCartStore'
 import ProductCard from '@/components/ProductCard'
 import { useProductStore } from '@/store/useProductStore'
-import toast from 'react-hot-toast'
 
 const WishlistItems = () => {
 
@@ -19,17 +18,6 @@ const WishlistItems = () => {
     const suggestedProducts = products
         .filter((p) => !wishlistIds.includes(p.id))
         .slice(0, 8)
-
-    const handleIncrease = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (quantity === 0) {
-            addToCart(product);
-        } else {
-            updateQuantity(product.id, quantity + 1);
-        }
-    };
 
     const handleAddAllToCart = () => {
         if (wishlist.length === 0) return;
@@ -55,11 +43,17 @@ const WishlistItems = () => {
                 </div>
             </div>
 
+            <div style={{padding:'20px 26px 0'}}>
+                {wishlist.length === 0 && (<p className='manrope font-500 size-16'>No products found</p>)}
+            </div>
+
             <div className='display-grid WishlistItems-grid'>
                 {wishlist.map((product) => (
                     <ProductCardWishlist product={product} id={product.id} />
                 ))}
             </div>
+
+
 
             <div className='WishlistItems-warning-container'>
                 <div className='WishlistItems-i-main-container'>
