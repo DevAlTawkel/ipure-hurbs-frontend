@@ -1,8 +1,6 @@
 "use client";
 
-import { DUMMY_PRODUCTS } from '@/store/useProductStore'
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { useProductStore } from "@/store/useProductStore";
 import { useCartStore } from "@/store/useCartStore";
 import { useWishlistStore } from "@/store/useWishlistStore";
@@ -12,20 +10,24 @@ import toast from "react-hot-toast";
 
 const TABS = ["Description", "Additional information", "Reviews"];
 
-export default function ProductDetailss() {
-  const { slug } = useParams();
-  const { products } = useProductStore();
+export default function ProductDetails({ slug }) {
+  const { fetchBySlug, products } = useProductStore();
   const { addToCart, updateQuantity, cart } = useCartStore();
   const { toggleWishlist, wishlistIds } = useWishlistStore();
 
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [activeTab, setActiveTab] = useState("Description");
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedSize, setSelectedSize] = useState('125 gm');
+  const [selectedSize, setSelectedSize] = useState(null);
   const [deliveryType, setDeliveryType] = useState("standard");
   const [selectedQty, setSelectedQty] = useState(1);
   const [mounted, setMounted] = useState(false);
 
   const [visibleReviews, setVisibleReviews] = useState(3);
+  const [zoom, setZoom] = useState({ active: false, x: 0, y: 0 });
 
   const DUMMY_REVIEWS = [
     {
@@ -96,22 +98,68 @@ export default function ProductDetailss() {
     },
   ];
 
+  useEffect(() => {
+    if (!slug) return;
+    console.log('test')
+    setLoading(true);
+    setError(null);
+
+    fetchBySlug(slug)
+      .then((fetched) => {
+        if (fetched) {
+          setProduct(fetched);
+        } else {
+          setError("Product not found");
+        }
+      })
+      .catch(() => setError("Failed to load product"))
+      .finally(() => setLoading(false));
+  }, [slug]);
+
+
   useEffect(() => { setMounted(true); }, []);
 
+  useEffect(() => {
+    if (product?.size?.length) {
+      const cheapest = [...product.size].sort((a, b) => a.effective_price - b.effective_price)[0];
+      setSelectedSize(cheapest);
+    }
+  }, [product]);
+
+  const displayPrice = selectedSize?.effective_price ?? product?.price ?? 0;
+
+  const perKgPrice = useMemo(() => {
+    if (!product?.size?.length) return null;
+
+    // Parse weight in grams from variant name (e.g. "500g" → 500, "1kg" → 1000)
+    const parseGrams = (name) => {
+      const lower = name.toLowerCase();
+      const kgMatch = lower.match(/([\d.]+)\s*kg/);
+      if (kgMatch) return parseFloat(kgMatch[1]) * 1000;
+      const gMatch = lower.match(/([\d.]+)\s*g/);
+      if (gMatch) return parseFloat(gMatch[1]);
+      return 0;
+    };
+
+    // Find the largest variant
+    const largest = [...product.size].sort((a, b) => parseGrams(b.name) - parseGrams(a.name))[0];
+    const grams = parseGrams(largest.name);
+    if (!grams) return null;
+
+    const pricePerKg = (largest.effective_price / grams) * 1000;
+    return pricePerKg.toFixed(2);
+  }, [product?.size]);
   // ─── Find product by slug ─────────────────────────────────────────────────
   // When API is ready: fetch from /api/products/{slug} instead
-  const product = DUMMY_PRODUCTS.find((p) => p.slug === slug) ?? products[0];
+  // const product = DUMMY_PRODUCTS.find((p) => p.slug === slug) ?? products[0];
 
   const cartItem = cart.find((i) => i.id === product?.id);
   const isWishlisted = mounted && wishlistIds.includes(product?.id);
+  const isInCart = !!cartItem;
 
   useEffect(() => {
-    if (cartItem) {
-      setSelectedQty(cartItem.quantity);
-    }
+    if (cartItem) setSelectedQty(cartItem.quantity);
   }, [cartItem]);
-
-  const isInCart = !!cartItem;
 
   const handleIncrease = () => {
     const newQty = selectedQty + 1;
@@ -151,7 +199,6 @@ export default function ProductDetailss() {
     }
   };
 
-  // ─── Recommended: other products ─────────────────────────────────────────
   const recommended = products.filter((p) => p.id !== product?.id).slice(0, 4);
   const moreToExplore = products.filter((p) => p.id !== product?.id).slice(4, 9);
 
@@ -215,7 +262,24 @@ export default function ProductDetailss() {
     </div>
   );
 
-  const [zoom, setZoom] = useState({ active: false, x: 0, y: 0 });
+  // ─── Loading / error states ───────────────────────────────────────────────
+  if (loading) return (
+    <div className="ProductDetails-wrapper">
+      <div style={{ padding: '80px 0', textAlign: 'center' }}>
+        <p className="manrope font-400 size-16 color-deep-forest-green">Loading product...</p>
+      </div>
+    </div>
+  );
+
+  if (error || !product) return (
+    <div className="ProductDetails-wrapper">
+      <div style={{ padding: '80px 0', textAlign: 'center' }}>
+        <p className="manrope font-400 size-16 color-deep-forest-green">{error ?? "Product not found"}</p>
+      </div>
+    </div>
+  );
+
+  if (!product) return null;
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -228,7 +292,6 @@ export default function ProductDetailss() {
     setZoom({ active: false, x: 0, y: 0 });
   };
 
-  if (!product) return null;
 
   return (
     <div className="ProductDetails-wrapper">
@@ -318,7 +381,7 @@ export default function ProductDetailss() {
           <div className='display-flex align-items-center ProductDetails-by-container'>
             <p className='manrope font-400 size-20 ProductDetails-by'>By:</p>
             <a href="#" className='ProductDetails-by-a'>
-              <p className='manrope font-400 size-18 '>Bioqem</p>
+              <p className='manrope font-400 size-18 '>{product.brand}</p>
               <div className='display-flex align-items-center justify-content-center ProductDetails-by-arrow'>
                 <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M4.94972 6.36412L-4.94538e-07 1.41432L1.41421 0.000118194L7.77822 6.36412L1.41421 12.728L-6.18171e-08 11.3138L4.94972 6.36412Z" fill="#0048FF" />
@@ -349,29 +412,33 @@ export default function ProductDetailss() {
           </div>
 
           <div className="display-flex ProductDetails-price-row">
-            <span className="manrope font-600 size-24 ProductDetails-price">${product.price.toFixed(2)}</span>
-            {product.originalPrice > product.price && (
-              <span className="manrope font-600 size-24 color-dfg-800 ProductDetails-original-price">${product.originalPrice.toFixed(2)}</span>
+            <span className="manrope font-600 size-24 ProductDetails-price">${displayPrice.toFixed(2)}</span>
+            {selectedSize && selectedSize.price > selectedSize.effective_price && (
+              <span className="manrope font-600 size-24 color-dfg-800 ProductDetails-original-price">
+                ${parseFloat(selectedSize.price).toFixed(2)}
+              </span>
             )}
           </div>
 
-          <p className="manrope font-400 size-14 color-black-black ProductDetails-short-desc">Bioqem Pharma Happy Knights Prash for Men is a natural, plant-based blend with ingredients like Korean Red Ginseng, Royal Jelly, and Safed Musali to support energy, stamina, vitality, and men’s wellness naturally.</p>
+          <p className="manrope font-400 size-14 color-black-black ProductDetails-short-desc">{product.description}</p>
           <p className='manrope font-600 size-20 ProductDetails-choose'>Choose <span className='manrope font-600 size-16 color-white ProductDetails-choose-express'>Express delivery</span> <span className='manrope font-500 size-14 color-earthy-olive-color'>Get your Order earliest.</span></p>
           <p className="manrope font-600 size-20 color-deep-forest-green ProductDetails-size">Size</p>
           <div className="display-flex ProductDetails-sizes-container">
-            {
-              ['125 gm', '250 gm', '500 gm', '1 Kg'].map((item, i) => (
-                <div key={i} onClick={() => setSelectedSize(item)} className={`cursor-pointer manrope font-400 size-18 color-deep-forest-green transition text-align-center ProductDetails-size-box ${selectedSize === item && 'active'}`}>
-                  {item}
-                </div>
-              ))
-            }
+            {[...(product.size || [])].sort((a, b) => a.effective_price - b.effective_price).map((item, i) => (
+              <div
+                key={item.variant_id}
+                onClick={() => setSelectedSize(item)}
+                className={`cursor-pointer manrope font-400 size-18 color-deep-forest-green transition text-align-center ProductDetails-size-box ${selectedSize?.variant_id === item.variant_id ? 'active' : ''}`}
+              >
+                {item.name}
+              </div>
+            ))}
           </div>
 
           <div className="display-flex flex-direction-column">
-            <p className="manrope font-400 size-14 color-black-black">SKU: N/A</p>
-            <p className="manrope font-400 size-14 color-black-black">Categories: Best selling, Men’s health enhancer</p>
-            <p className="manrope font-400 size-14 color-black-black">Tags: Erectile dysfunction, loss of libido, Men’s wellness, Premature ejaculation</p>
+            <p className="manrope font-400 size-14 color-black-black">SKU: {product.sku}</p>
+            <p className="manrope font-400 size-14 color-black-black">Categories: {product.category}</p>
+            <p className="manrope font-400 size-14 color-black-black">Tags: {product.tags.map((item) => item)}</p>
 
             <div className="display-grid gap-12 ProductDetails-delivery-details-container">
               <div className="display-flex align-items-center gap-8">
@@ -425,8 +492,14 @@ export default function ProductDetailss() {
 
         <div className="ProductDetails-checkout-container">
           <div className="display-flex align-items-baseline gap-8">
-            <span className="manrope font-600 size-24 ProductDetails-price">${product.price.toFixed(2)}</span>
-            <span className="manrope font-400 size-16 color-deep-forest-green">($ 200.21 / Kg)</span>
+            <span className="manrope font-600 size-24 ProductDetails-price">
+              ${(displayPrice * selectedQty).toFixed(2)}
+            </span>
+            {perKgPrice && (
+              <span className="manrope font-400 size-16 color-deep-forest-green">
+                (${perKgPrice} / Kg)
+              </span>
+            )}
           </div>
 
           <div className="display-flex flex-direction-column gap-8 ProductDetails-delivery-options">
@@ -521,137 +594,122 @@ export default function ProductDetailss() {
             <div className="ProductDetails-description">
               <div className="ProductDetails-description-first-row">
                 <p className="manrope font-600 size-20 color-deep-forest-green ProductDetails-description-title">Overview</p>
-                <p className="manrope font-400 size-16 color-black-black ProductDetails-description-p">Happy Knights for Men is a herbal wellness supplement specially formulated to support men’s vitality, stamina, and overall reproductive wellness. Crafted with a blend of carefully selected traditional herbs and natural ingredients, this supplement is designed to promote daily energy, physical endurance, and overall male well-being. It works by helping men maintain an active lifestyle while supporting strength, performance, and long-term wellness.</p>
-                <p className="manrope font-400 size-16 color-black-black ProductDetails-description-p">The herbal formulation is developed to assist in maintaining energy levels, improving stamina, and enhancing overall vitality, making it suitable for men looking to support their physical performance and everyday confidence. By combining natural botanical ingredients known for their traditional wellness benefits, Happy Knights for Men aims to promote balance, endurance, and overall health without relying on harsh synthetic components.</p>
-                <p className="manrope font-400 size-16 color-black-black ProductDetails-description-p">Regular use as part of a healthy lifestyle may help support men’s wellness goals by contributing to physical resilience, active performance, and general vitality. Designed for modern lifestyles, Happy Knights for Men provides a natural wellness approach for men seeking to maintain their strength, stamina, and overall reproductive health.</p>
+                {product.overview
+                  ? product.overview.split('\n').map((line, i) => {
+                    if (!line.trim()) return null;
+                    if (line.trim().startsWith('•')) {
+                      return (
+                        <p key={i} className="manrope font-400 size-16 color-black-black ProductDetails-description-p" style={{ paddingLeft: '1em' }}>
+                          {line.trim()}
+                        </p>
+                      );
+                    }
+                    return (
+                      <p key={i} className="manrope font-400 size-16 color-black-black ProductDetails-description-p">
+                        {line.trim()}
+                      </p>
+                    );
+                  })
+                  : null
+                }
               </div>
-
             </div>
-
           )}
 
           {activeTab === "Additional information" && (
             <div className="ProductDetails-description">
               <div className="ProductDetails-description-second-row">
-                <div>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th className='manrope size-16 font-600 color-deep-forest-green'>Key Herbal Ingredients</th>
-                        <th className='manrope size-16 font-600 color-deep-forest-green'>Key Benefits</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className='manrope size-14 font-400 color-black-black'>Korean Red Ginseng</td>
-                        <td className='manrope size-14 font-400 color-black-black'>Supports libido and male vitality</td>
-                      </tr>
-                      <tr>
-                        <td className='manrope size-14 font-400 color-black-black'>Ashwagandha (Withania somnifera)</td>
-                        <td className='manrope size-14 font-400 color-black-black'>Helps maintain healthy blood circulation</td>
-                      </tr>
-                      <tr>
-                        <td className='manrope size-14 font-400 color-black-black'>Royal Jelly, Gokhru, Giloy & Shilajit </td>
-                        <td className='manrope size-14 font-400 color-black-black'>Promotes overall sexual wellness</td>
-                      </tr>
-                      <tr>
-                        <td className='manrope size-14 font-400 color-black-black'>Siyah Musali (Curculigo orchioides)</td>
-                        <td className='manrope size-14 font-400 color-black-black'>Supports energy and stamina</td>
-                      </tr>
-                      <tr>
-                        <td className='manrope size-14 font-400 color-black-black'>Safed Musali (Chlorophytum borivilianum)</td>
-                        <td className='manrope size-14 font-400 color-black-black'>Helps reduce fatigue and general weakness</td>
-                      </tr>
-                      <tr>
-                        <td className='manrope size-14 font-400 color-black-black'>Kamarkas (Butea monosperma)</td>
-                        <td className='manrope size-14 font-400 color-black-black'>Supports reproductive health</td>
-                      </tr>
-                      <tr>
-                        <td className='manrope size-14 font-400 color-black-black'>Vidarikand (Pueraria tuberosa)</td>
-                        <td className='manrope size-14 font-400 color-black-black'>Supports overall immunity and wellness</td>
-                      </tr>
-                      <tr>
-                        <td className='manrope size-14 font-400 color-black-black'>Zafran, Kaunch Beej & Mastagi</td>
-                        <td className='manrope size-14 font-400 color-black-black'>Promotes vigor and vitality</td>
-                      </tr>
-                      <tr>
-                        <td className='manrope size-14 font-400 color-black-black'>Ginger, Elaichi, Maghz-E-Chilgoza </td>
-                        <td className='manrope size-14 font-400 color-black-black'>Helps support healthy sperm quality</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+
+                {/* Key Herbal Ingredients & Benefits table */}
+                {(product.additionalInfo?.key_herbal_ingredients?.length > 0 || product.additionalInfo?.key_benefits?.length > 0) && (
+                  <div>
+                    <table>
+                      <thead>
+                        <tr>
+                          {product.additionalInfo?.key_herbal_ingredients?.length > 0 && (
+                            <th className='manrope size-16 font-600 color-deep-forest-green'>Key Herbal Ingredients</th>
+                          )}
+                          {product.additionalInfo?.key_benefits?.length > 0 && (
+                            <th className='manrope size-16 font-600 color-deep-forest-green'>Key Benefits</th>
+                          )}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {Array.from({
+                          length: Math.max(
+                            product.additionalInfo?.key_herbal_ingredients?.length ?? 0,
+                            product.additionalInfo?.key_benefits?.length ?? 0
+                          )
+                        }).map((_, i) => (
+                          <tr key={i}>
+                            {product.additionalInfo?.key_herbal_ingredients?.length > 0 && (
+                              <td className='manrope size-14 font-400 color-black-black'>
+                                {product.additionalInfo.key_herbal_ingredients[i] ?? ""}
+                              </td>
+                            )}
+                            {product.additionalInfo?.key_benefits?.length > 0 && (
+                              <td className='manrope size-14 font-400 color-black-black'>
+                                {product.additionalInfo.key_benefits[i] ?? ""}
+                              </td>
+                            )}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
 
                 <div className='display-flex flex-direction-column gap-15'>
-                  <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
-                    <h6 className='manrope font-700 size-18 color-deep-forest-green'>Other Ingredients</h6>
-                    <p className='manrope font-400 size-16 color-black-black'>Natural herbal extracts, botanical ingredients, and approved excipients.</p>
-                    <p className='manrope font-400 size-16 color-black-black'>Allergen Information: <br />Manufactured in a facility that may process nuts, dairy, soy, wheat, sesame, or gluten-containing ingredients.</p>
-                  </div>
-                  <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
-                    <h6 className='manrope font-700 size-18 color-deep-forest-green'>Specifications</h6>
-                    <div className='display-grid ProductDetails-description-second-row-rght-sub-grid'>
-                      <div>
-                        <p className='manrope font-400 size-16 color-black-black'>Form: Herbal Powder</p>
-                        <p className='manrope font-400 size-16 color-black-black'>Category: Men's Wellness Supplement</p>
-                        <p className='manrope font-400 size-16 color-black-black'>Suitable For: Adult Men</p>
-                      </div>
-                      <div>
-                        <p className='manrope font-400 size-16 color-black-black'>Serving Size: 5 gm</p>
-                        <p className='manrope font-400 size-16 color-black-black'>Storage: Store in a cool, dry place</p>
-                        <p className='manrope font-400 size-16 color-black-black'>Usage Type: Oral Consumption</p>
+                  {/* Other Ingredients */}
+                  {product.additionalInfo?.other_ingredients && (
+                    <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
+                      <h6 className='manrope font-700 size-18 color-deep-forest-green'>Other Ingredients</h6>
+                      {product.additionalInfo.other_ingredients.split('\n').map((line, i) =>
+                        line.trim() ? (
+                          <p key={i} className='manrope font-400 size-16 color-black-black'>{line.trim()}</p>
+                        ) : null
+                      )}
+                    </div>
+                  )}
+
+                  {/* Allergen Info */}
+                  {product.additionalInfo?.allergen_info && (
+                    <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
+                      <h6 className='manrope font-700 size-18 color-deep-forest-green'>Allergen Information</h6>
+                      {product.additionalInfo.allergen_info.split('\n').map((line, i) =>
+                        line.trim() ? (
+                          <p key={i} className='manrope font-400 size-16 color-black-black'>{line.trim()}</p>
+                        ) : null
+                      )}
+                    </div>
+                  )}
+
+                  {/* Specifications */}
+                  {product.additionalInfo?.specifications?.length > 0 && (
+                    <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
+                      <h6 className='manrope font-700 size-18 color-deep-forest-green'>Specifications</h6>
+                      <div className='display-grid ProductDetails-description-second-row-rght-sub-grid'>
+                        {product.additionalInfo.specifications.map((spec, i) => (
+                          <p key={i} className='manrope font-400 size-16 color-black-black'>
+                            {spec.label}: {spec.value}
+                          </p>
+                        ))}
                       </div>
                     </div>
-                  </div>
+                  )}
 
-                  <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
-                    <h6 className='manrope font-700 size-18 color-deep-forest-green'>Indications</h6>
-                    <p className='manrope font-400 size-16 color-black-black'>Traditionally used to support:</p>
-                    <ul className='two-col-list'>
-                      <li className='manrope font-400 size-16 color-black-black'>Male vitality</li>
-                      <li className='manrope font-400 size-16 color-black-black'>Physical stamina</li>
-                      <li className='manrope font-400 size-16 color-black-black'>Energy levels</li>
-                      <li className='manrope font-400 size-16 color-black-black'>General wellness</li>
-                      <li className='manrope font-400 size-16 color-black-black'>Reproductive wellness</li>
-                      <li className='manrope font-400 size-16 color-black-black'>Immune health</li>
-                    </ul>
-                  </div>
+                  {/* Indications */}
+                  {product.additionalInfo?.indications?.length > 0 && (
+                    <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
+                      <h6 className='manrope font-700 size-18 color-deep-forest-green'>Indications</h6>
+                      <ul className='two-col-list'>
+                        {product.additionalInfo.indications.map((item, i) => (
+                          <li key={i} className='manrope font-400 size-16 color-black-black'>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
-              </div>
-
-              {/* <hr className="ProductDetails-description-hr" /> */}
-
-              <div className="display-grid ProductDetails-description-third-row">
-                <div className='background-white-200 ProductDetails-description-third-row-sub'>
-                  <h6 className="manrope font-700 size-18 color-deep-forest-green">Specifications</h6>
-                  <p className="manrope font-400 size-16 color-black-black">Serving Size: 5 gm (1 Teaspoon)</p>
-                  <p className="manrope font-400 size-16 color-black-black">Serving Size: 5 gm (1 Servings Per Container: As mentioned on pack)</p>
-                </div>
-
-                <div className='background-white-200 ProductDetails-description-third-row-sub'>
-                  <h6 className="manrope font-700 size-18 color-deep-forest-green">Suggested Use</h6>
-                  <ul>
-                    <li className="manrope font-400 size-16 color-black-black">Mix 1 teaspoon (5 gm) with cold milk and chew as directed.</li>
-                    <li className="manrope font-400 size-16 color-black-black">Consume before food or at least 2 hours after meals.</li>
-                    <li className="manrope font-400 size-16 color-black-black">Use regularly for best results</li>
-                    <li className="manrope font-400 size-16 color-black-black">Follow physician guidance where applicable</li>
-                  </ul>
-                </div>
-
-                <div className='background-white-200 ProductDetails-description-third-row-sub'>
-                  <h6 className="manrope font-700 size-18 color-deep-forest-green">Warnings</h6>
-                  <ul>
-                    <li className="manrope font-400 size-16 color-black-black">Read the label carefully before use.</li>
-                    <li className="manrope font-400 size-16 color-black-black">Do not exceed recommended usage.</li>
-                    <li className="manrope font-400 size-16 color-black-black">Keep out of reach of children.</li>
-                    <li className="manrope font-400 size-16 color-black-black">Store in a cool and dry place.</li>
-                    <li className="manrope font-400 size-16 color-black-black">If you are under medical supervision, consult a healthcare professional before use.</li>
-                  </ul>
-                  <div className='manrope font-600 size-16 ProductDetails-description-third-row-sub-warning'>
-                    Do not use if safety seal is broken or missing.
-                  </div>
-                </div>
-
               </div>
 
               <div className="ProductDetails-description-disclaimer">
@@ -661,52 +719,26 @@ export default function ProductDetailss() {
             </div>
           )}
 
-
-
           < hr className="ProductDetails-description-hr" />
 
           {activeTab === "Reviews" && (
             <div className="ProductDetails-reviews">
-              {/* <div className="ProductDetails-reviews-sub">
-                <p className="manrope font-500 size-20 color-deep-forest-green ProductDetails-reviews-empty">
-                  No reviews yet. Be the first to review this product.
-                </p>
-              </div> */}
-
               <div className='display-flex align-items-flex-start ProductDetails-reviews-sub'>
+
+                {/* Left: rating summary */}
                 <div className='ProductDetails-reviews-count-container'>
-                  <h3 className='manrope size-48 color-deep-forest-green'>4.7</h3>
+                  <h3 className='manrope size-48 color-deep-forest-green'>
+                    {product.reviews?.average ?? 0}
+                  </h3>
                   <div className="display-flex align-items-center ProductDetails-stars">
                     {[...Array(5)].map((_, index) => {
-                      const fill = Math.max(0, Math.min(100, (4.7 - index) * 100));
+                      const fill = Math.max(0, Math.min(100, ((product.reviews?.average ?? 0) - index) * 100));
                       return <Star key={index} fill={fill} />;
                     })}
                   </div>
-                  <p className='manrope font-400 size-16 color-deep-forest-green ProductDetails-reviews-p'>2580 verified reviews</p>
-
-                  {/* Rating Bars */}
-                  <div className='ProductDetails-rating-bars'>
-                    {[
-                      { star: 5, pct: 74 },
-                      { star: 4, pct: 17 },
-                      { star: 3, pct: 6 },
-                      { star: 2, pct: 0 },
-                      { star: 1, pct: 3 },
-                    ].map(({ star, pct }) => (
-                      <div key={star} className='ProductDetails-rating-bar-row'>
-                        <span className='manrope font-500 size-12 color-deep-forest-green ProductDetails-rating-bar-label'>{star}</span>
-                        <Star fill={pct > 0 ? 100 : 0} />
-                        <div className='ProductDetails-rating-bar-track'>
-                          <div
-                            className='ProductDetails-rating-bar-fill'
-                            style={{ width: `${pct}%` }}
-                          />
-                        </div>
-                        <span className='manrope font-400 size-12 color-black-black ProductDetails-rating-bar-pct'>{pct}%</span>
-                      </div>
-                    ))}
-                  </div>
-
+                  <p className='manrope font-400 size-16 color-deep-forest-green ProductDetails-reviews-p'>
+                    {product.reviews?.total ?? 0} verified reviews
+                  </p>
 
                   <button className='color-white background-deep-forest-green gap-8 transition manrope font-600 size-16 ProductDetails-write-review-btn'>
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -716,8 +748,11 @@ export default function ProductDetailss() {
                   </button>
                 </div>
 
+                {/* Right: review list */}
                 <div className='width-100 ProductDetails-all-reviews-container'>
-                  <h4 className='manrope font-600 size-28 color-deep-forest-green'>482 Reviews</h4>
+                  <h4 className='manrope font-600 size-28 color-deep-forest-green'>
+                    {product.reviews?.total ?? 0} Reviews
+                  </h4>
 
                   <div className='display-flex align-items-center justify-content-space-between width-100 ProductDetails-reviews-toolbar'>
                     <button className="display-flex align-items-center color-deep-forest-green font-400 manrope cursor-pointer transition outline-none size-18 ProductDetails-filter-btn">
@@ -731,94 +766,79 @@ export default function ProductDetailss() {
                     </button>
                   </div>
 
-                  {/* Review cards */}
-                  <div className='ProductDetails-review-list'>
-                    {DUMMY_REVIEWS.slice(0, visibleReviews).map((review) => (
-                      <div key={review.id} className='ProductDetails-review-card'>
-
-                        {/* Header */}
-                        <div className='display-flex align-items-center justify-content-space-between ProductDetails-review-header'>
-                          <div className='display-flex align-items-center gap-10'>
-                            <div className='ProductDetails-review-avatar'>
-                              <span className='manrope font-600 size-14 color-white'>
-                                {review.name.charAt(0)}
-                              </span>
-                            </div>
-                            <div>
-                              <p className='manrope font-700 size-14 color-deep-forest-green'>{review.name}</p>
-                              <p className='manrope font-500 size-14 color-dfg-400'>{review.date}</p>
-                            </div>
-                          </div>
-                          {review.verified && (
-                            <div className='display-flex align-items-center justify-content-center gap-8 ProductDetails-verified-badge'>
-                              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="0.5" y="0.5" width="13" height="13" rx="6.5" stroke="#2F3A2F" />
-                                <path d="M5.625 8.58824L9.41667 4L10 4.70588L5.625 10L3 6.82355L3.58334 6.11767L5.625 8.58824Z" fill="#2F3A2F" />
-                              </svg>
-                              <span className='manrope font-500 size-14' style={{ color: 'rgba(47, 58, 47, 1)', lineHeight: '20px' }}>Verified</span>
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Stars */}
-                        <div className='display-flex align-items-center ProductDetails-stars' style={{ marginTop: 8 }}>
-                          {[...Array(5)].map((_, i) => {
-                            const fill = Math.max(0, Math.min(100, (review.rating - i) * 100));
-                            return <Star key={i} fill={fill} />;
-                          })}
-                        </div>
-
-                        {/* Title & body */}
-                        <p className='manrope font-600 size-14 ProductDetails-review-title'>{review.title}</p>
-                        <p className='manrope font-400 size-16 color-deep-forest-green ProductDetails-review-body'>{review.body}</p>
-
-                        {/* Images */}
-                        {review.images.length > 0 && (
-                          <div className='display-flex align-items-center gap-12 ProductDetails-review-images'>
-                            {review.images.map((img, i) => (
-                              // <img key={i} src={img} alt={`review-img-${i}`} className='ProductDetails-review-img' />
-                              <div key={i} className='display-flex align-items-center justify-content-center ProductDetails-review-img'>
-                                <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M0.9918 18C0.44405 18 0 17.5551 0 17.0066V0.9934C0 0.44476 0.45531 0 0.9918 0H19.0082C19.556 0 20 0.44495 20 0.9934V17.0066C20 17.5552 19.5447 18 19.0082 18H0.9918ZM18 12V2H2V16L12 6L18 12ZM18 14.8284L12 8.8284L4.82843 16H18V14.8284ZM6 8C4.89543 8 4 7.1046 4 6C4 4.89543 4.89543 4 6 4C7.10457 4 8 4.89543 8 6C8 7.1046 7.10457 8 6 8Z" fill="#2F3A2F" />
-                                </svg>
+                  {product.reviews?.data?.length > 0 ? (
+                    <>
+                      <div className='ProductDetails-review-list'>
+                        {product.reviews.data.slice(0, visibleReviews).map((review) => (
+                          <div key={review.id} className='ProductDetails-review-card'>
+                            <div className='display-flex align-items-center justify-content-space-between ProductDetails-review-header'>
+                              <div className='display-flex align-items-center gap-10'>
+                                <div className='ProductDetails-review-avatar'>
+                                  <span className='manrope font-600 size-14 color-white'>
+                                    {review.name?.charAt(0) ?? "?"}
+                                  </span>
+                                </div>
+                                <div>
+                                  <p className='manrope font-700 size-14 color-deep-forest-green'>{review.name}</p>
+                                  <p className='manrope font-500 size-14 color-dfg-400'>{review.date}</p>
+                                </div>
                               </div>
-                            ))}
-                            {/* <button className='manrope font-400 size-14 ProductDetails-review-add-more'>Add more</button> */}
-                          </div>
-                        )}
+                              {review.verified && (
+                                <div className='display-flex align-items-center justify-content-center gap-8 ProductDetails-verified-badge'>
+                                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <rect x="0.5" y="0.5" width="13" height="13" rx="6.5" stroke="#2F3A2F" />
+                                    <path d="M5.625 8.58824L9.41667 4L10 4.70588L5.625 10L3 6.82355L3.58334 6.11767L5.625 8.58824Z" fill="#2F3A2F" />
+                                  </svg>
+                                  <span className='manrope font-500 size-14' style={{ color: 'rgba(47, 58, 47, 1)', lineHeight: '20px' }}>Verified</span>
+                                </div>
+                              )}
+                            </div>
 
-                        {/* Footer */}
-                        <div className='display-flex align-items-center justify-content-space-between ProductDetails-review-footer'>
-                          <button className='display-flex align-items-center gap-8 manrope font-600 size-20 ProductDetails-helpful-btn'>
-                            <svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path fillRule="evenodd" clipRule="evenodd" d="M7.75 0H6.79989L6.5456 0.915448L4.29989 9H0V22.5H18.1343L18.4287 21.6661L23.0177 8.66609L23.6058 7H13.5V4.85C13.5 2.17142 11.3286 0 8.65 0H7.75ZM6.4544 10.5846L8.69996 2.50052C9.9748 2.52711 11 3.56883 11 4.85V9.5H20.0722L16.3657 20H6.25V11.3204L6.4544 10.5846Z" fill="#2F3A2F" />
-                            </svg>
-                            Helpful ({review.helpful})
-                          </button>
-                          <button className='manrope font-600 size-20 ProductDetails-report-btn'>
-                            Report
+                            <div className='display-flex align-items-center ProductDetails-stars' style={{ marginTop: 8 }}>
+                              {[...Array(5)].map((_, i) => {
+                                const fill = Math.max(0, Math.min(100, (review.rating - i) * 100));
+                                return <Star key={i} fill={fill} />;
+                              })}
+                            </div>
+
+                            {review.title && (
+                              <p className='manrope font-600 size-14 ProductDetails-review-title'>{review.title}</p>
+                            )}
+                            <p className='manrope font-400 size-16 color-deep-forest-green ProductDetails-review-body'>{review.body}</p>
+
+                            <div className='display-flex align-items-center justify-content-space-between ProductDetails-review-footer'>
+                              <button className='display-flex align-items-center gap-8 manrope font-600 size-20 ProductDetails-helpful-btn'>
+                                <svg width="24" height="23" viewBox="0 0 24 23" fill="none">
+                                  <path fillRule="evenodd" clipRule="evenodd" d="M7.75 0H6.79989L6.5456 0.915448L4.29989 9H0V22.5H18.1343L18.4287 21.6661L23.0177 8.66609L23.6058 7H13.5V4.85C13.5 2.17142 11.3286 0 8.65 0H7.75ZM6.4544 10.5846L8.69996 2.50052C9.9748 2.52711 11 3.56883 11 4.85V9.5H20.0722L16.3657 20H6.25V11.3204L6.4544 10.5846Z" fill="#2F3A2F" />
+                                </svg>
+                                Helpful ({review.helpful ?? 0})
+                              </button>
+                              <button className='manrope font-600 size-20 ProductDetails-report-btn'>Report</button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {visibleReviews < product.reviews.data.length && (
+                        <div className='display-flex justify-content-flex-end'>
+                          <button
+                            onClick={() => setVisibleReviews((prev) => prev + 3)}
+                            className='manrope font-500 size-16 color-deep-forest-green ProductDetails-view-more-btn'
+                          >
+                            View more
                           </button>
                         </div>
-
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* View more */}
-                  {visibleReviews < DUMMY_REVIEWS.length && (
-                    <div className='display-flex justify-content-flex-end'>
-                      <button
-                        onClick={() => setVisibleReviews((prev) => prev + 3)}
-                        className='manrope font-500 size-16 color-deep-forest-green ProductDetails-view-more-btn'
-                      >
-                        View more
-                      </button>
+                      )}
+                    </>
+                  ) : (
+                    <div className="ProductDetails-reviews-sub">
+                      <p className="manrope font-500 size-20 color-deep-forest-green ProductDetails-reviews-empty">
+                        No reviews yet. Be the first to review this product.
+                      </p>
                     </div>
                   )}
-
                 </div>
               </div>
-
               <hr className="ProductDetails-description-hr" />
             </div>
           )}

@@ -5,9 +5,11 @@ import productService from "@/services/productService";
 const mapProduct = (p) => ({
   id: p.id,
   slug: p.slug,
+  sku: p.sku ?? "N/A",
   name: p.name,
   brand: p.brand?.name ?? "",
-  description: p.short_description ?? p.description ?? "",
+  description: p.short_description ?? "",
+  overview: p.description ?? "",
   price: parseFloat(p.price),
   originalPrice: p.compare_price ? parseFloat(p.compare_price) : parseFloat(p.price),
   discount: p.discount_percentage ?? 0,
@@ -26,6 +28,8 @@ const mapProduct = (p) => ({
     : p.has_discount ? `${p.discount_percentage}% off`
       : p.is_featured ? "New"
         : null,
+  size: p.variants,
+  additionalInfo: p.additional_info ?? null,
 });
 
 // ─── Dummy Data — fallback until API is stable ────────────────────────────────
@@ -83,6 +87,7 @@ export const useProductStore = create((set, get) => ({
       return null;
     }
   },
+
 
   getFilteredProducts: () => {
     const { products, activeTab, sortBy } = get();

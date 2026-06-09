@@ -1,4 +1,4 @@
-// import { DUMMY_PRODUCTS } from '@/store/useProductStore' // export it first
+// page.jsx
 import ProductHomePage from './ProductHomePage'
 import productService from '@/services/productService'
 
@@ -14,8 +14,8 @@ export async function generateStaticParams() {
     }
 }
 
-const page = async ({ params }) => {
-    return <ProductHomePage slug={params.slug} />
+export default async function page({ params }) {
+    const { slug } = await params 
+    
+    return <ProductHomePage slug={slug} />
 }
-
-export default page
