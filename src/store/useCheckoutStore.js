@@ -1,29 +1,69 @@
-// stores/useCheckoutStore.js
-
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-export const useCheckoutStore = create((set) => ({
-  shippingInfo: {
-    country: "",
-    firstName: "",
-    lastName: "",
-    contact: "",
-    email: "",
-    address1: "",
-    address2: "",
-    building: "",
-    city: "",
-    zip: "",
-    defaultAddress: false,
-    shippingMethod: "standard",
-    promoCode: "",
-  },
+export const useCheckoutStore = create(
+  persist(
+    (set) => ({
+      // ── Checkout Item (Buy Now) ──────────────────────────────────────────
+      checkoutItem: null,
+      setCheckoutItem: (item) => set({ checkoutItem: item }),
+      clearCheckoutItem: () => set({ checkoutItem: null }),
 
-  setShippingInfo: (data) =>
-    set((state) => ({
+      // ── Shipping Info ────────────────────────────────────────────────────
       shippingInfo: {
-        ...state.shippingInfo,
-        ...data,
+        country: "",
+        firstName: "",
+        lastName: "",
+        contact: "",
+        email: "",
+        address1: "",
+        address2: "",
+        building: "",
+        city: "",
+        zip: "",
+        defaultAddress: false,
+        shippingMethod: "standard",
+        promoCode: "",
       },
-    })),
-}));
+
+      setShippingInfo: (data) =>
+        set((state) => ({
+          shippingInfo: { ...state.shippingInfo, ...data },
+        })),
+
+      // ── Payment Info ─────────────────────────────────────────────────────
+      paymentInfo: {
+        nameOnCard: "",
+        cardNumber: "",
+        expiryMonth: "",
+        expiryYear: "",
+        cvv: "",
+        upiId: "",
+        billingSameAsShipping: true,
+      },
+
+      setPaymentInfo: (data) =>
+        set((state) => ({
+          paymentInfo: { ...state.paymentInfo, ...data },
+        })),
+
+      clearPaymentInfo: () =>
+        set({
+          paymentInfo: {
+            nameOnCard: "",
+            cardNumber: "",
+            expiryMonth: "",
+            expiryYear: "",
+            cvv: "",
+            upiId: "",
+            billingSameAsShipping: true,
+          },
+        }),
+    }),
+    {
+      name: "checkout-storage",
+      partialize: (state) => ({ shippingInfo: state.shippingInfo })
+
+    }
+  )
+);

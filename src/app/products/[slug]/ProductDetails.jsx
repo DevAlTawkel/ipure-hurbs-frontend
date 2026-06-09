@@ -4,16 +4,21 @@ import { useEffect, useMemo, useState } from "react";
 import { useProductStore } from "@/store/useProductStore";
 import { useCartStore } from "@/store/useCartStore";
 import { useWishlistStore } from "@/store/useWishlistStore";
+import { useCheckoutStore } from "@/store/useCheckoutStore";
 import ProductCard from "@/components/ProductCard";
 import "./ProductDetails.css";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const TABS = ["Description", "Additional information", "Reviews"];
 
 export default function ProductDetails({ slug }) {
+
+  const router = useRouter();
   const { fetchBySlug, products } = useProductStore();
   const { addToCart, updateQuantity, cart } = useCartStore();
   const { toggleWishlist, wishlistIds } = useWishlistStore();
+  const { setCheckoutItem } = useCheckoutStore();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,75 +33,6 @@ export default function ProductDetails({ slug }) {
 
   const [visibleReviews, setVisibleReviews] = useState(3);
   const [zoom, setZoom] = useState({ active: false, x: 0, y: 0 });
-
-  const DUMMY_REVIEWS = [
-    {
-      id: 1,
-      name: "Ahmad M.",
-      date: "1 June, 2026",
-      rating: 5,
-      title: "Great price and fast delivery",
-      body: "Ordered and received in 2 days. Product matches the description exactly. Very happy with my purchase.",
-      helpful: 12,
-      verified: true,
-      images: [],
-    },
-    {
-      id: 2,
-      name: "Ahmad M.",
-      date: "1 June, 2026",
-      rating: 4,
-      title: "Great price and fast delivery",
-      body: "Ordered and received in 2 days. Product matches the description exactly. Very happy with my purchase.",
-      helpful: 12,
-      verified: true,
-      images: [],
-    },
-    {
-      id: 3,
-      name: "Ahmad M.",
-      date: "1 June, 2026",
-      rating: 3,
-      title: "Exactly what I needed",
-      body: "Nice size, compact packaging, arrived in perfect condition. Will buy again.",
-      helpful: 12,
-      verified: true,
-      images: ["https://placehold.co/60x60", "https://placehold.co/60x60", "https://placehold.co/60x60"],
-    },
-    {
-      id: 4,
-      name: "Sara K.",
-      date: "28 May, 2026",
-      rating: 5,
-      title: "Highly recommend",
-      body: "Amazing product quality. Will definitely order again.",
-      helpful: 8,
-      verified: true,
-      images: [],
-    },
-    {
-      id: 5,
-      name: "Omar R.",
-      date: "20 May, 2026",
-      rating: 4,
-      title: "Good value",
-      body: "Good product for the price. Delivery was on time.",
-      helpful: 5,
-      verified: false,
-      images: [],
-    },
-    {
-      id: 6,
-      name: "Layla H.",
-      date: "15 May, 2026",
-      rating: 5,
-      title: "Perfect!",
-      body: "Exactly as described. Very satisfied with my purchase.",
-      helpful: 3,
-      verified: true,
-      images: [],
-    },
-  ];
 
   useEffect(() => {
     if (!slug) return;
@@ -197,6 +133,23 @@ export default function ProductDetails({ slug }) {
     if (selectedQty > 1) {
       updateQuantity(product.id, selectedQty);
     }
+  };
+
+  const handleBuyNow = () => {
+    if (!product.inStock) return;
+
+    setCheckoutItem({
+      productId: product.id,
+      productName: product.name,
+      productImage: product.images[0]?.url ?? "",
+      productSlug: product.slug,
+      variantId: selectedSize?.variant_id ?? null,
+      variantName: selectedSize?.name ?? null,
+      price: displayPrice,
+      qty: selectedQty,
+    });
+
+    router.push("/shipping-info");
   };
 
   const recommended = products.filter((p) => p.id !== product?.id).slice(0, 4);
@@ -558,6 +511,7 @@ export default function ProductDetails({ slug }) {
             </button>
 
             <button
+              onClick={handleBuyNow}
               disabled={!product.inStock}
               className="width-100 size-16 manrope font-400 transition cursor-pointer color-white ProductDetails-btn-buy"
             >
