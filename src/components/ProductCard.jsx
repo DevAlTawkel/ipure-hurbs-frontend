@@ -43,7 +43,7 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <Link href={`/products/${product.slug}`}>
+    <Link href={`/products/${product.slug}`} prefetch={false}>
       <div className="position-relative display-flex flex-direction-column overflow-hidden transition cursor-pointer background-white-200 ProductCard-container">
 
         {product.discount > 0 && (
@@ -66,11 +66,11 @@ export default function ProductCard({ product }) {
 
         <div className="position-relative display-flex align-items-center justify-content-center background-white ProductCard-image-wrapper">
           <img
-            src={product.images[0]?.url}
+            src={product.images?.[0]?.url ?? product.image ?? '/assets/placeholder.png'}
             alt={product.name}
             className="ProductCard-image"
             onError={(e) => {
-              e.target.src = "https://placehold.co/160x160/f3f4f6/9ca3af?text=Product";
+              e.currentTarget.src = '/assets/placeholder.png';
             }}
           />
           {!product.inStock && (
@@ -107,7 +107,7 @@ export default function ProductCard({ product }) {
               disabled={!product.inStock}
               onClick={(e) => {
                 e.preventDefault();
-                e.stopPropagation(); 
+                e.stopPropagation();
                 router.push(`/products/${product.slug}`)
               }}
               className="width-50 size-16 font-400 transition cursor-pointer color-white ProductCard-btn-buy"

@@ -1,37 +1,19 @@
 "use client";
 
 import { useEffect } from "react";
-import { useProductStore } from "@/store/useProductStore";
+import { useHomeStore } from "@/store/useHomeStore";
 import ProductCard from "@/components/ProductCard";
 import './HomeBestSellers.css'
 import Link from "next/link";
 
-function getBestSellers(allProducts = []) {
-    return [...allProducts]
-        .filter((p) => {
-            const isBestSeller =
-                p.category?.toLowerCase() === "best seller" ||
-                p.tab?.toLowerCase() === "best seller" ||
-                p.tags?.some((t) => t.toLowerCase() === "best seller");
-
-            return isBestSeller || (!isBestSeller && p.rating >= 4.5);
-        })
-        .sort((a, b) => {
-            const ratingDiff = (b.rating ?? 0) - (a.rating ?? 0);
-            if (ratingDiff !== 0) return ratingDiff;
-            return (b.reviews ?? b.sold ?? 0) - (a.reviews ?? a.sold ?? 0);
-        })
-        .slice(0, 4);
-}
-
 const HomeBestSellers = () => {
-    const { products, isLoading, fetchProducts } = useProductStore();
+    const { trendingProducts, isLoading, fetchHomeData } = useHomeStore();
 
     useEffect(() => {
-        fetchProducts();
+        if (trendingProducts.length === 0) fetchHomeData();
     }, []);
 
-    const bestSellers = getBestSellers(products);
+    const bestSellers = trendingProducts.slice(0, 4);
 
     return (
         <div className='overflow-hidden'>

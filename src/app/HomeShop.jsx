@@ -50,7 +50,7 @@ const HomeShop = () => {
             {/* Desktop grid */}
             <div className='display-grid HomeShop-cards-container'>
                 {categories.map((item) => (
-                    <Link href={`/category/${item.slug}`} key={item.id}>
+                    <Link href={`/products?category=${item.slug}`} key={item.id}>
                         <div className='background-white transition HomeShop-image-container'>
                             <img
                                 src={item.image ?? PLACEHOLDER_IMAGE}
@@ -75,7 +75,7 @@ const HomeShop = () => {
                     {pages.map((group, index) => (
                         <div className='HomeShop-slide' key={index}>
                             {group.map((item) => (
-                                <Link href={`/category/${item.slug}`} key={item.id}>
+                                <Link href={`/products?category=${item.slug}`} key={item.id}>
                                     <div className='background-white transition HomeShop-image-container'>
                                         <img
                                             src={item.image ?? PLACEHOLDER_IMAGE}

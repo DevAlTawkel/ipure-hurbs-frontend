@@ -1,14 +1,21 @@
-import { DUMMY_PRODUCTS } from '@/store/useProductStore' // export it first
+// page.jsx
 import ProductHomePage from './ProductHomePage'
+import productService from '@/services/productService'
 
 export async function generateStaticParams() {
-    return DUMMY_PRODUCTS.map((product) => ({
-        slug: product.slug,
-    }));
+    try {
+        const response = await productService.getAll({ per_page: 100 })
+        return (response.data ?? []).map((product) => ({
+            slug: product.slug,
+        }))
+    } catch (err) {
+        console.error('generateStaticParams failed:', err)
+        return []
+    }
 }
 
-const page = async ({ params }) => {
-    return <ProductHomePage slug={params.slug} />
+export default async function page({ params }) {
+    const { slug } = await params 
+    
+    return <ProductHomePage slug={slug} />
 }
-
-export default page
