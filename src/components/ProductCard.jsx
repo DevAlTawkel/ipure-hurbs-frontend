@@ -85,7 +85,7 @@ export default function ProductCard({ product }) {
 
           <div className="display-flex align-items-center justify-content-space-between ProductCard-price-row">
             <div>
-              <span className="manrope size-24 font-600 ProductCard-price">$ {product.price.toFixed(2)}</span>
+              <span className="manrope size-24 font-600 ProductCard-price">{product.currency_symbol} {product.price.toFixed(2)}</span>
             </div>
             <div className="display-flex align-items-center">
               <div className="display-flex align-items-center ProductCard-stars">
