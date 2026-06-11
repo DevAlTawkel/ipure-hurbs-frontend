@@ -77,7 +77,7 @@ export default function ProductCardWishlist({ product }) {
 
           <div className="display-flex align-items-center justify-content-space-between ProductCardWishlist-price-row">
             <div>
-              <span className="manrope size-24 font-600 ProductCardWishlist-price">$ {product.price.toFixed(2)}</span>
+              <span className="manrope size-24 font-600 ProductCardWishlist-price">{product.currency_symbol} {product.price.toFixed(2)}</span>
             </div>
             <div className="display-flex align-items-center">
               <div className="display-flex align-items-center ProductCardWishlist-stars">
