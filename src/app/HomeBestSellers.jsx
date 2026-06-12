@@ -33,7 +33,7 @@ const HomeBestSellers = () => {
                         </div>
                     </Link>
                 </div>
-                <div className='display-grid HomeBestSellers-cards-container'>
+                <div className='display-grid align-items-stretch HomeBestSellers-cards-container'>
 
                     {isLoading
                         ? Array.from({ length: 4 }).map((_, i) => (

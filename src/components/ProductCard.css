@@ -81,6 +81,10 @@
     gap: 4px;
 }
 
+.ProductCard-info-sub {
+    gap: 4px;
+}
+
 .ProductCard-brand {
     margin-top: 5px;
     margin-bottom: 3px;
@@ -110,13 +114,14 @@
 }
 
 .ProductCard-description {
+    flex: 1;
     color: rgba(88, 88, 90, 1);
     width: 90%;
 }
 
 .ProductCard-actions {
     gap: 10px;
-    margin-top: auto;
+    /* margin-top: auto; */
     padding-top: 10px;
 }
 
