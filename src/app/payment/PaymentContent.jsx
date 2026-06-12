@@ -100,7 +100,7 @@ const PaymentContent = () => {
     };
 
     return (
-        <div className="PaymentContent-main-container">
+        <div className="PaymentContent-main-container webpage-container">
             <h1 className="manrope font-600 size-20 color-black-black PaymentContent-page-title">Checkout</h1>
 
             <div className="PaymentContent-layout">

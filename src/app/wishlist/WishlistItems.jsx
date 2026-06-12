@@ -13,7 +13,7 @@ const WishlistItems = () => {
     const wishlist = useWishlistStore((state) => state.wishlist)
     const wishlistIds = useWishlistStore((state) => state.wishlistIds)
     const { products } = useProductStore()
-    const { addToCart, updateQuantity } = useCartStore();
+    const { addToCart } = useCartStore();
 
     const suggestedProducts = products
         .filter((p) => !wishlistIds.includes(p.id))
@@ -27,7 +27,7 @@ const WishlistItems = () => {
         });
     };
     return (
-        <div>
+        <div className='webpage-container'>
             <div className='display-flex align-items-center justify-content-space-between flex-wrap-wrap WishlistItems-padding'>
                 <div>
                     <h1 className='manrope font-600 size-24 color-deep-forest-green'>Your Wishlist</h1>

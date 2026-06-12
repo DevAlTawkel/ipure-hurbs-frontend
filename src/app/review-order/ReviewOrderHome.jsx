@@ -3,9 +3,9 @@ import ReviewOrderContent from './ReviewOrderContent'
 
 const ReviewOrderHome = () => {
     return (
-        <>
+        <div className='webpage-container'>
             <ReviewOrderContent />
-        </>
+        </div>
     )
 }
 

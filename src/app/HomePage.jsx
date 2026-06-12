@@ -11,7 +11,7 @@ import HomeNewsletter from './HomeNewsletter'
 
 const HomePage = () => {
   return (
-    <>
+    <div className='webpage-container'>
       <HomeMainBanner />
       <HomeMarquee />
       <div id="shop">
@@ -32,7 +32,7 @@ const HomePage = () => {
         <HomeBlogs />
       </div>
       <HomeNewsletter />
-    </>
+    </div>
   )
 }
 
