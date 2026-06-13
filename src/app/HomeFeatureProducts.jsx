@@ -30,10 +30,12 @@ const HomeFeatureProducts = () => {
                             />
                         </div>
 
-                        <div className='user-select-none HomeFeatureProducts-card-description-container'>
-                            <p className='manrope font-600 size-20 color-white'>{product.category}</p>
-                            <p className='manrope font-600 size-28 color-white'>{product.name}</p>
-                            <p className='manrope font-400 size-18 color-white'>{product.description}</p>
+                        <div className='user-select-none display-flex flex-direction-column justify-content-space-between HomeFeatureProducts-card-description-container'>
+                            <div className='HomeFeatureProducts-card-description-sub-container'>
+                                <p className='manrope font-600 size-20 color-white'>{product.category}</p>
+                                <p className='manrope font-600 size-28 color-white'>{product.name}</p>
+                                <p className='manrope font-400 size-18 color-white'>{product.description}</p>
+                            </div>
                             <div className="HomeFeatureProducts-button-wrap">
                                 <Link
                                     href={`/products/${product.slug}`}
