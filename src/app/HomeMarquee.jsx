@@ -20,7 +20,7 @@ export default function HomeMarquee() {
 
     return (
         <div className="HomeMarquee-wrapper">
-            <Marquee>
+            <Marquee direction="right">
                 {
                     cards.map((item, i)=>(
                         <div key={i} className="HomeMarquee-card">

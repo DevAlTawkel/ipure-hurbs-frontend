@@ -21,10 +21,10 @@ const HomeAboutUs = () => {
                     </div>
                 </div>
                 <div className='position-absolute HomeAboutUs-star-left'>
-                    <img src="/assets/HomeAboutUs_image_star.png" alt="" />
+                    <img src="/assets/HomeAboutUs_image_star-v2.png" alt="" />
                 </div>
                 <div className='position-absolute HomeAboutUs-star-right'>
-                    <img src="/assets/HomeAboutUs_image_star.png" alt="" />
+                    <img src="/assets/HomeAboutUs_image_star-v2.png" alt="" />
                 </div>
             </div>
             <div className='width-50 HomeAboutUs-sub-container'>
@@ -65,7 +65,7 @@ const HomeAboutUs = () => {
                     </div>
                 </div>
                 <div className='display-flex justify-content-flex-end'>
-                    <Link href={'/about-us'} className='color-sandstone-800 background-warm-khali manrope font-400 size-16 HomeAboutUs-learn-more-button'>
+                    <Link href={'/about-us'} className='color-sandstone-800 background-deep-forest-green manrope font-400 size-16 HomeAboutUs-learn-more-button'>
                         Learn More
                     </Link>
                 </div>

@@ -1,5 +1,6 @@
 .HomeBlogs-main-container {
     padding: 52px 20px 90px;
+    background-color: #DDE1CF;
 }
 
 .HomeBlogs-title{
@@ -15,7 +16,7 @@
 }
 
 .HomeBlogs-arrow-container {
-    background: radial-gradient(80% 80% at 88.75% 20%, rgba(219, 225, 202, 0.66) 0%, rgba(203, 209, 184, 0.66) 100%);
+    background: radial-gradient(80% 80% at 88.75% 20%, #A9B388 0%, #5F6F52 100%);
     width: 40px;
     height: 40px;
 }
