@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import './HomeFeatureProducts.css'
 import Link from 'next/link'
 import { useHomeStore } from '@/store/useHomeStore'
-const PLACEHOLDER_IMAGE = '/assets/placeholder.png.png'
+const PLACEHOLDER_IMAGE = '/assets/placeholder.png'
 
 const HomeFeatureProducts = () => {
     const { featuredProducts, fetchHomeData } = useHomeStore()
