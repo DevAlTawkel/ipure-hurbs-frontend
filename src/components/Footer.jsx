@@ -152,7 +152,7 @@ const Footer = () => {
         </div>
 
         <p className='manrope size-12 font-500 color-white-200 user-select-none Footer-copyright'>
-          iPureHerbs.com © Copyright 1997–2026 iPure Herbs, LLC. All rights reserved. iPure Herb® is a registered trademark of iPure Herbs, LLC. *Disclaimer: Statements made, or products sold through this website, have not been evaluated by the United States Food and Drug Administration. They are not intended to diagnose, treat, cure or prevent any disease. PLEASE NOTE that iPure Herbs LLC is not affiliated with or in any way or manner related to websites that are not specifically iPureherbs.com. iPureHerb, LLC is not responsible or liable for products sold or shipped from unauthorized sources.{' '}
+          iPureHerbs.org © Copyright 1997–2026 iPure Herbs, LLC. All rights reserved. iPure Herb® is a registered trademark of iPure Herbs, LLC. *Disclaimer: Statements made, or products sold through this website, have not been evaluated by the United States Food and Drug Administration. They are not intended to diagnose, treat, cure or prevent any disease. PLEASE NOTE that iPure Herbs LLC is not affiliated with or in any way or manner related to websites that are not specifically iPureherbs.com. iPureHerb, LLC is not responsible or liable for products sold or shipped from unauthorized sources.{' '}
           <Link href='/disclaimer' className='align-items-center justify-content-center Footer-read-more'>
             Read More
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

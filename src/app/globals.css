@@ -33,6 +33,17 @@ html {
   scroll-behavior: smooth;
 }
 
+.webpage-container {
+  max-width: 1920px;
+}
+
+@media (min-width:1920px) {
+  .webpage-container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .inter {
   font-family: "Inter", sans-serif;
 }

@@ -4,10 +4,10 @@ import Products from './Products'
 
 const ProductsHome = () => {
   return (
-    <>
+    <div className='webpage-container'>
       <ProductMainBanner />
       <Products />
-    </>
+    </div>
   )
 }
 

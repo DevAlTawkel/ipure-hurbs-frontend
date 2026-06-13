@@ -13,7 +13,7 @@ const WishlistItems = () => {
     const wishlist = useWishlistStore((state) => state.wishlist)
     const wishlistIds = useWishlistStore((state) => state.wishlistIds)
     const { products } = useProductStore()
-    const { addToCart, updateQuantity } = useCartStore();
+    const { addToCart } = useCartStore();
 
     const suggestedProducts = products
         .filter((p) => !wishlistIds.includes(p.id))
@@ -27,7 +27,7 @@ const WishlistItems = () => {
         });
     };
     return (
-        <div>
+        <div className='webpage-container'>
             <div className='display-flex align-items-center justify-content-space-between flex-wrap-wrap WishlistItems-padding'>
                 <div>
                     <h1 className='manrope font-600 size-24 color-deep-forest-green'>Your Wishlist</h1>
@@ -43,13 +43,15 @@ const WishlistItems = () => {
                 </div>
             </div>
 
-            <div style={{padding:'20px 26px 0'}}>
-                {wishlist.length === 0 && (<p className='manrope font-500 size-16'>No products found</p>)}
+            <div>
+                {wishlist.length === 0 && (<p style={{ padding: '20px 26px 0' }} className='manrope font-500 size-20'>No products found</p>)}
             </div>
 
             <div className='display-grid WishlistItems-grid'>
-                {wishlist.map((product) => (
-                    <ProductCardWishlist product={product} id={product.id} />
+                {wishlist.map((product, i) => (
+                    <div key={i}>
+                        <ProductCardWishlist product={product} id={product.id} />
+                    </div>
                 ))}
             </div>
 
@@ -71,7 +73,7 @@ const WishlistItems = () => {
                     <button
                         onClick={handleAddAllToCart}
                         disabled={wishlist.length === 0}
-                        className="size-16 font-400 background-transparent color-dfg-200 transition cursor-pointer ProductCardWishlist-btn-cart"
+                        className="size-16 font-400 background-transparent color-dfg-200 transition cursor-pointer WishlistItems-btn-cart"
                     >
                         Add to cart
                     </button>
@@ -82,8 +84,8 @@ const WishlistItems = () => {
                 <h6 className='manrope font-600 size-24'>Find your next favorites</h6>
 
                 <div className='display-grid ProductCardWishlist-last-section-grid'>
-                    {suggestedProducts.map((p) => (
-                        <ProductCard key={p.id} product={p} />
+                    {suggestedProducts.map((p, i) => (
+                       <ProductCard key={p.id} product={p} />
                     ))}
                 </div>
             </div>

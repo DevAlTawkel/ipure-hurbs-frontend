@@ -104,7 +104,7 @@ const ShippingInfoContent = () => {
     };
 
     return (
-        <div className="ShippingInfoContent-main-container">
+        <div className="ShippingInfoContent-main-container webpage-container">
             {/* ── Left Panel ── */}
             <div className="ShippingInfoContent-left-container">
                 <h2 className='manrope font-700 size-24 color-deep-forest-green'>Shipping information</h2>

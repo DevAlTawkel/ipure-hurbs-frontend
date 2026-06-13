@@ -4,7 +4,7 @@
 }
 
 .WishlistItems-grid {
-    padding: 54px 22px;
+    padding: 0 22px 54px;
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
 }
@@ -45,7 +45,7 @@
 }
 
 .WishlistItems-btn-cart {
-    padding: 8px;
+    padding: 14px;
     border-radius: 38px;
     border: 1px solid rgba(47, 58, 47, 1);
     min-width: 175px;
@@ -86,6 +86,12 @@
     }
 }
 
+@media (max-width:570px) {
+
+    .WishlistItems-btn-cart {
+        width: 100%;
+    }
+}
 
 @media (max-width: 480px) {
     .WishlistItems-warning-container {
@@ -93,13 +99,10 @@
         gap: 25px;
     }
 
-    .ProductCardWishlist-actions-2{
+    .ProductCardWishlist-actions-2 {
         margin-left: auto;
         margin-right: auto;
     }
-}
-
-@media (max-width: 480px) {
 
     .ProductCardWishlist-last-section-grid,
     .WishlistItems-grid {
