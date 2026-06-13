@@ -14,6 +14,8 @@ const WishlistItems = () => {
     const wishlistIds = useWishlistStore((state) => state.wishlistIds)
     const { products } = useProductStore()
     const { addToCart } = useCartStore();
+    const { removeFromWishlist } = useWishlistStore();
+
 
     const suggestedProducts = products
         .filter((p) => !wishlistIds.includes(p.id))
@@ -22,10 +24,14 @@ const WishlistItems = () => {
     const handleAddAllToCart = () => {
         if (wishlist.length === 0) return;
 
-        wishlist.forEach((product) => {
+        const snapshot = [...wishlist];
+        snapshot.forEach((product) => {
             addToCart(product);
+            removeFromWishlist(product.id);
         });
     };
+
+
     return (
         <div className='webpage-container'>
             <div className='display-flex align-items-center justify-content-space-between flex-wrap-wrap WishlistItems-padding'>
@@ -85,7 +91,7 @@ const WishlistItems = () => {
 
                 <div className='display-grid ProductCardWishlist-last-section-grid'>
                     {suggestedProducts.map((p, i) => (
-                       <ProductCard key={p.id} product={p} />
+                        <ProductCard key={p.id} product={p} />
                     ))}
                 </div>
             </div>

@@ -14,7 +14,7 @@ export default function ProductCardWishlist({ product }) {
 
   const { addToCart, updateQuantity, cart } = useCartStore();
 
-  const { toggleWishlist, wishlistIds } = useWishlistStore();
+  const { toggleWishlist, wishlistIds, removeFromWishlist } = useWishlistStore();
   const isWishlisted = wishlistIds.includes(product.id);
 
   // Get current quantity of this product in cart
@@ -27,6 +27,7 @@ export default function ProductCardWishlist({ product }) {
 
     if (quantity === 0) {
       addToCart(product);
+      removeFromWishlist(product.id);
     } else {
       updateQuantity(product.id, quantity + 1);
     }
