@@ -97,7 +97,7 @@ const Footer = () => {
               <ul className='display-flex flex-direction-column list-style-none Footer-nav-list'>
                 {links.map((link) => (
                   <li key={link.name}>
-                    <Link href={link.href} className='manrope font-400 size-14 transition Footer-nav-link'>
+                    <Link href={link.href} prefetch={false} className='manrope font-400 size-14 transition Footer-nav-link'>
                       {link.name}
                     </Link>
                   </li>
@@ -153,7 +153,7 @@ const Footer = () => {
 
         <p className='manrope size-12 font-500 color-white-200 user-select-none Footer-copyright'>
           iPureHerbs.org © Copyright 1997–2026 iPure Herbs, LLC. All rights reserved. iPure Herb® is a registered trademark of iPure Herbs, LLC. *Disclaimer: Statements made, or products sold through this website, have not been evaluated by the United States Food and Drug Administration. They are not intended to diagnose, treat, cure or prevent any disease. PLEASE NOTE that iPure Herbs LLC is not affiliated with or in any way or manner related to websites that are not specifically iPureherbs.com. iPureHerb, LLC is not responsible or liable for products sold or shipped from unauthorized sources.{' '}
-          <Link href='/disclaimer' className='align-items-center justify-content-center Footer-read-more'>
+          <Link href='/disclaimer' prefetch={false} className='align-items-center justify-content-center Footer-read-more'>
             Read More
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M13.1714 12.0001L8.22168 7.05031L9.63589 5.63611L15.9999 12.0001L9.63589 18.364L8.22168 16.9498L13.1714 12.0001Z" fill="#F4F4F4" />
