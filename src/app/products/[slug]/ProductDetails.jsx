@@ -645,9 +645,28 @@ export default function ProductDetails({ slug }) {
                   {product.additionalInfo?.indications?.length > 0 && (
                     <div className="background-white-200 ProductDetails-description-second-row-rght-sub">
                       <h6 className="manrope font-700 size-18 color-deep-forest-green">Indications</h6>
-                      {product.additionalInfo.indications.map((line, i) => (
-                        <p key={i} className="manrope font-400 size-16 color-black-black">{line}</p>
-                      ))}
+                      {product.additionalInfo.indications.map((line, i) => {
+                        const parts = line.split('•');
+                        const heading = parts[0].trim(); // "Traditionally Used To Support:"
+                        const bullets = parts.slice(1).filter(p => p.trim()); // the actual bullet items
+
+                        return (
+                          <div key={i}>
+                            {heading && (
+                              <p className="manrope font-600 size-16 color-black-black" style={{ marginBottom: '10px' }}>
+                                {heading}
+                              </p>
+                            )}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px 16px' }}>
+                              {bullets.map((part, j) => (
+                                <p key={j} className="manrope font-400 size-16 color-black-black" style={{ paddingLeft: '1em' }}>
+                                  • {part.trim()}
+                                </p>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
 
@@ -704,6 +723,10 @@ export default function ProductDetails({ slug }) {
                         );
                       })
                     )}
+
+                    <p className="manrope font-600 size-16 color-black-black text-align-center ProductDetails-description-third-row-sub-warning">
+                      Do not use if safety seal is broken or missing.
+                    </p>
                   </div>
                 )}
               </div>
