@@ -18,11 +18,11 @@
 /* ── Layout ── */
 .CartContent-wrapper {
     display: flex;
-    gap: 54px;
+    gap: 11px;
     margin: 0 auto;
     padding: 32px 20px;
     align-items: flex-start;
-    /* background-color: ; */
+    background-color: #f4f4f4;
 }
 
 /* ══════════════════════════════════
@@ -33,6 +33,8 @@
     display: flex;
     flex-direction: column;
     gap: 0;
+    background-color: white;
+    border-radius: 8px;
 }
 
 /* ── Empty State ── */
@@ -62,12 +64,11 @@
 }
 
 .CartContent-item-img {
-    width: 250px;
+    width: 300px;
     min-height: 230px;
     flex-shrink: 0;
     border-radius: 8px;
     overflow: hidden;
-    background: linear-gradient(135deg, #f0f0f0 0%, #e4e4e4 100%);
     display: flex;
     align-items: center;
     justify-content: center;
