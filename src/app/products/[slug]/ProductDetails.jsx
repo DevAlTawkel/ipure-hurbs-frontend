@@ -569,65 +569,59 @@ export default function ProductDetails({ slug }) {
             <div className="ProductDetails-description">
               <div className="ProductDetails-description-second-row">
 
-                {/* Key Herbal Ingredients & Benefits table */}
-                {(product.additionalInfo?.key_herbal_ingredients?.length > 0 || product.additionalInfo?.key_benefits?.length > 0) && (
-                  <div>
-                    <table>
-                      <thead>
-                        <tr>
-                          {product.additionalInfo?.key_herbal_ingredients?.length > 0 && (
-                            <th className='manrope size-16 font-600 color-deep-forest-green'>Key Herbal Ingredients</th>
-                          )}
-                          {product.additionalInfo?.key_benefits?.length > 0 && (
-                            <th className='manrope size-16 font-600 color-deep-forest-green'>Key Benefits</th>
-                          )}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {Array.from({
-                          length: Math.max(
-                            product.additionalInfo?.key_herbal_ingredients?.length ?? 0,
-                            product.additionalInfo?.key_benefits?.length ?? 0
-                          )
-                        }).map((_, i) => (
-                          <tr key={i}>
+                {/* Key Herbal Ingredients & Key Benefits */}
+                {(product.additionalInfo?.key_herbal_ingredients?.length > 0 ||
+                  product.additionalInfo?.key_benefits?.length > 0) && (
+                    <div>
+                      <table>
+                        <thead>
+                          <tr>
                             {product.additionalInfo?.key_herbal_ingredients?.length > 0 && (
-                              <td className='manrope size-14 font-400 color-black-black'>
-                                {product.additionalInfo.key_herbal_ingredients[i] ?? ""}
-                              </td>
+                              <th className="manrope size-16 font-600 color-deep-forest-green">
+                                Key Herbal Ingredients
+                              </th>
                             )}
                             {product.additionalInfo?.key_benefits?.length > 0 && (
-                              <td className='manrope size-14 font-400 color-black-black'>
-                                {product.additionalInfo.key_benefits[i] ?? ""}
-                              </td>
+                              <th className="manrope size-16 font-600 color-deep-forest-green">
+                                Key Benefits
+                              </th>
                             )}
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-
-                <div className='display-flex flex-direction-column gap-15'>
-                  {/* Other Ingredients */}
-                  {product.additionalInfo?.other_ingredients && (
-                    <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
-                      <h6 className='manrope font-700 size-18 color-deep-forest-green'>Other Ingredients</h6>
-                      {product.additionalInfo.other_ingredients.split('\n').map((line, i) =>
-                        line.trim() ? (
-                          <p key={i} className='manrope font-400 size-16 color-black-black'>{line.trim()}</p>
-                        ) : null
-                      )}
+                        </thead>
+                        <tbody>
+                          {Array.from({
+                            length: Math.max(
+                              product.additionalInfo?.key_herbal_ingredients?.length ?? 0,
+                              product.additionalInfo?.key_benefits?.length ?? 0
+                            ),
+                          }).map((_, i) => (
+                            <tr key={i}>
+                              {product.additionalInfo?.key_herbal_ingredients?.length > 0 && (
+                                <td className="manrope size-14 font-400 color-black-black">
+                                  {product.additionalInfo.key_herbal_ingredients[i] ?? ""}
+                                </td>
+                              )}
+                              {product.additionalInfo?.key_benefits?.length > 0 && (
+                                <td className="manrope size-14 font-400 color-black-black">
+                                  {product.additionalInfo.key_benefits[i] ?? ""}
+                                </td>
+                              )}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   )}
 
-                  {/* Allergen Info */}
-                  {product.additionalInfo?.allergen_info && (
-                    <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
-                      <h6 className='manrope font-700 size-18 color-deep-forest-green'>Allergen Information</h6>
-                      {product.additionalInfo.allergen_info.split('\n').map((line, i) =>
+                <div className="display-flex flex-direction-column gap-15">
+
+                  {/* Other Ingredients */}
+                  {product.additionalInfo?.other_ingredients && (
+                    <div className="background-white-200 ProductDetails-description-second-row-rght-sub">
+                      <h6 className="manrope font-700 size-18 color-deep-forest-green">Other Ingredients</h6>
+                      {product.additionalInfo.other_ingredients.split("\n").map((line, i) =>
                         line.trim() ? (
-                          <p key={i} className='manrope font-400 size-16 color-black-black'>{line.trim()}</p>
+                          <p key={i} className="manrope font-400 size-16 color-black-black">{line.trim()}</p>
                         ) : null
                       )}
                     </div>
@@ -635,12 +629,12 @@ export default function ProductDetails({ slug }) {
 
                   {/* Specifications */}
                   {product.additionalInfo?.specifications?.length > 0 && (
-                    <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
-                      <h6 className='manrope font-700 size-18 color-deep-forest-green'>Specifications</h6>
-                      <div className='display-grid ProductDetails-description-second-row-rght-sub-grid'>
+                    <div className="background-white-200 ProductDetails-description-second-row-rght-sub">
+                      <h6 className="manrope font-700 size-18 color-deep-forest-green">Specifications</h6>
+                      <div className="display-grid ProductDetails-description-second-row-rght-sub-grid">
                         {product.additionalInfo.specifications.map((spec, i) => (
-                          <p key={i} className='manrope font-400 size-16 color-black-black'>
-                            {spec.label}: {spec.value}
+                          <p key={i} className="manrope font-400 size-16 color-black-black">
+                            <strong>{spec.label}:</strong> {spec.value}
                           </p>
                         ))}
                       </div>
@@ -649,21 +643,78 @@ export default function ProductDetails({ slug }) {
 
                   {/* Indications */}
                   {product.additionalInfo?.indications?.length > 0 && (
-                    <div className='background-white-200 ProductDetails-description-second-row-rght-sub'>
-                      <h6 className='manrope font-700 size-18 color-deep-forest-green'>Indications</h6>
-                      <ul className='two-col-list'>
-                        {product.additionalInfo.indications.map((item, i) => (
-                          <li key={i} className='manrope font-400 size-16 color-black-black'>{item}</li>
-                        ))}
-                      </ul>
+                    <div className="background-white-200 ProductDetails-description-second-row-rght-sub">
+                      <h6 className="manrope font-700 size-18 color-deep-forest-green">Indications</h6>
+                      {product.additionalInfo.indications.map((line, i) => (
+                        <p key={i} className="manrope font-400 size-16 color-black-black">{line}</p>
+                      ))}
                     </div>
                   )}
+
+
                 </div>
+              </div>
+
+              <div className="display-grid ProductDetails-description-third-row">
+                {/* Supplement Facts */}
+                {product.additionalInfo?.supplement_facts?.length > 0 && (
+                  <div className="background-white-200 ProductDetails-description-second-row-rght-sub">
+                    <h6 className="manrope font-700 size-18 color-deep-forest-green">Supplement Facts</h6>
+                    {product.additionalInfo.supplement_facts.map((line, i) =>
+                      line.split('•').map((part, j) => {
+                        if (!part.trim()) return null;
+                        return (
+                          <p key={`${i}-${j}`} className="manrope font-400 size-16 color-black-black" style={{ paddingLeft: '1em' }}>
+                            • {part.trim()}
+                          </p>
+                        );
+                      })
+                    )}
+                  </div>
+                )}
+
+                {/* Suggested Use */}
+                {product.additionalInfo?.suggested_use?.length > 0 && (
+                  <div className="background-white-200 ProductDetails-description-second-row-rght-sub">
+                    <h6 className="manrope font-700 size-18 color-deep-forest-green">Suggested Use</h6>
+                    {product.additionalInfo.suggested_use.map((line, i) =>
+                      line.split('•').map((part, j) => {
+                        if (!part.trim()) return null;
+                        return (
+                          <p key={`${i}-${j}`} className="manrope font-400 size-16 color-black-black" style={{ paddingLeft: '1em' }}>
+                            • {part.trim()}
+                          </p>
+                        );
+                      })
+                    )}
+                  </div>
+                )}
+
+                {/* Warnings */}
+                {product.additionalInfo?.warnings?.length > 0 && (
+                  <div className="background-white-200 ProductDetails-description-second-row-rght-sub">
+                    <h6 className="manrope font-700 size-18 color-deep-forest-green">Warnings</h6>
+                    {product.additionalInfo.warnings.map((line, i) =>
+                      line.split('•').map((part, j) => {
+                        if (!part.trim()) return null;
+                        return (
+                          <p key={`${i}-${j}`} className="manrope font-400 size-16 color-black-black" style={{ paddingLeft: '1em' }}>
+                            • {part.trim()}
+                          </p>
+                        );
+                      })
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="ProductDetails-description-disclaimer">
                 <h6 className="manrope font-600 size-20 color-deep-forest-green">Disclaimer</h6>
-                <p className="manrope font-400 size-16 color-black-black">Our herbal wellness products are thoughtfully crafted to support your everyday well-being and healthy lifestyle. Results may vary from person to person based on individual needs and routines. For the best experience, combine our supplements with a balanced diet, regular activity, and mindful self-care. These products are not intended to diagnose, treat, cure, or prevent any disease.</p>
+                <p className="manrope font-400 size-16 color-black-black">
+                  Our herbal wellness products are thoughtfully crafted to support your everyday well-being
+                  and healthy lifestyle. Results may vary from person to person based on individual needs
+                  and routines. These products are not intended to diagnose, treat, cure, or prevent any disease.
+                </p>
               </div>
             </div>
           )}
