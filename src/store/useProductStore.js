@@ -1,6 +1,34 @@
 import { create } from "zustand";
 import productService from "@/services/productService";
 
+const parseJsonArray = (arr) => {
+  if (!arr?.length) return [];
+  try {
+    const parsed = JSON.parse(arr[0]);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return arr;
+  }
+};
+
+const mapAdditionalInfo = (info) => {
+  if (!info) return null;
+  return {
+    key_herbal_ingredients: parseJsonArray(info.key_herbal_ingredients),
+    key_benefits: parseJsonArray(info.key_benefits),
+    specifications: parseJsonArray(info.specifications).map((s) => {
+      const [label, ...rest] = s.split(":");
+      return { label: label.trim(), value: rest.join(":").trim() };
+    }),
+    indications: info.indications ?? [],
+    supplement_facts: info.supplement_facts ?? [],
+    suggested_use: info.suggested_use ?? [],
+    warnings: info.warnings ?? [],
+    other_ingredients: info.other_ingredients ?? "",
+  };
+};
+
+
 // ─── Map API response shape → component shape ─────────────────────────────────
 const mapProduct = (p) => ({
   id: p.id,
@@ -29,8 +57,8 @@ const mapProduct = (p) => ({
       : p.is_featured ? "New"
         : null,
   size: p.variants,
-  additionalInfo: p.additional_info ?? null,
   currency_symbol: p.currency_symbol ?? "",
+  additionalInfo: mapAdditionalInfo(p.additional_info),
 });
 
 
