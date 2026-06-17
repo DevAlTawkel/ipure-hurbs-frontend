@@ -18,7 +18,6 @@ export default function RootLayout({ children }) {
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-567KQ7CG');`}
         </Script>
-        {/* End Google Tag Manager */}
 
       </head>
       <body>
@@ -32,7 +31,6 @@ export default function RootLayout({ children }) {
             style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
-        {/* End Google Tag Manager (noscript) */}
 
         <Toaster
           position="top-right"
