@@ -22,6 +22,9 @@ import { Toaster } from 'react-hot-toast';
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="facebook-domain-verification" content="l7vjdxsmus730yf2l606pitakz1c4t" />
+      </head>
       <body>
         <Toaster
           position="top-right"
