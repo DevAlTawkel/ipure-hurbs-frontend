@@ -59,6 +59,13 @@ const mapProduct = (p) => ({
   size: p.variants,
   currency_symbol: p.currency_symbol ?? "",
   additionalInfo: mapAdditionalInfo(p.additional_info),
+  seo: {
+    title: p.seo?.title || `${p.name} | ""`,
+    description: p.seo?.description || p.short_description || "",
+    keywords: (p.tags?.[0] ?? "").split(",").map((t) => t.trim()).filter(Boolean),
+    canonical: `https://www.ipureherbs.com/products/${p.slug}`,
+    ogImage: p.image_url ?? p.images?.[0]?.url ?? "https://www.ipureherbs.com/logo.webp",
+  },
 });
 
 
