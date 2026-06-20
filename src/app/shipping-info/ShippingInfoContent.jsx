@@ -71,7 +71,7 @@ const ShippingInfoContent = () => {
     const deliveryFee = (() => {
         if (subtotal >= 100) return 0;
         if (form.shippingMethod === "express") return 40;
-        return 30;
+        return 0;
     })();
 
     const total = subtotal + deliveryFee;
