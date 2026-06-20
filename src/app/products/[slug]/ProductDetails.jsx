@@ -148,6 +148,7 @@ export default function ProductDetails({ slug }) {
       variantName: selectedSize?.name ?? null,
       price: displayPrice,
       qty: selectedQty,
+      shippingMethod: deliveryType,
     });
 
     router.push("/shipping-info");

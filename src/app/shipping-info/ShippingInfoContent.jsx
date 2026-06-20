@@ -12,18 +12,37 @@ const ShippingInfoContent = () => {
     const router = useRouter();
     const { shippingInfo, setShippingInfo, checkoutItem } = useCheckoutStore();
 
-    // console.log('checkoutItem in shipping page:', checkoutItem);
     const { cart } = useCartStore();
 
     const [form, setForm] = useState(shippingInfo);
+    const [hydrated, setHydrated] = useState(false);
+
 
     useEffect(() => {
-        setForm(shippingInfo);
+        const unsub = useCheckoutStore.persist.onFinishHydration(() => {
+            const { shippingInfo, checkoutItem } = useCheckoutStore.getState();
+            const base = { ...shippingInfo };
+            if (checkoutItem?.shippingMethod) {
+                base.shippingMethod = checkoutItem.shippingMethod;
+            }
+            setForm(base);
+            setHydrated(true);
+        });
+
+        // If already hydrated (e.g. navigating between pages, not a refresh)
+        if (useCheckoutStore.persist.hasHydrated()) {
+            const { shippingInfo, checkoutItem } = useCheckoutStore.getState();
+            const base = { ...shippingInfo };
+            if (checkoutItem?.shippingMethod) {
+                base.shippingMethod = checkoutItem.shippingMethod;
+            }
+            setForm(base);
+            setHydrated(true);
+        }
+
+        return () => unsub();
     }, []);
 
-    // ─── Determine which items to show ───────────────────────────────────────
-    // If user came via "Buy Now", show just that item
-    // Otherwise show full cart
     const displayItems = checkoutItem
         ? [{
             id: checkoutItem.productId,
@@ -50,9 +69,9 @@ const ShippingInfoContent = () => {
     const subtotal = displayItems.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
 
     const deliveryFee = (() => {
-        // if (form.shippingMethod === "express") return 40;
-        if (subtotal >= 100) return 0;   // free standard shipping above $100
-        return 30;                        // standard below $100
+        if (subtotal >= 100) return 0;
+        if (form.shippingMethod === "express") return 40;
+        return 0;
     })();
 
     const total = subtotal + deliveryFee;
@@ -102,6 +121,14 @@ const ShippingInfoContent = () => {
         // toast.success("Shipping info saved!");
         router.push("/payment");
     };
+
+    if (!hydrated) return (
+        <div className="ShippingInfoContent-main-container webpage-container">
+            <div style={{ padding: '80px 0', textAlign: 'center' }}>
+                <p className="manrope font-400 size-16 color-deep-forest-green">Loading...</p>
+            </div>
+        </div>
+    );
 
     return (
         <div className="ShippingInfoContent-main-container webpage-container">
@@ -347,7 +374,10 @@ const ShippingInfoContent = () => {
                 <div className="payment-options-box">
                     <h3>Payment Options</h3>
                     <div className="payment-icons">
-                        {['VISA', 'MC', 'AMEX', 'PYPL', 'GPay'].map((label) => (
+                        {/* {['VISA', 'MC', 'AMEX', 'PYPL', 'GPay'].map((label) => (
+                            <div className="payment-icon" key={label}>{label}</div>
+                        ))} */}
+                        {['COD'].map((label) => (
                             <div className="payment-icon" key={label}>{label}</div>
                         ))}
                     </div>
