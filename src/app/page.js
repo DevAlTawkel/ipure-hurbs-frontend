@@ -38,7 +38,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/company-logo.png",
+        url: "/assets/company-logo.png",
         width: 1125,
         height: 1125,
         alt: "iPure Herbs",
