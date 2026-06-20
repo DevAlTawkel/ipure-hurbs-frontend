@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export const useCheckoutStore = create(
   persist(
@@ -62,8 +62,12 @@ export const useCheckoutStore = create(
     }),
     {
       name: "checkout-storage",
-      partialize: (state) => ({ shippingInfo: state.shippingInfo })
-
+      storage: createJSONStorage(() => sessionStorage),
+      partialize: (state) => ({
+        checkoutItem: state.checkoutItem,
+        shippingInfo: state.shippingInfo,
+        paymentInfo: state.paymentInfo,
+      }),
     }
   )
 );

@@ -8,27 +8,8 @@ import { useCartStore } from "@/store/useCartStore";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-// Format "4111111111111111" → "4111 1111 1111 1111"
 const formatCardNumber = (value) => {
     return value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
-};
-
-// Mask all but last 4 digits for display: "•••• •••• •••• 1111"
-const maskCardNumber = (value) => {
-    const digits = value.replace(/\D/g, '');
-    if (!digits) return '•••• •••• •••• ••••';
-    const last4 = digits.slice(-4).padStart(digits.length, '•');
-    const padded = last4.padEnd(16, '•');
-    return padded.replace(/(.{4})/g, '$1 ').trim();
-};
-
-const getCardBrand = (number) => {
-    const n = number.replace(/\s/g, '');
-    if (/^4/.test(n)) return 'VISA';
-    if (/^5[1-5]/.test(n)) return 'MC';
-    if (/^3[47]/.test(n)) return 'AMEX';
-    if (/^6/.test(n)) return 'DISCOVER';
-    return 'CARD';
 };
 
 // ── Main Component ────────────────────────────────────────────────────────────
@@ -81,7 +62,6 @@ const PaymentContent = () => {
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
 
-        // Auto-format card number as user types
         if (name === 'cardNumber') {
             setForm((prev) => ({ ...prev, cardNumber: formatCardNumber(value) }));
             return;
@@ -160,118 +140,26 @@ const PaymentContent = () => {
                                     viewBox="0 0 512 512"
                                     xmlSpace="preserve"
                                 >
-                                    <path style={{fill:"#D5DCED;"}} d="M503.172,432.552H8.828c-4.875,0-8.828-3.953-8.828-8.828V185.379h512v238.345
-	C512,428.599,508.047,432.552,503.172,432.552z"/>
-                                    <path style={{fill:"#F1F4FB;"}} d="M503.172,326.621H8.828c-4.875,0-8.828-3.953-8.828-8.828V88.276c0-4.875,3.953-8.828,8.828-8.828
-	h494.345c4.875,0,8.828,3.953,8.828,8.828v229.517C512,322.668,508.047,326.621,503.172,326.621z"/>
-                                    <path style={{fill:"#B4E66E;"}} d="M476.69,141.241c-14.603,0-26.483-11.88-26.483-26.483c0-4.875-3.948-8.828-8.828-8.828H70.621
-	c-4.879,0-8.828,3.953-8.828,8.828c0,14.603-11.88,26.483-26.483,26.483c-4.879,0-8.828,3.953-8.828,8.828V256
-	c0,4.875,3.948,8.828,8.828,8.828c14.603,0,26.483,11.88,26.483,26.483c0,4.875,3.948,8.828,8.828,8.828h370.759
-	c4.879,0,8.828-3.953,8.828-8.828c0-14.603,11.88-26.483,26.483-26.483c4.879,0,8.828-3.953,8.828-8.828V150.069
-	C485.517,145.194,481.569,141.241,476.69,141.241z M44.138,248.061v-90.051c17.267-3.518,30.905-17.155,34.422-34.422h84.972
-	c3.697,0,5.748,4.265,3.414,7.133c-16.058,19.733-25.705,44.888-25.705,72.314s9.646,52.582,25.705,72.316
-	c2.334,2.867,0.282,7.133-3.414,7.133H78.56C75.043,265.216,61.405,251.577,44.138,248.061z M467.862,248.061
-	c-17.267,3.518-30.905,17.155-34.422,34.422h-84.972c-3.697,0-5.748-4.265-3.414-7.133c16.058-19.734,25.705-44.889,25.705-72.316
-	s-9.646-52.582-25.705-72.316c-2.334-2.868-0.283-7.133,3.414-7.133h84.972c3.518,17.267,17.155,30.905,34.422,34.422V248.061z"/>
-                                    <circle style={{fill:"#A0D755;"}} cx="256" cy="203.034" r="97.103" />
-                                    <path style={{fill:"#F1F4FB;"}} d="M264.828,196.255V168.49c11.081,1.836,17.655,6.748,17.655,9.717c0,4.875,3.948,8.828,8.828,8.828
-	c4.879,0,8.828-3.953,8.828-8.828c0-14.102-14.671-25.137-35.31-27.605v-0.533c0-4.875-3.948-8.828-8.828-8.828
-	c-4.879,0-8.828,3.953-8.828,8.828v0.533c-20.639,2.467-35.31,13.502-35.31,27.605c0,19.646,19.304,27.132,35.31,31.607v27.765
-	c-11.081-1.836-17.655-6.748-17.655-9.717c0-4.875-3.948-8.828-8.828-8.828s-8.828,3.953-8.828,8.828
-	c0,14.102,14.671,25.137,35.31,27.605V256c0,4.875,3.948,8.828,8.828,8.828c4.879,0,8.828-3.953,8.828-8.828v-0.533
-	c20.639-2.467,35.31-13.502,35.31-27.605C300.138,208.216,280.834,200.73,264.828,196.255z M229.517,178.207
-	c0-2.969,6.574-7.881,17.655-9.717v22.798C234.446,187.172,229.517,183.402,229.517,178.207z M264.828,237.579v-22.798
-	c12.726,4.116,17.655,7.887,17.655,13.081C282.483,230.831,275.908,235.743,264.828,237.579z"/>
+                                    <path style={{ fill: "#D5DCED" }} d="M503.172,432.552H8.828c-4.875,0-8.828-3.953-8.828-8.828V185.379h512v238.345 C512,428.599,508.047,432.552,503.172,432.552z" />
+                                    <path style={{ fill: "#F1F4FB" }} d="M503.172,326.621H8.828c-4.875,0-8.828-3.953-8.828-8.828V88.276c0-4.875,3.953-8.828,8.828-8.828 h494.345c4.875,0,8.828,3.953,8.828,8.828v229.517C512,322.668,508.047,326.621,503.172,326.621z" />
+                                    <path style={{ fill: "#B4E66E" }} d="M476.69,141.241c-14.603,0-26.483-11.88-26.483-26.483c0-4.875-3.948-8.828-8.828-8.828H70.621 c-4.879,0-8.828,3.953-8.828,8.828c0,14.603-11.88,26.483-26.483,26.483c-4.879,0-8.828,3.953-8.828,8.828V256 c0,4.875,3.948,8.828,8.828,8.828c14.603,0,26.483,11.88,26.483,26.483c0,4.875,3.948,8.828,8.828,8.828h370.759 c4.879,0,8.828-3.953,8.828-8.828c0-14.603,11.88-26.483,26.483-26.483c4.879,0,8.828-3.953,8.828-8.828V150.069 C485.517,145.194,481.569,141.241,476.69,141.241z M44.138,248.061v-90.051c17.267-3.518,30.905-17.155,34.422-34.422h84.972 c3.697,0,5.748,4.265,3.414,7.133c-16.058,19.733-25.705,44.888-25.705,72.314s9.646,52.582,25.705,72.316 c2.334,2.867,0.282,7.133-3.414,7.133H78.56C75.043,265.216,61.405,251.577,44.138,248.061z M467.862,248.061 c-17.267,3.518-30.905,17.155-34.422,34.422h-84.972c-3.697,0-5.748-4.265-3.414-7.133c16.058-19.734,25.705-44.889,25.705-72.316 s-9.646-52.582-25.705-72.316c-2.334-2.868-0.283-7.133,3.414-7.133h84.972c3.518,17.267,17.155,30.905,34.422,34.422V248.061z" />
+                                    <circle style={{ fill: "#A0D755" }} cx="256" cy="203.034" r="97.103" />
+                                    <path style={{ fill: "#F1F4FB" }} d="M264.828,196.255V168.49c11.081,1.836,17.655,6.748,17.655,9.717c0,4.875,3.948,8.828,8.828,8.828 c4.879,0,8.828-3.953,8.828-8.828c0-14.102-14.671-25.137-35.31-27.605v-0.533c0-4.875-3.948-8.828-8.828-8.828 c-4.879,0-8.828,3.953-8.828,8.828v0.533c-20.639,2.467-35.31,13.502-35.31,27.605c0,19.646,19.304,27.132,35.31,31.607v27.765 c-11.081-1.836-17.655-6.748-17.655-9.717c0-4.875-3.948-8.828-8.828-8.828s-8.828,3.953-8.828,8.828 c0,14.102,14.671,25.137,35.31,27.605V256c0,4.875,3.948,8.828,8.828,8.828c4.879,0,8.828-3.953,8.828-8.828v-0.533 c20.639-2.467,35.31-13.502,35.31-27.605C300.138,208.216,280.834,200.73,264.828,196.255z M229.517,178.207 c0-2.969,6.574-7.881,17.655-9.717v22.798C234.446,187.172,229.517,183.402,229.517,178.207z M264.828,237.579v-22.798 c12.726,4.116,17.655,7.887,17.655,13.081C282.483,230.831,275.908,235.743,264.828,237.579z" />
                                     <g>
-                                        <circle style={{fill:"#B4E66E;"}} cx="35.31" cy="114.759" r="8.828" />
-                                        <circle style={{fill:"#B4E66E;"}} cx="476.69" cy="114.759" r="8.828" />
-                                        <circle style={{fill:"#B4E66E;"}} cx="35.31" cy="291.31" r="8.828" />
-                                        <circle style={{fill:"#B4E66E;"}} cx="476.69" cy="291.31" r="8.828" />
+                                        <circle style={{ fill: "#B4E66E" }} cx="35.31" cy="114.759" r="8.828" />
+                                        <circle style={{ fill: "#B4E66E" }} cx="476.69" cy="114.759" r="8.828" />
+                                        <circle style={{ fill: "#B4E66E" }} cx="35.31" cy="291.31" r="8.828" />
+                                        <circle style={{ fill: "#B4E66E" }} cx="476.69" cy="291.31" r="8.828" />
                                     </g>
                                     <g>
-                                        <rect y="344.276" style={{fill:"#C7CFE2;"}} width="512" height="17.655" />
-                                        <rect y="379.586" style={{fill:"#C7CFE2;"}} width="512" height="17.655" />
-                                        <path style={{fill:"#C7CFE2;"}} d="M503.172,432.552H8.828c-4.875,0-8.828-3.953-8.828-8.828v-8.828h512v8.828
-		C512,428.599,508.047,432.552,503.172,432.552z"/>
+                                        <rect y="344.276" style={{ fill: "#C7CFE2" }} width="512" height="17.655" />
+                                        <rect y="379.586" style={{ fill: "#C7CFE2" }} width="512" height="17.655" />
+                                        <path style={{ fill: "#C7CFE2" }} d="M503.172,432.552H8.828c-4.875,0-8.828-3.953-8.828-8.828v-8.828h512v8.828 C512,428.599,508.047,432.552,503.172,432.552z" />
                                     </g>
                                 </svg>
                             </div>
                             <span className="manrope font-500 size-13 color-black-black">Cash on Delivery</span>
                         </div>
-
-
-                        {/*
-                        <div className="card-method-row">
-                            <div className="card-method-icon">
-                                <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
-                                    <rect width="18" height="14" rx="2" fill="white" fillOpacity="0.3" />
-                                    <rect x="0" y="4" width="18" height="3" fill="white" fillOpacity="0.6" />
-                                </svg>
-                            </div>
-                            <span className="manrope font-500 size-13 color-black-black">Credit or Debit Card</span>
-                        </div>
-
-                        <p className="manrope font-500 size-13 color-muted payment-detail-label">Enter your payment details:</p>
-
-                        <div className="payment-form">
-                            <input
-                                type="text"
-                                name="nameOnCard"
-                                placeholder="Name on Card*"
-                                value={form.nameOnCard}
-                                onChange={handleChange}
-                                className="manrope"
-                            />
-                            <input
-                                type="text"
-                                name="cardNumber"
-                                placeholder="1234 5678 9012 3456"
-                                value={form.cardNumber}
-                                onChange={handleChange}
-                                className="manrope"
-                                maxLength={19}
-                                inputMode="numeric"
-                            />
-                            <div className="form-row">
-                                <select name="expiryMonth" value={form.expiryMonth} onChange={handleChange} className="manrope">
-                                    <option value="" disabled>MM</option>
-                                    {Array.from({ length: 12 }, (_, i) => {
-                                        const m = String(i + 1).padStart(2, '0');
-                                        return <option key={m} value={m}>{m}</option>;
-                                    })}
-                                </select>
-                                <select name="expiryYear" value={form.expiryYear} onChange={handleChange} className="manrope">
-                                    <option value="" disabled>YY</option>
-                                    {[25, 26, 27, 28, 29, 30, 31, 32, 33, 34].map(y => (
-                                        <option key={y} value={y}>{y}</option>
-                                    ))}
-                                </select>
-                                <input
-                                    type="password"
-                                    name="cvv"
-                                    placeholder="CVV*"
-                                    value={form.cvv}
-                                    onChange={handleChange}
-                                    className="manrope"
-                                    maxLength={4}
-                                    inputMode="numeric"
-                                />
-                            </div>
-
-                            <div className="upi-section">
-                                <p className="manrope font-500 size-13 color-black-black">UPI Options available:</p>
-                                <input
-                                    type="text"
-                                    name="upiId"
-                                    placeholder="Enter UPI ID"
-                                    value={form.upiId}
-                                    onChange={handleChange}
-                                    className="manrope"
-                                />
-                            </div>
-                        </div>
-
-                        */}
 
                         <label className="manrope font-400 size-13 color-muted billing-checkbox-label">
                             <input
