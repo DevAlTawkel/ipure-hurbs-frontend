@@ -444,11 +444,7 @@ export default function ProductDetails({ slug }) {
             <span className="manrope font-600 size-24 ProductDetails-price">
               ${(displayPrice * selectedQty).toFixed(2)}
             </span>
-            {perKgPrice && (
-              <span className="manrope font-400 size-16 color-deep-forest-green">
-                (${perKgPrice} / Kg)
-              </span>
-            )}
+            
           </div>
 
           <div className="display-flex flex-direction-column gap-8 ProductDetails-delivery-options">

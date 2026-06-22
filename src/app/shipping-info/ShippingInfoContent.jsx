@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useCheckoutStore } from "@/store/useCheckoutStore";
 import { useCartStore } from "@/store/useCartStore";
 import toast from 'react-hot-toast';
+import orderService from '@/services/orderService';
 
 const ShippingInfoContent = () => {
 
@@ -16,6 +17,31 @@ const ShippingInfoContent = () => {
 
     const [form, setForm] = useState(shippingInfo);
     const [hydrated, setHydrated] = useState(false);
+
+    const [priceSummary, setPriceSummary] = useState(null);
+    const [priceLoading, setPriceLoading] = useState(false);
+
+    // Build the payload from store data
+    const buildPayload = (items, shippingMethod) => ({
+        items: items.map((item) => ({
+            product_id: item.id,
+            variant_id: checkoutItem?.variantId ?? null,
+            quantity: item.quantity
+        })),
+        shipping_method: shippingMethod,
+        promo_code: form.promoCode || null,
+    });
+
+    // Fetch price whenever shipping method or items change
+    useEffect(() => {
+        if (!hydrated || displayItems.length === 0) return;
+
+        setPriceLoading(true);
+        orderService.calculatePrice(buildPayload(displayItems, form.shippingMethod))
+            .then((data) => setPriceSummary(data))
+            .catch(() => setPriceSummary(null))
+            .finally(() => setPriceLoading(false));
+    }, [hydrated, form.shippingMethod, form.promoCode]);
 
 
     useEffect(() => {
@@ -65,16 +91,14 @@ const ShippingInfoContent = () => {
             image: item.image,
         }));
 
-    // ─── Summary calculations ─────────────────────────────────────────────────
-    const subtotal = displayItems.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
-
-    const deliveryFee = (() => {
+    const subtotal = priceSummary?.subtotal ?? displayItems.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+    const deliveryFee = priceSummary?.delivery_fee ?? (() => {
         if (subtotal >= 100) return 0;
         if (form.shippingMethod === "express") return 40;
-        return 0;
+        return 30;
     })();
-
-    const total = subtotal + deliveryFee;
+    const discount = priceSummary?.discount ?? 0;
+    const total = priceSummary?.total ?? (subtotal + deliveryFee);
 
     // ... your existing handleChange, handleSaveAddress, handleContinue unchanged ...
     const handleChange = (e) => {
@@ -321,26 +345,36 @@ const ShippingInfoContent = () => {
                 <div className="summary-box">
                     <h2 className='manrope font-700 color-deep-forest-green size-24'>Summary</h2>
 
-                    <div className="summary-row">
-                        <span className="label size-16">
-                            Subtotal ({displayItems.length} {displayItems.length === 1 ? "item" : "items"})
-                        </span>
-                        <span>${subtotal.toFixed(2)}</span>
-                    </div>
-                    <div className="summary-row">
-                        <span className="label">
-                            {form.shippingMethod === "express" ? "Express delivery" : "Standard delivery"}
-                        </span>
-                        <span>{deliveryFee > 0 ? `$${deliveryFee.toFixed(2)}` : "Free"}</span>
-                    </div>
-
-                    <div className="summary-divider" />
-
-                    <div className="summary-total">
-                        <span>Total</span>
-                        <span>${total.toFixed(2)}</span>
-                    </div>
-                    <p className="summary-tax">Including taxes</p>
+                    {priceLoading ? (
+                        <p className="manrope font-400 size-14" style={{ color: '#888' }}>Calculating...</p>
+                    ) : (
+                        <>
+                            <div className="summary-row">
+                                <span className="label size-16">
+                                    Subtotal ({displayItems.length} {displayItems.length === 1 ? "item" : "items"})
+                                </span>
+                                <span>${subtotal.toFixed(2)}</span>
+                            </div>
+                            <div className="summary-row">
+                                <span className="label">
+                                    {form.shippingMethod === "express" ? "Express delivery" : "Standard delivery"}
+                                </span>
+                                <span>{deliveryFee > 0 ? `$${deliveryFee.toFixed(2)}` : "Free"}</span>
+                            </div>
+                            {discount > 0 && (
+                                <div className="summary-row" style={{ color: 'green' }}>
+                                    <span className="label">Discount</span>
+                                    <span>-${discount.toFixed(2)}</span>
+                                </div>
+                            )}
+                            <div className="summary-divider" />
+                            <div className="summary-total">
+                                <span>Total</span>
+                                <span>${total.toFixed(2)}</span>
+                            </div>
+                            <p className="summary-tax">Including taxes</p>
+                        </>
+                    )}
                 </div>
 
                 {/* Cart Items */}
